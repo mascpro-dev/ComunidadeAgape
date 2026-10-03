@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#06153a" />
+    <title>Comunidade Cristã Ágape</title>
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@360;440;560;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="stage">
+      <div class="phone" id="app">
+        <div class="notch" aria-hidden="true"></div>
+        <header class="topbar">
+          <button class="brand-lockup" data-go="inicio" aria-label="Início Ágape">
+            <span class="logo" aria-hidden="true">
+              <svg viewBox="0 0 120 108" fill="none">
+                <path d="M60 6 L114 102 H6 Z" stroke="currentColor" stroke-width="9" stroke-linejoin="miter" />
+                <path d="M60 34 L92 90 H28 Z" stroke="currentColor" stroke-width="9" stroke-linejoin="miter" />
+              </svg>
+            </span>
+            <span>
+              <p class="kicker" id="greeting">Comunidade Cristã</p>
+              <h1 class="brand">Ágape</h1>
+            </span>
+          </button>
+          <button class="avatar" data-go="mais" aria-label="Perfil">A</button>
+        </header>
+
+        <main id="screen" class="screen"></main>
+
+        <nav class="dock" aria-label="Navegação">
+          <button class="dock-btn is-on" data-go="inicio">
+            <span class="ico">⌂</span><span>Início</span>
+          </button>
+          <button class="dock-btn" data-go="ao-vivo">
+            <span class="ico live-dot">◉</span><span>Culto</span>
+          </button>
+          <button class="dock-btn" data-go="celulas">
+            <span class="ico">◎</span><span>Células</span>
+          </button>
+          <button class="dock-btn" data-go="formacao">
+            <span class="ico">✦</span><span>Formação</span>
+          </button>
+          <button class="dock-btn" data-go="mais">
+            <span class="ico">☰</span><span>Mais</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
