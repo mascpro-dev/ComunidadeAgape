@@ -64,9 +64,12 @@ body {
     @apply flex items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.04] px-3.5 py-3.5 text-left transition hover:border-gold/35;
   }
   .topic-tile {
-    @apply flex min-h-[104px] flex-col items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.04] px-3 py-4 text-center transition hover:border-gold/40;
+    @apply flex aspect-[1.15/1] min-h-[96px] flex-col items-center justify-center rounded-2xl border border-white/[0.08] bg-[#0b1c3e]/70 px-3 py-4 text-center transition hover:border-gold/40 md:min-h-[118px];
   }
   .frame {
     @apply rounded-[22px] border border-white/[0.08] bg-white/[0.03];
+  }
+  .dash-card {
+    @apply rounded-[22px] border border-white/[0.08] bg-[#0a1733]/80 p-4 backdrop-blur-md md:p-5;
   }
 }

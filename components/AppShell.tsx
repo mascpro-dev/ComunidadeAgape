@@ -70,7 +70,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`rounded-full px-3.5 py-2 text-[13px] tracking-wide transition ${
+                  className={`rounded-full px-2.5 py-2 text-[12px] tracking-wide transition lg:px-3.5 lg:text-[13px] ${
                     on ? "bg-white/10 text-gold" : "text-[#c5d2ea] hover:text-white"
                   }`}
                 >
@@ -96,8 +96,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-28 pt-3 md:px-8 md:pb-16 md:pt-8">{children}</main>
 
-      <footer className="mt-auto hidden border-t border-white/[0.06] py-12 md:block">
-        <div className="mx-auto grid max-w-7xl gap-10 px-8 md:grid-cols-[1.2fr_repeat(3,1fr)]">
+      <footer className="mt-auto hidden md:block">
+        <div className="mx-auto grid max-w-7xl gap-10 px-8 py-12 md:grid-cols-[1.2fr_repeat(3,1fr)]">
           <div>
             <p className="font-display text-2xl text-gold">Ágape</p>
             <p className="mt-2 max-w-sm text-sm text-muted">
@@ -128,6 +128,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <Link href="/lideranca">Liderança</Link>
               <Link href="/dashboard">Painel</Link>
             </div>
+          </div>
+        </div>
+        <div className="bg-[#6bb4d4] text-[12px] text-[#0a2348]">
+          <div className="mx-auto flex max-w-7xl items-center justify-between px-8 py-3">
+            <div className="flex gap-4">
+              <Link href="/mais">Termos</Link>
+              <Link href="/mais">Privacidade</Link>
+            </div>
+            <p>© Comunidade Cristã Ágape</p>
           </div>
         </div>
       </footer>
