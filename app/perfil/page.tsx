@@ -1,3 +1,4 @@
+import { InstalarPwa } from "@/components/InstalarPwa";
 import { MemberProfile } from "@/components/MemberProfile";
 import { PageHeader } from "@/components/PageHeader";
 
@@ -9,6 +10,7 @@ export default function PerfilPage() {
         title="Meu perfil"
         lead="Cadastre seus dados. A liderança usa isso para cuidado, célula, família e formação."
       />
+      <InstalarPwa />
       <MemberProfile />
     </div>
   );
