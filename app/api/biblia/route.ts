@@ -1,29 +1,35 @@
 import { bibleBooks } from "@/lib/bible-books";
+import { bibleVersions, type BibleVersionId } from "@/lib/bible-versions";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const bookN = Number(url.searchParams.get("book") || "43");
   const chapter = Number(url.searchParams.get("chapter") || "1");
+  const versaoId = (url.searchParams.get("versao") || "almeida") as BibleVersionId;
+  const version = bibleVersions.find((v) => v.id === versaoId) || bibleVersions[0];
   const book = bibleBooks.find((b) => b.n === bookN) || bibleBooks[42];
   const cap = Math.min(Math.max(1, chapter), book.caps);
 
-  const verses = (await fromBolls(book.n, cap)) || (await fromBibleApi(book.slug, cap));
+  let verses = await fromBolls(version.bolls, book.n, cap);
+  if (!verses?.length && "bibleApi" in version && version.bibleApi) {
+    verses = await fromBibleApi(book.slug, cap, version.bibleApi);
+  }
   if (!verses?.length) {
-    return NextResponse.json({ error: "Capítulo indisponível agora." }, { status: 502 });
+    return NextResponse.json({ error: "Capítulo indisponível nesta versão agora." }, { status: 502 });
   }
 
   return NextResponse.json({
     livro: book.nome,
     capitulo: cap,
     versiculos: verses,
-    versao: "Almeida",
+    versao: version.nome,
   });
 }
 
-async function fromBolls(book: number, chapter: number) {
+async function fromBolls(slug: string, book: number, chapter: number) {
   try {
-    const res = await fetch(`https://bolls.life/get-text/ALM/${book}/${chapter}/`, {
+    const res = await fetch(`https://bolls.life/get-text/${slug}/${book}/${chapter}/`, {
       next: { revalidate: 86400 },
     });
     if (!res.ok) return null;
@@ -35,9 +41,9 @@ async function fromBolls(book: number, chapter: number) {
   }
 }
 
-async function fromBibleApi(slug: string, chapter: number) {
+async function fromBibleApi(slug: string, chapter: number, translation: string) {
   try {
-    const res = await fetch(`https://bible-api.com/${slug}+${chapter}?translation=almeida`, {
+    const res = await fetch(`https://bible-api.com/${slug}+${chapter}?translation=${translation}`, {
       next: { revalidate: 86400 },
     });
     if (!res.ok) return null;

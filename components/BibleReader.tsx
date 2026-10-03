@@ -1,22 +1,28 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { bibleBooks } from "@/lib/bible-books";
+import { bibleVersions, type BibleVersionId } from "@/lib/bible-versions";
+import { devocionais, gruposDevocional } from "@/lib/devocionais";
 
 type Verse = { n: number; texto: string };
 
 export function BibleReader() {
   const [book, setBook] = useState(43);
   const [chapter, setChapter] = useState(1);
+  const [versao, setVersao] = useState<BibleVersionId>("almeida");
+  const [grupo, setGrupo] = useState<(typeof gruposDevocional)[number]["id"]>("jovens");
   const [verses, setVerses] = useState<Verse[]>([]);
   const [status, setStatus] = useState("Carregando…");
   const current = bibleBooks.find((b) => b.n === book)!;
+  const versionNome = bibleVersions.find((v) => v.id === versao)?.nome || "Almeida";
+  const lista = useMemo(() => devocionais.filter((d) => d.grupo === grupo), [grupo]);
 
   useEffect(() => {
     let alive = true;
     setStatus("Carregando…");
     setVerses([]);
-    fetch(`/api/biblia?book=${book}&chapter=${chapter}`)
+    fetch(`/api/biblia?book=${book}&chapter=${chapter}&versao=${versao}`)
       .then(async (r) => {
         const data = await r.json();
         if (!alive) return;
@@ -25,84 +31,138 @@ export function BibleReader() {
         setStatus("");
       })
       .catch(() => {
-        if (alive) setStatus("Não foi possível abrir este capítulo agora.");
+        if (alive) setStatus("Não foi possível abrir este capítulo nesta versão agora.");
       });
     return () => {
       alive = false;
     };
-  }, [book, chapter]);
+  }, [book, chapter, versao]);
 
   function goBook(n: number) {
     setBook(n);
     setChapter(1);
   }
 
-  return (
-    <div className="md:grid md:grid-cols-[220px_1fr] md:gap-8">
-      <aside className="mb-6 max-h-[240px] overflow-y-auto rounded-2xl border border-white/10 p-3 md:mb-0 md:max-h-[70vh]">
-        <p className="mb-2 text-[11px] uppercase tracking-[0.16em] text-muted">Antigo Testamento</p>
-        {bibleBooks
-          .filter((b) => !b.nt)
-          .map((b) => (
-            <button
-              key={b.n}
-              onClick={() => goBook(b.n)}
-              className={`block w-full rounded-lg px-2 py-1.5 text-left text-[13px] ${
-                book === b.n ? "bg-white/10 text-gold" : "text-[#d7e2f8]"
-              }`}
-            >
-              {b.nome}
-            </button>
-          ))}
-        <p className="mb-2 mt-4 text-[11px] uppercase tracking-[0.16em] text-muted">Novo Testamento</p>
-        {bibleBooks
-          .filter((b) => b.nt)
-          .map((b) => (
-            <button
-              key={b.n}
-              onClick={() => goBook(b.n)}
-              className={`block w-full rounded-lg px-2 py-1.5 text-left text-[13px] ${
-                book === b.n ? "bg-white/10 text-gold" : "text-[#d7e2f8]"
-              }`}
-            >
-              {b.nome}
-            </button>
-          ))}
-      </aside>
+  function abrirLeitura(livro: number, capitulo: number) {
+    setBook(livro);
+    setChapter(capitulo);
+    if (typeof window !== "undefined") {
+      document.getElementById("leitura")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
 
-      <section>
-        <div className="mb-5 flex items-center justify-between gap-3">
-          <h2 className="font-display text-3xl">
-            {current.nome} {chapter}
-          </h2>
-          <div className="flex gap-2">
+  return (
+    <div>
+      <div className="mb-6 flex flex-wrap gap-2">
+        {bibleVersions.map((v) => (
+          <button key={v.id} className={versao === v.id ? "btn-gold" : "btn-ghost"} onClick={() => setVersao(v.id)}>
+            {v.nome}
+          </button>
+        ))}
+      </div>
+
+      <section className="mb-10">
+        <h2 className="section-label">Devocional por ministério</h2>
+        <div className="mb-4 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none]">
+          {gruposDevocional.map((g) => (
             <button
-              className="btn-ghost px-3 py-2"
-              disabled={chapter <= 1}
-              onClick={() => setChapter((c) => Math.max(1, c - 1))}
+              key={g.id}
+              className={`whitespace-nowrap rounded-full border px-3 py-2 text-[13px] ${
+                grupo === g.id ? "border-transparent bg-gold font-semibold text-[#1a1408]" : "border-white/10"
+              }`}
+              onClick={() => setGrupo(g.id)}
             >
-              ←
+              {g.nome}
             </button>
-            <button
-              className="btn-ghost px-3 py-2"
-              disabled={chapter >= current.caps}
-              onClick={() => setChapter((c) => Math.min(current.caps, c + 1))}
-            >
-              →
-            </button>
-          </div>
+          ))}
         </div>
-        <p className="mb-4 text-[12px] text-muted">Almeida · leitura online da Comunidade Ágape</p>
-        {status ? <p className="text-sm text-muted">{status}</p> : null}
-        <div className="space-y-3">
-          {verses.map((v) => (
-            <p key={v.n} className="text-[16px] leading-relaxed">
-              <sup className="mr-2 text-[11px] text-gold">{v.n}</sup>
-              {v.texto}
-            </p>
+        <div className="grid gap-4 md:grid-cols-2">
+          {lista.map((d) => (
+            <article key={d.id} className="card">
+              <p className="text-[11px] uppercase tracking-[0.16em] text-gold">{d.referencia}</p>
+              <h3 className="mt-1 font-display text-2xl">{d.titulo}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-[#d7e2f8]">{d.ideia}</p>
+              <ol className="mt-4 list-decimal space-y-2 pl-5 text-[14px] leading-relaxed">
+                {d.pontos.map((p) => (
+                  <li key={p}>{p}</li>
+                ))}
+              </ol>
+              <p className="mt-4 text-sm text-gold">Para pensar: {d.pergunta}</p>
+              <p className="meta mt-2">Oração: {d.oracao}</p>
+              <button className="btn-gold mt-4" onClick={() => abrirLeitura(d.livro, d.capitulo)}>
+                Ler {d.referencia} em {versionNome}
+              </button>
+            </article>
           ))}
         </div>
       </section>
+
+      <div id="leitura" className="md:grid md:grid-cols-[220px_1fr] md:gap-8">
+        <aside className="mb-6 max-h-[240px] overflow-y-auto rounded-2xl border border-white/10 p-3 md:mb-0 md:max-h-[70vh]">
+          <p className="mb-2 text-[11px] uppercase tracking-[0.16em] text-muted">Antigo Testamento</p>
+          {bibleBooks
+            .filter((b) => !b.nt)
+            .map((b) => (
+              <button
+                key={b.n}
+                onClick={() => goBook(b.n)}
+                className={`block w-full rounded-lg px-2 py-1.5 text-left text-[13px] ${
+                  book === b.n ? "bg-white/10 text-gold" : "text-[#d7e2f8]"
+                }`}
+              >
+                {b.nome}
+              </button>
+            ))}
+          <p className="mb-2 mt-4 text-[11px] uppercase tracking-[0.16em] text-muted">Novo Testamento</p>
+          {bibleBooks
+            .filter((b) => b.nt)
+            .map((b) => (
+              <button
+                key={b.n}
+                onClick={() => goBook(b.n)}
+                className={`block w-full rounded-lg px-2 py-1.5 text-left text-[13px] ${
+                  book === b.n ? "bg-white/10 text-gold" : "text-[#d7e2f8]"
+                }`}
+              >
+                {b.nome}
+              </button>
+            ))}
+        </aside>
+
+        <section>
+          <div className="mb-5 flex items-center justify-between gap-3">
+            <h2 className="font-display text-3xl">
+              {current.nome} {chapter}
+            </h2>
+            <div className="flex gap-2">
+              <button
+                className="btn-ghost px-3 py-2"
+                disabled={chapter <= 1}
+                onClick={() => setChapter((c) => Math.max(1, c - 1))}
+              >
+                ←
+              </button>
+              <button
+                className="btn-ghost px-3 py-2"
+                disabled={chapter >= current.caps}
+                onClick={() => setChapter((c) => Math.min(current.caps, c + 1))}
+              >
+                →
+              </button>
+            </div>
+          </div>
+          <p className="mb-4 text-[12px] text-muted">{versionNome} · Comunidade Cristã Ágape</p>
+          {status ? <p className="text-sm text-muted">{status}</p> : null}
+          <div className="space-y-3">
+            {verses.map((v) => (
+              <p key={v.n} className="text-[16px] leading-relaxed">
+                <sup className="mr-2 text-[11px] text-gold">{v.n}</sup>
+                {v.texto}
+              </p>
+            ))}
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

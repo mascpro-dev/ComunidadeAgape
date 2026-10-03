@@ -119,8 +119,8 @@ export function CommunityHub() {
   }
 
   return (
-    <div>
-      <div className="mb-5 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none]">
+    <div className="w-full">
+      <div className="mb-6 grid grid-cols-3 gap-3 sm:grid-cols-6 md:gap-6">
         {ROOMS.map((r) => (
           <button
             key={r}
@@ -128,10 +128,10 @@ export function CommunityHub() {
               setSala(r);
               setTab("salas");
             }}
-            className="grid min-w-[72px] justify-items-center gap-1"
+            className="grid justify-items-center gap-1.5"
           >
             <span
-              className={`grid h-14 w-14 place-items-center rounded-full border-2 ${
+              className={`grid h-14 w-14 place-items-center rounded-full border-2 md:h-16 md:w-16 ${
                 sala === r && tab === "salas" ? "border-gold text-gold" : "border-white/20 text-ink"
               }`}
             >
@@ -142,7 +142,7 @@ export function CommunityHub() {
         ))}
       </div>
 
-      <div className="mb-5 flex gap-2">
+      <div className="mb-5 flex w-full gap-2">
         <button className={tab === "feed" ? "btn-gold" : "btn-ghost"} onClick={() => setTab("feed")}>
           Feed
         </button>
@@ -152,11 +152,11 @@ export function CommunityHub() {
       </div>
 
       {tab === "feed" ? (
-        <div className="mx-auto grid max-w-xl gap-4">
-          <form onSubmit={publish} className="card grid gap-2">
+        <div className="grid w-full gap-4 md:grid-cols-2">
+          <form onSubmit={publish} className="card grid gap-2 md:col-span-2">
             <input name="autor" placeholder="Seu nome" className="field" />
             <textarea name="texto" required rows={3} placeholder="O que Deus tem feito na casa?" className="field" />
-            <button className="btn-gold" type="submit">
+            <button className="btn-gold w-fit" type="submit">
               Publicar
             </button>
           </form>
@@ -188,9 +188,9 @@ export function CommunityHub() {
           ))}
         </div>
       ) : (
-        <div className="mx-auto max-w-xl">
+        <div className="w-full">
           <h2 className="mb-3 font-display text-3xl">Sala {sala}</h2>
-          <div className="mb-4 grid gap-2 rounded-2xl border border-white/10 p-3">
+          <div className="mb-4 grid min-h-[200px] gap-2 rounded-2xl border border-white/10 p-4">
             {daSala.length ? (
               daSala.map((m) => (
                 <div key={m.id}>
@@ -204,7 +204,7 @@ export function CommunityHub() {
               <p className="text-sm text-muted">Seja o primeiro a escrever nesta sala.</p>
             )}
           </div>
-          <form onSubmit={sendRoom} className="grid gap-2">
+          <form onSubmit={sendRoom} className="grid gap-2 md:grid-cols-[1fr_2fr_auto]">
             <input name="autor" placeholder="Seu nome" className="field" />
             <input name="texto" required placeholder={`Mensagem em ${sala}`} className="field" />
             <button className="btn-gold" type="submit">
