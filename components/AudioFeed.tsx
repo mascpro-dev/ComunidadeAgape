@@ -2,6 +2,8 @@
 
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { loadJson, saveJson } from "@/lib/client-store";
+import { getSessionId } from "@/lib/auth";
+import { MEMBROS_KEY, garantirAdmin, seedMembros, temFuncao, type Membro } from "@/lib/metrics";
 
 type AudioItem = {
   id: string;
@@ -11,9 +13,7 @@ type AudioItem = {
   dataUrl: string;
 };
 
-const PIN = "agape2033";
 const KEY = "agape-audios";
-const LEADER = "agape-leader";
 
 export function AudioFeed() {
   const [items, setItems] = useState<AudioItem[]>([]);
@@ -24,21 +24,14 @@ export function AudioFeed() {
 
   useEffect(() => {
     setItems(loadJson<AudioItem[]>(KEY, []));
-    setLeader(sessionStorage.getItem(LEADER) === "1");
+    const lista = garantirAdmin(loadJson<Membro[]>(MEMBROS_KEY, seedMembros));
+    const u = lista.find((m) => m.id === getSessionId());
+    setLeader(temFuncao(u, "audios"));
   }, []);
 
   function persist(next: AudioItem[]) {
     setItems(next);
     saveJson(KEY, next);
-  }
-
-  function unlock(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const pin = String(new FormData(e.currentTarget).get("pin") || "");
-    if (pin === PIN) {
-      sessionStorage.setItem(LEADER, "1");
-      setLeader(true);
-    }
   }
 
   async function startRec() {
@@ -126,15 +119,13 @@ export function AudioFeed() {
             </button>
           </form>
         ) : (
-          <form onSubmit={unlock} className="grid gap-2">
+          <div className="grid gap-2">
             <p className="font-display text-2xl">Área dos líderes</p>
-            <p className="meta">Quem lidera entra com o código da casa para enviar áudios à igreja.</p>
-            <input name="pin" type="password" placeholder="Código da liderança" className="field" />
-            <button className="btn-gold" type="submit">
-              Entrar
-            </button>
-            <p className="text-[12px] text-muted">Código de demonstração: agape2033</p>
-          </form>
+            <p className="meta">Entre na sua conta. Só publica áudio quem o administrador principal liberar.</p>
+            <a href="/entrar" className="btn-gold">
+              Fazer login
+            </a>
+          </div>
         )}
       </aside>
     </div>

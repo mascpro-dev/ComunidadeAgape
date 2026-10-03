@@ -4,18 +4,23 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 import { loadJson, saveJson } from "@/lib/client-store";
 import { LeaderGate } from "./LeaderGate";
 import {
+  FUNCOES,
   MEMBROS_KEY,
   RELATORIOS_KEY,
   estadosCivis,
+  garantirAdmin,
   maskCpf,
   ministeriosPainel,
   parseCursos,
   seedMembros,
   seedRelatorios,
   summarize,
+  temFuncao,
+  type FuncaoId,
   type Membro,
   type Relatorio,
 } from "@/lib/metrics";
+import { getSessionId } from "@/lib/auth";
 
 export function MetricsDashboard() {
   const [tab, setTab] = useState<"numeros" | "relatorios" | "pessoas">("numeros");
@@ -23,9 +28,9 @@ export function MetricsDashboard() {
   const [relatorios, setRelatorios] = useState<Relatorio[]>(seedRelatorios);
 
   useEffect(() => {
-    const m = loadJson(MEMBROS_KEY, seedMembros);
+    const m = garantirAdmin(loadJson(MEMBROS_KEY, seedMembros));
     const r = loadJson(RELATORIOS_KEY, seedRelatorios);
-    if (!localStorage.getItem(MEMBROS_KEY)) saveJson(MEMBROS_KEY, m);
+    saveJson(MEMBROS_KEY, m);
     if (!localStorage.getItem(RELATORIOS_KEY)) saveJson(RELATORIOS_KEY, r);
     setMembros(m);
     setRelatorios(r);
@@ -58,7 +63,7 @@ export function MetricsDashboard() {
   }
 
   return (
-    <LeaderGate title="Painel da casa">
+    <LeaderGate title="Painel da casa" funcao="painel">
       <div className="mb-6 flex flex-wrap gap-2">
         <button className={tab === "numeros" ? "btn-gold" : "btn-ghost"} onClick={() => setTab("numeros")}>
           Números
@@ -182,43 +187,76 @@ export function MetricsDashboard() {
       ) : null}
 
       {tab === "pessoas" ? (
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[720px] text-left text-sm">
-            <thead className="text-[11px] uppercase tracking-[0.14em] text-muted">
-              <tr>
-                <th className="pb-3 pr-3">Nome</th>
-                <th className="pb-3 pr-3">CPF</th>
-                <th className="pb-3 pr-3">Bairro</th>
-                <th className="pb-3 pr-3">Célula</th>
-                <th className="pb-3 pr-3">Convertido</th>
-                <th className="pb-3 pr-3">Família</th>
-                <th className="pb-3">Cursos</th>
-              </tr>
-            </thead>
-            <tbody>
-              {membros.map((m) => (
-                <tr key={m.id} className="border-t border-white/10">
-                  <td className="py-3 pr-3">{m.nome}</td>
-                  <td className="py-3 pr-3">{maskCpf(m.cpf)}</td>
-                  <td className="py-3 pr-3">{m.bairro}</td>
-                  <td className="py-3 pr-3">
-                    {m.celula}
-                    {m.querIndicacao ? <span className="block text-[11px] text-gold">quer indicação</span> : null}
-                  </td>
-                  <td className="py-3 pr-3">{m.convertido ? "Sim" : "Não"}</td>
-                  <td className="py-3 pr-3">
-                    {estadosCivis.find((e) => e.id === m.estadoCivil)?.label}
-                    {m.tempoCasado ? ` · ${m.tempoCasado}` : ""}
-                    {m.temFilhos ? ` · ${m.qtdFilhos} filho(s)` : ""}
-                  </td>
-                  <td className="py-3">{parseCursos(m.cursos).join("; ") || "—"}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <PessoasAdmin membros={membros} onChange={(next) => { setMembros(next); saveJson(MEMBROS_KEY, next); }} />
       ) : null}
     </LeaderGate>
+  );
+}
+
+function PessoasAdmin({
+  membros,
+  onChange,
+}: {
+  membros: Membro[];
+  onChange: (m: Membro[]) => void;
+}) {
+  const eu = membros.find((m) => m.id === getSessionId());
+  const podeLiberar = temFuncao(eu, "liberar");
+
+  function toggle(id: string, fn: FuncaoId) {
+    onChange(
+      membros.map((m) => {
+        if (m.id !== id || m.principal) return m;
+        const tem = (m.funcoes || []).includes(fn);
+        const funcoes = tem ? (m.funcoes || []).filter((f) => f !== fn) : [...(m.funcoes || []), fn];
+        return { ...m, funcoes };
+      }),
+    );
+  }
+
+  return (
+    <div className="grid gap-4">
+      {membros.map((m) => (
+        <article key={m.id} className="card">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p className="font-display text-2xl">
+                {m.nome}
+                {m.principal ? <span className="ml-2 text-sm text-gold">adm principal</span> : null}
+              </p>
+              <p className="meta">
+                {m.email || "sem e-mail"} · {maskCpf(m.cpf)} · {m.bairro} · {m.cidade}
+              </p>
+              <p className="meta">
+                {m.celula}
+                {m.querIndicacao ? " · quer indicação de célula" : ""} · convertido: {m.convertido ? "sim" : "não"}
+              </p>
+              <p className="meta">
+                {estadosCivis.find((e) => e.id === m.estadoCivil)?.label}
+                {m.tempoCasado ? ` · ${m.tempoCasado}` : ""}
+                {m.temFilhos ? ` · ${m.qtdFilhos} filho(s)` : ""}
+                {parseCursos(m.cursos).length ? ` · ${parseCursos(m.cursos).join("; ")}` : ""}
+              </p>
+            </div>
+          </div>
+          {podeLiberar ? (
+            <div className="mt-4 flex flex-wrap gap-3">
+              {FUNCOES.map((f) => (
+                <label key={f.id} className="flex items-center gap-2 text-[13px]">
+                  <input
+                    type="checkbox"
+                    disabled={!!m.principal}
+                    checked={m.principal || (m.funcoes || []).includes(f.id)}
+                    onChange={() => toggle(m.id, f.id)}
+                  />
+                  {f.label}
+                </label>
+              ))}
+            </div>
+          ) : null}
+        </article>
+      ))}
+    </div>
   );
 }
 

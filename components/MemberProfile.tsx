@@ -3,22 +3,27 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { celulas, cursos } from "@/lib/content";
 import { loadJson, saveJson } from "@/lib/client-store";
+import { buscarCep } from "@/lib/cep";
+import { getSessionId, hashPassword } from "@/lib/auth";
 import {
+  ADMIN_PRINCIPAL,
   MEU_PERFIL_KEY,
   MEMBROS_KEY,
   estadosCivis,
+  garantirAdmin,
   seedMembros,
   type EstadoCivil,
   type Membro,
 } from "@/lib/metrics";
 
-const empty: Omit<Membro, "id" | "atualizado"> = {
+const empty: Omit<Membro, "id" | "atualizado" | "senhaHash" | "funcoes" | "principal"> = {
   nome: "",
   cpf: "",
   endereco: "",
   bairro: "",
   cep: "",
   cidade: "",
+  email: "",
   celula: "Não frequento",
   querIndicacao: true,
   convertido: false,
@@ -33,20 +38,39 @@ export function MemberProfile() {
   const [membros, setMembros] = useState<Membro[]>(seedMembros);
   const [meuId, setMeuId] = useState("");
   const [form, setForm] = useState(empty);
+  const [senha, setSenha] = useState("");
+  const [cepStatus, setCepStatus] = useState("");
   const [ok, setOk] = useState("");
 
   useEffect(() => {
-    const all = loadJson(MEMBROS_KEY, seedMembros);
-    if (!localStorage.getItem(MEMBROS_KEY)) saveJson(MEMBROS_KEY, all);
+    const all = garantirAdmin(loadJson(MEMBROS_KEY, seedMembros));
+    saveJson(MEMBROS_KEY, all);
     setMembros(all);
-    const id = localStorage.getItem(MEU_PERFIL_KEY) || "";
+    const id = getSessionId() || localStorage.getItem(MEU_PERFIL_KEY) || "";
     setMeuId(id);
     const mine = all.find((m) => m.id === id);
-    if (mine) {
-      const { id: _i, atualizado: _a, ...rest } = mine;
-      setForm(rest);
-    }
+    if (mine) fill(mine);
   }, []);
+
+  function fill(mine: Membro) {
+    setForm({
+      nome: mine.nome,
+      cpf: mine.cpf,
+      endereco: mine.endereco,
+      bairro: mine.bairro,
+      cep: mine.cep,
+      cidade: mine.cidade,
+      email: mine.email || "",
+      celula: mine.celula,
+      querIndicacao: mine.querIndicacao,
+      convertido: mine.convertido,
+      cursos: mine.cursos,
+      temFilhos: mine.temFilhos,
+      qtdFilhos: mine.qtdFilhos,
+      estadoCivil: mine.estadoCivil,
+      tempoCasado: mine.tempoCasado,
+    });
+  }
 
   const casado = form.estadoCivil === "casado" || form.estadoCivil === "uniao";
   const semCelula = form.celula === "Não frequento";
@@ -56,14 +80,34 @@ export function MemberProfile() {
     setForm((f) => ({ ...f, [key]: value }));
   }
 
+  async function onCep() {
+    setCepStatus("Buscando CEP…");
+    const dados = await buscarCep(form.cep);
+    if (!dados) {
+      setCepStatus("CEP não encontrado.");
+      return;
+    }
+    setForm((f) => ({
+      ...f,
+      cep: dados.cep,
+      bairro: dados.bairro || f.bairro,
+      cidade: dados.cidade || f.cidade,
+      endereco: f.endereco.includes(",") ? f.endereco : dados.endereco || f.endereco,
+    }));
+    setCepStatus("Endereço preenchido pelo CEP. Confira o número e o apto.");
+  }
+
   function addCurso(nome: string) {
     if (listaCursos.includes(nome)) return;
     set("cursos", [...listaCursos, nome].join("; "));
   }
 
-  function save(e: FormEvent) {
+  async function save(e: FormEvent) {
     e.preventDefault();
-    const id = meuId || crypto.randomUUID();
+    const prev = membros.find((m) => m.id === meuId);
+    const isPrincipal = !!prev?.principal || meuId === ADMIN_PRINCIPAL.id;
+    const id = isPrincipal ? ADMIN_PRINCIPAL.id : meuId || crypto.randomUUID();
+    const senhaHash = senha ? await hashPassword(senha) : prev?.senhaHash || (isPrincipal ? ADMIN_PRINCIPAL.senhaHash : "");
     const membro: Membro = {
       ...form,
       id,
@@ -71,15 +115,18 @@ export function MemberProfile() {
       tempoCasado: casado ? form.tempoCasado : "",
       querIndicacao: semCelula ? form.querIndicacao : false,
       atualizado: new Date().toLocaleDateString("pt-BR"),
+      senhaHash,
+      principal: isPrincipal,
+      funcoes: isPrincipal ? ADMIN_PRINCIPAL.funcoes : prev?.funcoes || [],
+      email: (form.email || "").toLowerCase(),
     };
-    const next = membros.some((m) => m.id === id)
-      ? membros.map((m) => (m.id === id ? membro : m))
-      : [membro, ...membros];
+    const next = garantirAdmin([membro, ...membros.filter((m) => m.id !== id)]);
     setMembros(next);
     saveJson(MEMBROS_KEY, next);
     localStorage.setItem(MEU_PERFIL_KEY, id);
     setMeuId(id);
-    setOk("Perfil salvo. A liderança vê estes dados no painel.");
+    setSenha("");
+    setOk("Cadastro salvo.");
   }
 
   return (
@@ -92,6 +139,30 @@ export function MemberProfile() {
         CPF
         <input className="field" required placeholder="000.000.000-00" value={form.cpf} onChange={(e) => set("cpf", e.target.value)} />
       </label>
+      <label className="grid gap-1 text-sm">
+        E-mail
+        <input className="field" type="email" required value={form.email} onChange={(e) => set("email", e.target.value)} />
+      </label>
+      <label className="grid gap-1 text-sm">
+        Senha {meuId ? "(em branco mantém a atual)" : ""}
+        <input className="field" type="password" value={senha} onChange={(e) => setSenha(e.target.value)} required={!meuId} />
+      </label>
+      <label className="grid gap-1 text-sm">
+        CEP
+        <input
+          className="field"
+          required
+          placeholder="00000-000"
+          value={form.cep}
+          onChange={(e) => set("cep", e.target.value)}
+          onBlur={onCep}
+        />
+        {cepStatus ? <span className="text-[12px] text-gold">{cepStatus}</span> : null}
+      </label>
+      <label className="grid gap-1 text-sm">
+        Cidade
+        <input className="field" required value={form.cidade} onChange={(e) => set("cidade", e.target.value)} />
+      </label>
       <label className="grid gap-1 text-sm md:col-span-2">
         Endereço
         <input className="field" required value={form.endereco} onChange={(e) => set("endereco", e.target.value)} />
@@ -99,14 +170,6 @@ export function MemberProfile() {
       <label className="grid gap-1 text-sm">
         Bairro
         <input className="field" required value={form.bairro} onChange={(e) => set("bairro", e.target.value)} />
-      </label>
-      <label className="grid gap-1 text-sm">
-        CEP
-        <input className="field" required placeholder="00000-000" value={form.cep} onChange={(e) => set("cep", e.target.value)} />
-      </label>
-      <label className="grid gap-1 text-sm">
-        Cidade
-        <input className="field" required value={form.cidade} onChange={(e) => set("cidade", e.target.value)} />
       </label>
       <label className="grid gap-1 text-sm">
         Célula que frequenta

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { PageHeader } from "@/components/PageHeader";
 
 const items = [
+  { href: "/entrar", t: "Entrar", d: "Login do membro e do administrador" },
   { href: "/perfil", t: "Meu perfil", d: "Nome, CPF, célula, família e cursos" },
   { href: "/dashboard", t: "Painel e relatórios", d: "Métricas da casa — só liderança" },
   { href: "/biblia", t: "Bíblia online", d: "Leitura por livro e capítulo" },

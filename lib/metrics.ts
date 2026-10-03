@@ -13,6 +13,16 @@ export const estadosCivis = [
 
 export type EstadoCivil = (typeof estadosCivis)[number]["id"];
 
+export type FuncaoId = "painel" | "relatorios" | "pessoas" | "liberar" | "audios";
+
+export const FUNCOES: { id: FuncaoId; label: string }[] = [
+  { id: "painel", label: "Painel de métricas" },
+  { id: "relatorios", label: "Enviar relatórios" },
+  { id: "pessoas", label: "Ver cadastros" },
+  { id: "liberar", label: "Liberar funções" },
+  { id: "audios", label: "Publicar áudios" },
+];
+
 export type Membro = {
   id: string;
   nome: string;
@@ -21,6 +31,10 @@ export type Membro = {
   bairro: string;
   cep: string;
   cidade: string;
+  email?: string;
+  senhaHash?: string;
+  principal?: boolean;
+  funcoes?: FuncaoId[];
   celula: string;
   querIndicacao: boolean;
   convertido: boolean;
@@ -31,6 +45,40 @@ export type Membro = {
   tempoCasado: string;
   atualizado: string;
 };
+
+export const ADMIN_PRINCIPAL: Membro = {
+  id: "adm-marcelo",
+  nome: "Marcelo Conelheiros",
+  cpf: "313.527.834-84",
+  endereco: "Rua Presidente Vargas, 67 - apto 102",
+  bairro: "Salgado Filho",
+  cep: "17501-550",
+  cidade: "Marília-SP",
+  email: "conelheiros@gmail.com",
+  senhaHash: "b747bc6099dbdf7b1ad799a25856627f61e9b883806844e020192b0a2f46ebb5",
+  principal: true,
+  funcoes: FUNCOES.map((f) => f.id),
+  celula: "Não frequento",
+  querIndicacao: false,
+  convertido: true,
+  cursos: "",
+  temFilhos: false,
+  qtdFilhos: 0,
+  estadoCivil: "solteiro",
+  tempoCasado: "",
+  atualizado: "02/10/2026",
+};
+
+export function temFuncao(m: Membro | undefined, fn: FuncaoId) {
+  if (!m) return false;
+  if (m.principal) return true;
+  return (m.funcoes || []).includes(fn);
+}
+
+export function garantirAdmin(lista: Membro[]) {
+  const outros = lista.filter((m) => m.id !== ADMIN_PRINCIPAL.id && m.email !== ADMIN_PRINCIPAL.email);
+  return [ADMIN_PRINCIPAL, ...outros];
+}
 
 export type Relatorio = {
   id: string;

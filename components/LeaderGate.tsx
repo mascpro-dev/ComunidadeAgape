@@ -1,37 +1,45 @@
 "use client";
 
-import { FormEvent, useEffect, useState, type ReactNode } from "react";
-import { LEADER_PIN } from "@/lib/metrics";
+import Link from "next/link";
+import { useEffect, useState, type ReactNode } from "react";
+import { getSessionId } from "@/lib/auth";
+import { loadJson, saveJson } from "@/lib/client-store";
+import { MEMBROS_KEY, garantirAdmin, seedMembros, temFuncao, type FuncaoId, type Membro } from "@/lib/metrics";
 
-const KEY = "agape-leader";
-
-export function LeaderGate({ title, children }: { title: string; children: ReactNode }) {
-  const [ok, setOk] = useState(false);
+export function LeaderGate({
+  title,
+  funcao,
+  children,
+}: {
+  title: string;
+  funcao: FuncaoId;
+  children: ReactNode;
+}) {
+  const [user, setUser] = useState<Membro | null>(null);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    setOk(sessionStorage.getItem(KEY) === "1");
+    const lista = garantirAdmin(loadJson<Membro[]>(MEMBROS_KEY, seedMembros));
+    saveJson(MEMBROS_KEY, lista);
+    const u = lista.find((m) => m.id === getSessionId()) || null;
+    setUser(u);
+    setReady(true);
   }, []);
 
-  function unlock(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const pin = String(new FormData(e.currentTarget).get("pin") || "");
-    if (pin === LEADER_PIN) {
-      sessionStorage.setItem(KEY, "1");
-      setOk(true);
-    }
-  }
-
-  if (ok) return <>{children}</>;
+  if (!ready) return <p className="text-sm text-muted">Carregando…</p>;
+  if (temFuncao(user || undefined, funcao)) return <>{children}</>;
 
   return (
-    <form onSubmit={unlock} className="card mx-auto grid max-w-md gap-2">
+    <article className="card mx-auto max-w-md">
       <p className="font-display text-2xl">{title}</p>
-      <p className="meta">Área da liderança. Use o código da casa para ver números e enviar relatórios.</p>
-      <input name="pin" type="password" placeholder="Código da liderança" className="field" />
-      <button className="btn-gold" type="submit">
-        Entrar
-      </button>
-      <p className="text-[12px] text-muted">Código de demonstração: {LEADER_PIN}</p>
-    </form>
+      <p className="meta mt-2">
+        {user
+          ? "Este cadastro ainda não tem esta função. Peça ao administrador principal para liberar."
+          : "Entre com e-mail e senha. O administrador libera as funções de cada cadastro."}
+      </p>
+      <Link href="/entrar" className="btn-gold mt-4">
+        Ir para o login
+      </Link>
+    </article>
   );
 }

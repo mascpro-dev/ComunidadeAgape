@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "./Logo";
+import { SessionMenu } from "./LoginForm";
 
 const tabs = [
   { href: "/", label: "Início", icon: HomeIcon },
@@ -40,6 +41,7 @@ function isOn(pathname: string, href: string) {
       "/palavra",
       "/perfil",
       "/dashboard",
+      "/entrar",
     ].some(
       (p) => pathname === p || pathname.startsWith(`${p}/`),
     );
@@ -77,9 +79,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               );
             })}
           </nav>
-          <Link href="/culto" className="btn-gold">
-            Assistir culto
-          </Link>
+          <SessionMenu />
         </div>
       </header>
 
@@ -92,11 +92,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </span>
         </Link>
         <Link
-          href="/mais"
+          href="/entrar"
           className="grid h-9 w-9 place-items-center rounded-full border border-gold/40 text-[11px] font-semibold text-gold"
-          aria-label="Perfil"
+          aria-label="Entrar"
         >
-          A
+          M
         </Link>
       </header>
 
