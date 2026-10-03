@@ -1,16 +1,30 @@
 import Link from "next/link";
 import { eventos, ministerios } from "@/lib/content";
 
+const atajos = [
+  { href: "/culto", k: "Culto", t: "Ao vivo e no templo" },
+  { href: "/celulas", k: "Células", t: "Encontre o seu grupo" },
+  { href: "/eventos", k: "Agenda", t: "Essa semana na casa" },
+  { href: "/oracao", k: "Oração", t: "Envie um pedido" },
+  { href: "/formacao", k: "Formação", t: "Discipulado contínuo" },
+  { href: "/formacao/infantil", k: "Kids", t: "Check-in no templo" },
+];
+
 export default function HomePage() {
   return (
     <div>
       <article className="hero">
         <span className="pill">
-          <span className="h-2 w-2 rounded-full bg-red-500" /> culto · domingo 18h
+          <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+          domingo · 10h e 18h
         </span>
-        <h1 className="max-w-[16ch] text-[26px] font-extrabold leading-tight">Jesus para toda a vida.</h1>
-        <p className="mb-3.5 mt-2 text-sm text-[#d7e2f8]">Amar, servir e transformar a cidade — juntos, com propósito.</p>
-        <div className="flex flex-wrap gap-2.5">
+        <h1 className="font-display max-w-[14ch] text-[40px] font-semibold leading-[0.95] md:max-w-[16ch] md:text-[72px]">
+          Jesus para toda a vida.
+        </h1>
+        <p className="mb-6 mt-4 max-w-[42ch] text-sm leading-relaxed text-[#d7e2f8] md:text-lg">
+          Amar, servir e transformar a cidade — juntos, com propósito.
+        </p>
+        <div className="flex flex-wrap gap-3">
           <Link href="/culto" className="btn-gold">
             Assistir agora
           </Link>
@@ -20,59 +34,47 @@ export default function HomePage() {
         </div>
       </article>
 
-      <section className="mt-6">
-        <h2 className="section-label">No app</h2>
-        <div className="grid grid-cols-2 gap-2.5">
-          <Link href="/culto" className="tile from-[#3d6fd4] to-[#12245a]">
-            <span className="text-sm text-white/80">Conteúdo</span>
-            <b>Culto ao vivo</b>
-          </Link>
-          <Link href="/celulas" className="tile from-[#2a5bb8] to-[#0a2460]">
-            <span className="text-sm text-white/80">Grupos</span>
-            <b>Achar célula</b>
-          </Link>
-          <Link href="/eventos" className="tile from-[#e4d3a2] to-[#8a7340] text-[#1a1408]">
-            <span className="text-sm opacity-80">Agenda</span>
-            <b>Eventos</b>
-          </Link>
-          <Link href="/oracao" className="tile from-[#7eb6ff] to-[#1a4a8c] text-[#041218]">
-            <span className="text-sm opacity-80">Oração</span>
-            <b>Enviar pedido</b>
-          </Link>
-          <Link href="/formacao" className="tile from-[#16305f] to-[#071433]">
-            <span className="text-sm text-white/80">Acompanhamento</span>
-            <b>Discipulado</b>
-          </Link>
-          <Link href="/formacao/infantil" className="tile from-[#2a5bb8] to-[#0a2460]">
-            <span className="text-sm text-white/80">Kids</span>
-            <b>Check-in</b>
-          </Link>
+      <section className="mt-8 grid gap-8 md:mt-14 md:grid-cols-[1.15fr_0.85fr] md:gap-12">
+        <div>
+          <h2 className="section-label">Entrar na casa</h2>
+          <div className="grid gap-2.5 md:grid-cols-2">
+            {atajos.map((a) => (
+              <Link key={a.href} href={a.href} className="shortcut">
+                <span className="h-9 w-px bg-gold/70" />
+                <span>
+                  <b className="block text-[15px] font-medium">{a.k}</b>
+                  <span className="text-[13px] text-muted">{a.t}</span>
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <h2 className="section-label">Essa semana</h2>
+          <div className="grid gap-3">
+            {eventos.slice(0, 3).map((e) => (
+              <Link key={e.titulo} href="/eventos" className="card">
+                <p className="text-[11px] uppercase tracking-[0.16em] text-gold">{e.tag}</p>
+                <h3 className="mt-1 font-display text-2xl font-semibold">{e.titulo}</h3>
+                <p className="meta">{e.quando}</p>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="mt-6">
+      <section className="mt-10 md:mt-16">
         <h2 className="section-label">Gerações</h2>
-        <div className="flex gap-3 overflow-x-auto pb-1 [scrollbar-width:none]">
+        <div className="grid grid-cols-3 gap-3 md:grid-cols-6">
           {ministerios.map((m) => (
-            <Link key={m.id} href={`/formacao/${m.id}`} className="min-w-[72px] text-center text-[11px] text-muted">
-              <div className="mx-auto mb-1.5 grid h-16 w-16 place-items-center rounded-[22px] border-2 border-gold/50 bg-navy text-xl">
-                {m.emoji}
-              </div>
-              {m.nome.split(" ")[0]}
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className="mt-6">
-        <h2 className="section-label">Essa semana</h2>
-        <div className="grid gap-2.5">
-          {eventos.slice(0, 3).map((e) => (
-            <Link key={e.titulo} href="/eventos" className="card">
-              <h3 className="text-base font-semibold">{e.titulo}</h3>
-              <p className="meta">
-                {e.quando} · {e.tag}
-              </p>
+            <Link
+              key={m.id}
+              href={`/formacao/${m.id}`}
+              className="rounded-2xl border border-white/[0.08] bg-white/[0.03] px-2 py-4 text-center transition hover:border-gold/40"
+            >
+              <p className="font-display text-2xl text-gold">{m.nome.slice(0, 1)}</p>
+              <p className="mt-2 text-[12px] text-[#d7e2f8]">{m.nome}</p>
             </Link>
           ))}
         </div>

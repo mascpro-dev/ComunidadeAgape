@@ -1,43 +1,43 @@
-import Link from "next/link";
 import { pilares, valores, visoes } from "@/lib/content";
+import { PageHeader } from "@/components/PageHeader";
 
 export default function VisaoPage() {
   return (
     <div>
-      <Link href="/mais" className="mb-2.5 inline-block text-sm font-bold text-gold">
-        ← mais
-      </Link>
-      <h1 className="text-lg font-extrabold uppercase tracking-wider">Visão 2033</h1>
-      <p className="mb-3.5 mt-1.5 text-xs text-muted">
-        Uma igreja bíblica, relacional, intergeracional e conectada — tecnologia a favor da missão.
-      </p>
-      <div className="mb-4 grid grid-cols-2 gap-2.5">
+      <PageHeader
+        backHref="/mais"
+        backLabel="mais"
+        kicker="2033"
+        title="Visão"
+        lead="Uma igreja bíblica, relacional, intergeracional e conectada — tecnologia a favor da missão."
+      />
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
         {pilares.map((p) => (
-          <article key={p.n} className={`tile ${p.tone}`}>
-            <span className="text-sm opacity-90">
+          <article key={p.n} className="card min-h-[120px]">
+            <p className="text-[11px] uppercase tracking-[0.16em] text-gold">
               {p.n} · {p.extra}
-            </span>
-            <b>{p.nome}</b>
+            </p>
+            <h2 className="mt-6 font-display text-[28px] leading-none">{p.nome}</h2>
           </article>
         ))}
       </div>
-      <section className="mt-6">
+      <section className="mt-10">
         <h2 className="section-label">Princípios que continuam</h2>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
           {valores.map((v) => (
-            <article key={v.t} className="rounded-[14px] border border-white/10 p-2.5 text-xs text-muted">
-              <b className="mb-1 block text-[13px] text-ink">{v.t}</b>
-              {v.d}
+            <article key={v.t} className="rounded-2xl border border-white/10 p-4">
+              <b className="mb-2 block font-display text-xl text-ink">{v.t}</b>
+              <p className="text-[13px] text-muted">{v.d}</p>
             </article>
           ))}
         </div>
       </section>
-      <section className="mt-6">
+      <section className="mt-10">
         <h2 className="section-label">Materiais</h2>
-        <div className="grid gap-2.5">
+        <div className="grid gap-3 md:grid-cols-2">
           {visoes.map((v) => (
             <article key={v.titulo} className="card">
-              <h3 className="font-semibold">{v.titulo}</h3>
+              <h3 className="font-display text-2xl">{v.titulo}</h3>
               <p className="meta">{v.texto}</p>
             </article>
           ))}

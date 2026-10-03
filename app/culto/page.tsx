@@ -1,12 +1,17 @@
 import { church, youtubeSrc } from "@/lib/content";
+import { PageHeader } from "@/components/PageHeader";
 
 export default function CultoPage() {
   const src = youtubeSrc();
   return (
     <div>
-      <h1 className="mb-2.5 text-lg font-extrabold uppercase tracking-wider">Culto</h1>
+      <PageHeader
+        kicker="Presencial e online"
+        title="Culto"
+        lead="Adoração, Palavra e comunidade para todas as gerações — no templo e na transmissão."
+      />
       {src ? (
-        <div className="aspect-video overflow-hidden rounded-[20px] border border-white/10 bg-black">
+        <div className="aspect-video overflow-hidden rounded-[24px] border border-white/10 bg-black md:max-w-4xl">
           <iframe
             src={src}
             className="h-full w-full"
@@ -16,26 +21,32 @@ export default function CultoPage() {
           />
         </div>
       ) : (
-        <article className="hero min-h-[150px]">
+        <article className="hero min-h-[180px] md:min-h-[280px]">
           <span className="pill">
-            <span className="h-2 w-2 rounded-full bg-red-500" /> culto presencial e online
+            <span className="h-1.5 w-1.5 rounded-full bg-red-500" /> transmissão · domingo 18h
           </span>
-          <h2 className="text-[26px] font-extrabold leading-tight">A transmissão entra no ar domingo 18h.</h2>
-          <p className="mt-2 text-sm text-[#d7e2f8]">Adoração, Palavra e comunidade para todas as gerações.</p>
+          <h2 className="font-display text-[34px] font-semibold leading-tight md:text-5xl">
+            A live entra no ar no culto da noite.
+          </h2>
         </article>
       )}
-      <p className="my-4 text-sm text-muted">Cultos presenciais e on-line, integrados</p>
-      <div className="grid gap-2.5">
+      <div className="mt-6 grid gap-3 md:grid-cols-3">
         <article className="card">
-          <h3 className="font-semibold">Culto da família</h3>
-          <p className="meta">Domingo 10h · templo · todas as gerações</p>
+          <p className="text-[11px] uppercase tracking-[0.16em] text-gold">Domingo</p>
+          <h3 className="mt-1 font-display text-2xl">Culto da família</h3>
+          <p className="meta">10h · templo · todas as gerações</p>
         </article>
         <article className="card">
-          <h3 className="font-semibold">Culto da noite</h3>
-          <p className="meta">Domingo 18h · templo + live · Palavra aplicada</p>
+          <p className="text-[11px] uppercase tracking-[0.16em] text-gold">Domingo</p>
+          <h3 className="mt-1 font-display text-2xl">Culto da noite</h3>
+          <p className="meta">18h · templo + live · Palavra aplicada</p>
         </article>
-        <a href={church.youtubeUrl} target="_blank" rel="noopener" className="btn-gold">
-          Abrir canal no YouTube
+        <a href={church.youtubeUrl} target="_blank" rel="noopener" className="card flex flex-col justify-between">
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.16em] text-gold">Canal</p>
+            <h3 className="mt-1 font-display text-2xl">YouTube Ágape</h3>
+          </div>
+          <p className="meta">Abrir transmissões anteriores →</p>
         </a>
       </div>
     </div>

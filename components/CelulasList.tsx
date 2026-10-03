@@ -23,7 +23,7 @@ export function CelulasList() {
           </button>
         ))}
       </div>
-      <div className="grid gap-2.5">
+      <div className="grid gap-3 md:grid-cols-2">
         {lista.length ? (
           lista.map((c) => (
             <article key={c.id} className="card">

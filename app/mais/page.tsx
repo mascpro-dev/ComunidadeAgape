@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PageHeader } from "@/components/PageHeader";
 
 const items = [
   { href: "/visao", t: "Visão 2033", d: "Protótipo, gerações, educação e missão na cidade" },
@@ -13,11 +14,11 @@ const items = [
 export default function MaisPage() {
   return (
     <div>
-      <h1 className="text-lg font-extrabold uppercase tracking-wider">Mais</h1>
-      <div className="mt-3 grid gap-2.5">
+      <PageHeader kicker="A casa" title="Mais" lead="Tudo o que a comunidade precisa, em um só lugar." />
+      <div className="grid gap-3 md:grid-cols-2">
         {items.map((i) => (
           <Link key={i.href} href={i.href} className="card">
-            <h3 className="font-semibold">{i.t}</h3>
+            <h3 className="font-display text-2xl">{i.t}</h3>
             <p className="meta">{i.d}</p>
           </Link>
         ))}

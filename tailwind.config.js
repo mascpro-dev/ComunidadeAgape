@@ -12,7 +12,8 @@ module.exports = {
         sky: "#7eb6ff",
       },
       fontFamily: {
-        sans: ["Outfit", "system-ui", "sans-serif"],
+        sans: ["var(--font-sans)", "Outfit", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "Georgia", "serif"],
       },
       boxShadow: {
         phone: "0 40px 80px rgba(0,0,0,.55)",

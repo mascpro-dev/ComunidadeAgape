@@ -12,11 +12,25 @@ const tabs = [
   { href: "/mais", label: "Mais", icon: MenuIcon },
 ];
 
+const desktopNav = [
+  { href: "/", label: "Início" },
+  { href: "/culto", label: "Culto" },
+  { href: "/celulas", label: "Células" },
+  { href: "/formacao", label: "Formação" },
+  { href: "/eventos", label: "Agenda" },
+  { href: "/visao", label: "Visão 2033" },
+  { href: "/oracao", label: "Oração" },
+];
+
 function isOn(pathname: string, href: string) {
-  if (href === "/") return pathname === "/" || pathname.startsWith("/eventos");
+  if (href === "/") return pathname === "/";
   if (href === "/formacao") return pathname.startsWith("/formacao") || pathname.startsWith("/cursos");
   if (href === "/mais")
-    return ["/mais", "/oracao", "/visao", "/lideranca"].some((p) => pathname === p || pathname.startsWith(`${p}/`));
+    return ["/mais", "/oracao", "/visao", "/lideranca", "/eventos"].some(
+      (p) => pathname === p || pathname.startsWith(`${p}/`),
+    );
+  if (href === "/eventos") return pathname.startsWith("/eventos");
+  if (href === "/visao") return pathname.startsWith("/visao") || pathname.startsWith("/lideranca");
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
@@ -24,51 +38,95 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   return (
-    <div className="min-h-dvh bg-deep md:grid md:place-items-center md:p-6">
-      <div className="relative mx-auto flex min-h-dvh w-full max-w-[430px] flex-col overflow-hidden bg-[linear-gradient(180deg,#0a2460_0%,#06153a_28%)] md:h-[860px] md:min-h-0 md:rounded-[36px] md:border md:border-white/10 md:shadow-phone">
-        <div className="pointer-events-none absolute left-1/2 top-3 z-20 hidden h-2.5 w-28 -translate-x-1/2 rounded-full bg-black md:block" />
-        <header className="flex items-center justify-between px-5 pb-2 pt-7">
-          <Link href="/" className="flex items-center gap-2.5 text-white">
-            <Logo className="h-8 w-8" />
+    <div className="flex min-h-dvh flex-col">
+      <header className="sticky top-0 z-40 hidden border-b border-white/[0.06] bg-[#030b1f]/80 backdrop-blur-xl md:block">
+        <div className="mx-auto flex h-[76px] max-w-6xl items-center justify-between px-8">
+          <Link href="/" className="flex items-center gap-3 text-white">
+            <Logo className="h-9 w-9 text-gold" />
             <span>
-              <p className="text-[10px] uppercase tracking-[0.18em] text-muted">Comunidade Cristã</p>
-              <p className="text-[22px] font-extrabold uppercase tracking-[0.08em]">Ágape</p>
+              <p className="text-[10px] uppercase tracking-[0.22em] text-muted">Comunidade Cristã</p>
+              <p className="font-display text-[26px] font-semibold leading-none tracking-wide">Ágape</p>
             </span>
           </Link>
-          <Link
-            href="/mais"
-            className="grid h-10 w-10 place-items-center rounded-[14px] bg-gradient-to-br from-[#1c4aae] to-gold text-sm font-extrabold text-navy"
-            aria-label="Perfil"
-          >
-            A
+          <nav className="flex items-center gap-1">
+            {desktopNav.map((item) => {
+              const on = isOn(pathname, item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`rounded-full px-3.5 py-2 text-[13px] tracking-wide transition ${
+                    on ? "bg-white/10 text-gold" : "text-[#c5d2ea] hover:text-white"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
+          <Link href="/culto" className="btn-gold">
+            Assistir culto
           </Link>
-        </header>
-        <main className="flex-1 overflow-y-auto px-4 pb-28 pt-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {children}
-        </main>
-        <nav className="absolute bottom-3 left-3 right-3 grid grid-cols-5 rounded-[22px] border border-white/10 bg-navy/90 px-1 py-2 backdrop-blur-xl">
+        </div>
+      </header>
+
+      <header className="flex items-center justify-between px-5 pb-1 pt-[calc(env(safe-area-inset-top)+18px)] md:hidden">
+        <Link href="/" className="flex items-center gap-2.5 text-white">
+          <Logo className="h-7 w-7 text-gold" />
+          <span>
+            <p className="text-[9px] uppercase tracking-[0.2em] text-muted">Comunidade Cristã</p>
+            <p className="font-display text-[22px] font-semibold leading-none">Ágape</p>
+          </span>
+        </Link>
+        <Link
+          href="/mais"
+          className="grid h-9 w-9 place-items-center rounded-full border border-gold/40 text-[11px] font-semibold text-gold"
+          aria-label="Perfil"
+        >
+          A
+        </Link>
+      </header>
+
+      <main className="mx-auto w-full max-w-6xl flex-1 px-5 pb-28 pt-3 md:px-8 md:pb-16 md:pt-10">{children}</main>
+
+      <footer className="mt-auto hidden border-t border-white/[0.06] py-10 md:block">
+        <div className="mx-auto flex max-w-6xl items-end justify-between px-8">
+          <div>
+            <p className="font-display text-2xl text-gold">Ágape</p>
+            <p className="mt-2 max-w-sm text-sm text-muted">
+              Pessoas formadas por Jesus em uma comunidade viva, para amar, servir e transformar a cidade.
+            </p>
+          </div>
+          <p className="text-xs tracking-[0.16em] text-muted">VISÃO 2033</p>
+        </div>
+      </footer>
+
+      <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-white/10 bg-[#06153a]/92 px-2 pb-[max(10px,env(safe-area-inset-bottom))] pt-2 backdrop-blur-xl md:hidden">
+        <div className="mx-auto grid max-w-md grid-cols-5">
           {tabs.map((tab) => {
             const on = isOn(pathname, tab.href);
             return (
               <Link
                 key={tab.href}
                 href={tab.href}
-                className={`grid justify-items-center gap-0.5 text-[10px] ${on ? "text-gold" : "text-[#7d91b8]"}`}
+                className={`grid justify-items-center gap-1 py-1 text-[10px] tracking-wide ${
+                  on ? "text-gold" : "text-[#7d91b8]"
+                }`}
               >
                 <tab.icon live={tab.href === "/culto"} />
                 {tab.label}
               </Link>
             );
           })}
-        </nav>
-      </div>
+        </div>
+      </nav>
     </div>
   );
 }
 
 function HomeIcon(_p?: { live?: boolean }) {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
       <path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z" />
     </svg>
   );
@@ -76,32 +134,38 @@ function HomeIcon(_p?: { live?: boolean }) {
 function LiveIcon({ live }: { live?: boolean }) {
   return (
     <span className="relative">
-      {live ? <span className="absolute -right-0.5 top-0 h-1.5 w-1.5 rounded-full bg-red-500 shadow-[0_0_0_4px_rgba(239,68,68,.25)]" /> : null}
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-        <circle cx="12" cy="12" r="5" />
+      {live ? (
+        <span className="absolute -right-0.5 top-0 h-1.5 w-1.5 rounded-full bg-red-500 shadow-[0_0_0_4px_rgba(239,68,68,.25)]" />
+      ) : null}
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M5 12a7 7 0 0 1 14 0M2 12a10 10 0 0 1 20 0" />
       </svg>
     </span>
   );
 }
 function CellsIcon(_p?: { live?: boolean }) {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <circle cx="12" cy="12" r="8" />
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
       <circle cx="12" cy="12" r="3" />
+      <circle cx="6" cy="8" r="2.2" />
+      <circle cx="18" cy="8" r="2.2" />
+      <circle cx="7" cy="17" r="2.2" />
+      <circle cx="17" cy="17" r="2.2" />
     </svg>
   );
 }
 function SparkIcon(_p?: { live?: boolean }) {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 2 13.8 8.2 20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z" />
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+      <path d="M12 3v4M12 17v4M4.9 6.5l2.8 2.8M16.3 14.7l2.8 2.8M3 12h4M17 12h4M4.9 17.5l2.8-2.8M16.3 9.3l2.8-2.8" />
     </svg>
   );
 }
 function MenuIcon(_p?: { live?: boolean }) {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M5 7h14M5 12h14M5 17h14" />
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+      <path d="M5 7h14M5 12h14M5 17h10" />
     </svg>
   );
 }

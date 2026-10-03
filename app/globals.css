@@ -6,41 +6,61 @@
   color-scheme: dark;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   @apply bg-deep text-ink antialiased;
-  font-family: Outfit, system-ui, sans-serif;
+  background-image:
+    radial-gradient(1200px 600px at 80% -10%, rgba(214, 192, 138, 0.08), transparent 50%),
+    radial-gradient(900px 500px at -10% 20%, rgba(61, 111, 212, 0.16), transparent 45%);
 }
 
 @layer components {
+  .page-kicker {
+    @apply mb-2 text-[11px] font-medium uppercase tracking-[0.22em] text-gold;
+  }
+  .page-title {
+    font-family: var(--font-display), Georgia, serif;
+    @apply text-[32px] font-semibold leading-[1.05] tracking-tight md:text-5xl;
+  }
+  .page-lead {
+    @apply mt-2 max-w-[42ch] text-sm leading-relaxed text-muted md:text-base;
+  }
   .card {
-    @apply rounded-[22px] border border-white/10 bg-white/[0.06] p-3.5 text-left;
+    @apply rounded-2xl border border-white/[0.08] bg-white/[0.04] p-4 text-left backdrop-blur-sm md:p-5;
   }
   .meta {
-    @apply mt-1 text-xs text-muted;
+    @apply mt-1.5 text-[13px] leading-snug text-muted;
   }
   .btn-gold {
-    @apply inline-flex items-center justify-center rounded-full bg-gold px-4 py-2.5 text-sm font-bold text-[#1a1408];
+    @apply inline-flex items-center justify-center rounded-full bg-gold px-5 py-2.5 text-[13px] font-semibold tracking-wide text-[#1a1408] transition hover:bg-[#e5d4a8];
   }
   .btn-ghost {
-    @apply inline-flex items-center justify-center rounded-full bg-white/10 px-4 py-2.5 text-sm font-bold;
+    @apply inline-flex items-center justify-center rounded-full border border-white/15 bg-transparent px-5 py-2.5 text-[13px] font-semibold tracking-wide text-ink transition hover:border-gold/50 hover:text-gold;
   }
   .field {
-    @apply w-full rounded-[14px] border border-white/10 bg-white/[0.04] px-3 py-3 outline-none;
+    @apply w-full rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-3 text-sm outline-none transition placeholder:text-muted/70 focus:border-gold/50;
   }
   .hero {
-    @apply relative flex min-h-[188px] flex-col justify-end overflow-hidden rounded-[28px] p-[18px];
+    @apply relative flex min-h-[220px] flex-col justify-end overflow-hidden rounded-[26px] p-5 md:min-h-[420px] md:rounded-[32px] md:p-12;
     background:
-      radial-gradient(90% 80% at 100% 0%, #d6c08a22, transparent 42%),
-      radial-gradient(80% 90% at 0% 100%, #3d6fd444, transparent 50%),
-      linear-gradient(165deg, #1a3d8a 0%, #06153a 72%);
+      linear-gradient(180deg, transparent 20%, rgba(3, 11, 31, 0.55) 100%),
+      radial-gradient(90% 80% at 100% 0%, #d6c08a28, transparent 42%),
+      radial-gradient(80% 90% at 0% 100%, #3d6fd440, transparent 50%),
+      linear-gradient(165deg, #16356f 0%, #06153a 58%, #030b1f 100%);
   }
   .pill {
-    @apply mb-3 inline-flex items-center gap-1.5 self-start rounded-full bg-gold px-2.5 py-1.5 text-[11px] font-extrabold uppercase tracking-wider text-[#1a1408];
+    @apply mb-3 inline-flex items-center gap-2 self-start rounded-full border border-gold/35 bg-gold/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-gold;
   }
   .section-label {
-    @apply mb-3 text-[12px] uppercase tracking-[0.14em] text-muted;
+    @apply mb-4 text-[11px] font-medium uppercase tracking-[0.2em] text-muted;
   }
   .tile {
-    @apply flex min-h-[118px] flex-col justify-between rounded-[20px] bg-gradient-to-br p-4 text-left;
+    @apply flex min-h-[108px] flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-left transition hover:border-gold/30;
+  }
+  .shortcut {
+    @apply flex items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.04] px-3.5 py-3.5 text-left transition hover:border-gold/35;
   }
 }
