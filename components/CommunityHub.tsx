@@ -2,6 +2,8 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { loadJson, saveJson } from "@/lib/client-store";
+import { CardPhoto } from "./CardPhoto";
+import { fotos } from "@/lib/fotos";
 
 const ROOMS = ["Palavra", "Oração", "Jovens", "Famílias", "Missão", "Liderança"] as const;
 
@@ -13,6 +15,7 @@ type Post = {
   likes: number;
   liked?: boolean;
   comentarios: string[];
+  imagem?: string;
 };
 
 type Msg = { id: string; sala: string; autor: string; texto: string; quando: string };
@@ -28,6 +31,7 @@ const seedPosts: Post[] = [
     quando: "Hoje",
     likes: 24,
     comentarios: ["Amém, igreja!", "Levando a família."],
+    imagem: fotos.culto,
   },
   {
     id: "p2",
@@ -36,6 +40,7 @@ const seedPosts: Post[] = [
     quando: "Ontem",
     likes: 18,
     comentarios: ["Eu vou."],
+    imagem: fotos.missao,
   },
   {
     id: "p3",
@@ -44,6 +49,7 @@ const seedPosts: Post[] = [
     quando: "Esta semana",
     likes: 31,
     comentarios: [],
+    imagem: fotos.celulas,
   },
 ];
 
@@ -54,7 +60,12 @@ export function CommunityHub() {
   const [sala, setSala] = useState<(typeof ROOMS)[number]>("Oração");
 
   useEffect(() => {
-    setPosts(loadJson(POSTS, seedPosts));
+    setPosts(
+      loadJson(POSTS, seedPosts).map((p) => {
+        const seed = seedPosts.find((s) => s.id === p.id);
+        return { ...p, imagem: p.imagem || seed?.imagem };
+      }),
+    );
     setMsgs(loadJson(MSGS, [] as Msg[]));
   }, []);
 
@@ -162,7 +173,11 @@ export function CommunityHub() {
           </form>
           {posts.map((p) => (
             <article key={p.id} className="card overflow-hidden p-0">
-              <div className="h-40 bg-[linear-gradient(135deg,#1a3d8a,#06153a_55%,#d6c08a33)]" />
+              {p.imagem ? (
+                <CardPhoto src={p.imagem} alt={p.autor} className="h-48 md:h-56" />
+              ) : (
+                <div className="h-40 bg-[linear-gradient(135deg,#1a3d8a,#06153a_55%,#d6c08a33)]" />
+              )}
               <div className="p-4">
                 <p className="text-[13px] font-semibold">{p.autor}</p>
                 <p className="mt-2 text-[15px] leading-relaxed">{p.texto}</p>

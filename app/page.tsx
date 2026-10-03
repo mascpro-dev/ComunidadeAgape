@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { CardPhoto } from "@/components/CardPhoto";
+import { fotos } from "@/lib/fotos";
 import { eventos, ministerios } from "@/lib/content";
 
 const atajos = [
@@ -56,10 +58,13 @@ export default function HomePage() {
           <h2 className="section-label">Essa semana</h2>
           <div className="grid gap-3">
             {eventos.slice(0, 3).map((e) => (
-              <Link key={e.titulo} href="/eventos" className="card">
-                <p className="text-[11px] uppercase tracking-[0.16em] text-gold">{e.tag}</p>
-                <h3 className="mt-1 font-display text-2xl font-semibold">{e.titulo}</h3>
-                <p className="meta">{e.quando}</p>
+              <Link key={e.titulo} href="/eventos" className="card overflow-hidden p-0">
+                <CardPhoto src={fotos[e.foto as keyof typeof fotos]} alt={e.titulo} className="h-28" />
+                <div className="p-4">
+                  <p className="text-[11px] uppercase tracking-[0.16em] text-gold">{e.tag}</p>
+                  <h3 className="mt-1 font-display text-2xl font-semibold">{e.titulo}</h3>
+                  <p className="meta">{e.quando}</p>
+                </div>
               </Link>
             ))}
           </div>
@@ -73,10 +78,10 @@ export default function HomePage() {
             <Link
               key={m.id}
               href={`/formacao/${m.id}`}
-              className="rounded-2xl border border-white/[0.08] bg-white/[0.03] px-2 py-4 text-center transition hover:border-gold/40"
+              className="group relative overflow-hidden rounded-2xl border border-white/[0.08] text-center transition hover:border-gold/40"
             >
-              <p className="font-display text-2xl text-gold">{m.nome.slice(0, 1)}</p>
-              <p className="mt-2 text-[12px] text-[#d7e2f8]">{m.nome}</p>
+              <CardPhoto src={fotos[m.id as keyof typeof fotos] || fotos.familia} alt={m.nome} className="h-28 md:h-32" />
+              <p className="absolute bottom-2 left-0 right-0 font-display text-lg text-white drop-shadow">{m.nome}</p>
             </Link>
           ))}
         </div>

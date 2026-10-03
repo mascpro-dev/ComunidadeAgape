@@ -1,5 +1,7 @@
 import { church, youtubeSrc } from "@/lib/content";
 import { PageHeader } from "@/components/PageHeader";
+import { CardPhoto } from "@/components/CardPhoto";
+import { fotos } from "@/lib/fotos";
 
 export default function CultoPage() {
   const src = youtubeSrc();
@@ -31,23 +33,31 @@ export default function CultoPage() {
         </article>
       )}
       <div className="mt-6 grid gap-3 md:grid-cols-3">
-        <article className="card">
-          <p className="text-[11px] uppercase tracking-[0.16em] text-gold">Domingo</p>
-          <h3 className="mt-1 font-display text-2xl">Culto da família</h3>
-          <p className="meta">10h · templo · todas as gerações</p>
+        <article className="card overflow-hidden p-0">
+          <CardPhoto src={fotos.familia} alt="Culto da família" className="h-36" />
+          <div className="p-4">
+            <p className="text-[11px] uppercase tracking-[0.16em] text-gold">Domingo</p>
+            <h3 className="mt-1 font-display text-2xl">Culto da família</h3>
+            <p className="meta">10h · templo · todas as gerações</p>
+          </div>
         </article>
-        <article className="card">
-          <p className="text-[11px] uppercase tracking-[0.16em] text-gold">Domingo</p>
-          <h3 className="mt-1 font-display text-2xl">Culto da noite</h3>
-          <p className="meta">18h · templo + live · Palavra aplicada</p>
+        <article className="card overflow-hidden p-0">
+          <CardPhoto src={fotos.cultoNoite} alt="Culto da noite" className="h-36" />
+          <div className="p-4">
+            <p className="text-[11px] uppercase tracking-[0.16em] text-gold">Domingo</p>
+            <h3 className="mt-1 font-display text-2xl">Culto da noite</h3>
+            <p className="meta">18h · templo + live · Palavra aplicada</p>
+          </div>
         </article>
-        <a href={church.youtubeUrl} target="_blank" rel="noopener" className="card flex flex-col justify-between">
-          <div>
+        <a href={church.youtubeUrl} target="_blank" rel="noopener" className="card overflow-hidden p-0">
+          <CardPhoto src={fotos.youtube} alt="YouTube Ágape" className="h-36" />
+          <div className="p-4">
             <p className="text-[11px] uppercase tracking-[0.16em] text-gold">Canal</p>
             <h3 className="mt-1 font-display text-2xl">YouTube Ágape</h3>
+            <p className="meta">Abrir transmissões anteriores →</p>
           </div>
-          <p className="meta">Abrir transmissões anteriores →</p>
         </a>
+      </div>
       </div>
     </div>
   );

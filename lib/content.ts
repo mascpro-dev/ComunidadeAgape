@@ -527,10 +527,10 @@ export const cursos = [
 ];
 
 export const eventos = [
-  { titulo: "Culto da família", quando: "Dom 10h · templo", tag: "Culto" },
-  { titulo: "Culto da noite", quando: "Dom 18h · templo + online", tag: "Ao vivo" },
-  { titulo: "Células em casas", quando: "Durante a semana", tag: "Comunidade" },
-  { titulo: "Ágape Serve", quando: "Ações na cidade", tag: "Missão" },
+  { titulo: "Culto da família", quando: "Dom 10h · templo", tag: "Culto", foto: "familia" },
+  { titulo: "Culto da noite", quando: "Dom 18h · templo + online", tag: "Ao vivo", foto: "cultoNoite" },
+  { titulo: "Células em casas", quando: "Durante a semana", tag: "Comunidade", foto: "celulas" },
+  { titulo: "Ágape Serve", quando: "Ações na cidade", tag: "Missão", foto: "missao" },
 ];
 
 export const dias = ["Todos", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"] as const;
