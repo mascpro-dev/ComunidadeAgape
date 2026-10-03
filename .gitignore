@@ -5,3 +5,6 @@ Thumbs.db
 serve.ps1
 assets/*.jpg
 assets/c__*
+node_modules
+.next
+out
