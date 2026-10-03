@@ -23,14 +23,25 @@ export default function CultoPage() {
           />
         </div>
       ) : (
-        <article className="hero min-h-[180px] md:min-h-[280px]">
-          <span className="pill">
-            <span className="h-1.5 w-1.5 rounded-full bg-red-500" /> transmissão · domingo 18h
-          </span>
-          <h2 className="font-display text-[34px] font-semibold leading-tight md:text-5xl">
-            A live entra no ar no culto da noite.
-          </h2>
-        </article>
+        <a
+          href={church.youtubeUrl}
+          target="_blank"
+          rel="noopener"
+          className="relative block min-h-[220px] overflow-hidden rounded-[24px] md:min-h-[380px]"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={fotos.culto} alt="Culto da noite Ágape" className="absolute inset-0 h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#030b1f] via-[#030b1f]/55 to-black/20" />
+          <div className="relative z-10 flex min-h-[220px] flex-col justify-end p-5 md:min-h-[380px] md:p-10">
+            <span className="pill">
+              <span className="h-1.5 w-1.5 rounded-full bg-red-500" /> transmissão · domingo 18h
+            </span>
+            <h2 className="font-display max-w-[16ch] text-[34px] font-semibold leading-tight md:text-5xl">
+              A live entra no ar no culto da noite.
+            </h2>
+            <p className="mt-3 text-sm text-[#d7e2f8] md:text-base">Abrir o canal no YouTube para assistir.</p>
+          </div>
+        </a>
       )}
       <div className="mt-6 grid gap-3 md:grid-cols-3">
         <article className="card overflow-hidden p-0">
