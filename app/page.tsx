@@ -8,8 +8,6 @@ const atajos = [
   { href: "/comunidade", k: "Comunidade", t: "Feed e salas" },
   { href: "/palavra", k: "Áudios", t: "Palavra dos líderes" },
   { href: "/culto", k: "Culto", t: "Ao vivo e no templo" },
-];
-  { href: "/culto", k: "Culto", t: "Ao vivo e no templo" },
   { href: "/celulas", k: "Células", t: "Encontre o seu grupo" },
   { href: "/formacao", k: "Formação", t: "Discipulado contínuo" },
 ];
