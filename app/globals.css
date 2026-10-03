@@ -63,4 +63,10 @@ body {
   .shortcut {
     @apply flex items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.04] px-3.5 py-3.5 text-left transition hover:border-gold/35;
   }
+  .topic-tile {
+    @apply flex min-h-[104px] flex-col items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.04] px-3 py-4 text-center transition hover:border-gold/40;
+  }
+  .frame {
+    @apply rounded-[22px] border border-white/[0.08] bg-white/[0.03];
+  }
 }

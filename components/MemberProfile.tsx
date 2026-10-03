@@ -1,9 +1,11 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
+import { Avatar } from "@/components/Avatar";
 import { celulas, cursos } from "@/lib/content";
 import { loadJson, saveJson } from "@/lib/client-store";
 import { buscarCep } from "@/lib/cep";
+import { comprimirFoto } from "@/lib/foto-perfil";
 import { getSessionId, hashPassword } from "@/lib/auth";
 import {
   ADMIN_PRINCIPAL,
@@ -32,6 +34,7 @@ const empty: Omit<Membro, "id" | "atualizado" | "senhaHash" | "funcoes" | "princ
   qtdFilhos: 0,
   estadoCivil: "solteiro",
   tempoCasado: "",
+  foto: "",
 };
 
 export function MemberProfile() {
@@ -69,6 +72,7 @@ export function MemberProfile() {
       qtdFilhos: mine.qtdFilhos,
       estadoCivil: mine.estadoCivil,
       tempoCasado: mine.tempoCasado,
+      foto: mine.foto || "",
     });
   }
 
@@ -119,6 +123,7 @@ export function MemberProfile() {
       principal: isPrincipal,
       funcoes: isPrincipal ? ADMIN_PRINCIPAL.funcoes : prev?.funcoes || [],
       email: (form.email || "").toLowerCase(),
+      foto: form.foto || "",
     };
     const next = garantirAdmin([membro, ...membros.filter((m) => m.id !== id)]);
     setMembros(next);
@@ -129,8 +134,39 @@ export function MemberProfile() {
     setOk("Cadastro salvo.");
   }
 
+  async function onFoto(file?: File) {
+    if (!file) return;
+    try {
+      const data = await comprimirFoto(file);
+      set("foto", data);
+    } catch {
+      setOk("Não foi possível usar esta foto.");
+    }
+  }
+
   return (
     <form onSubmit={save} className="grid gap-4 md:grid-cols-2">
+      <div className="card flex items-center gap-4 md:col-span-2">
+        <Avatar nome={form.nome} foto={form.foto} size={88} />
+        <div>
+          <p className="text-sm font-medium">Foto do perfil</p>
+          <p className="meta mb-3">Aparece no menu e na casa. Use uma foto clara do rosto.</p>
+          <label className="btn-ghost inline-flex cursor-pointer">
+            Escolher foto
+            <input
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => onFoto(e.target.files?.[0])}
+            />
+          </label>
+          {form.foto ? (
+            <button type="button" className="ml-2 text-[13px] text-muted" onClick={() => set("foto", "")}>
+              Remover
+            </button>
+          ) : null}
+        </div>
+      </div>
       <label className="grid gap-1 text-sm">
         Nome
         <input className="field" required value={form.nome} onChange={(e) => set("nome", e.target.value)} />

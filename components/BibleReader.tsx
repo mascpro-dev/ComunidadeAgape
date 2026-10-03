@@ -52,8 +52,8 @@ export function BibleReader() {
   }
 
   return (
-    <div>
-      <div className="mb-6 flex flex-wrap gap-2">
+    <div className="md:mx-auto md:max-w-6xl">
+      <div className="frame mb-6 flex flex-wrap gap-2 p-3 md:p-4">
         {bibleVersions.map((v) => (
           <button key={v.id} className={versao === v.id ? "btn-gold" : "btn-ghost"} onClick={() => setVersao(v.id)}>
             {v.nome}
@@ -61,7 +61,7 @@ export function BibleReader() {
         ))}
       </div>
 
-      <section className="mb-10">
+      <section className="frame mb-8 p-4 md:p-6">
         <h2 className="section-label">Devocional por ministério</h2>
         <div className="mb-4 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none]">
           {gruposDevocional.map((g) => (
@@ -78,7 +78,7 @@ export function BibleReader() {
         </div>
         <div className="grid gap-4 md:grid-cols-2">
           {lista.map((d) => (
-            <article key={d.id} className="card">
+            <article key={d.id} className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 md:p-5">
               <p className="text-[11px] uppercase tracking-[0.16em] text-gold">{d.referencia}</p>
               <h3 className="mt-1 font-display text-2xl">{d.titulo}</h3>
               <p className="mt-3 text-sm leading-relaxed text-[#d7e2f8]">{d.ideia}</p>
@@ -97,9 +97,9 @@ export function BibleReader() {
         </div>
       </section>
 
-      <div id="leitura" className="md:grid md:grid-cols-[220px_1fr] md:gap-8">
-        <aside className="mb-6 max-h-[240px] overflow-y-auto rounded-2xl border border-white/10 p-3 md:mb-0 md:max-h-[70vh]">
-          <p className="mb-2 text-[11px] uppercase tracking-[0.16em] text-muted">Antigo Testamento</p>
+      <div id="leitura" className="md:grid md:grid-cols-[240px_minmax(0,1fr)] md:items-start md:gap-8">
+        <aside className="frame mb-6 max-h-[240px] overflow-y-auto p-3 md:sticky md:top-24 md:mb-0 md:max-h-[calc(100vh-8rem)]">
+          <p className="mb-2 px-1 text-[11px] uppercase tracking-[0.16em] text-muted">Antigo Testamento</p>
           {bibleBooks
             .filter((b) => !b.nt)
             .map((b) => (
@@ -113,7 +113,7 @@ export function BibleReader() {
                 {b.nome}
               </button>
             ))}
-          <p className="mb-2 mt-4 text-[11px] uppercase tracking-[0.16em] text-muted">Novo Testamento</p>
+          <p className="mb-2 mt-4 px-1 text-[11px] uppercase tracking-[0.16em] text-muted">Novo Testamento</p>
           {bibleBooks
             .filter((b) => b.nt)
             .map((b) => (
@@ -129,37 +129,39 @@ export function BibleReader() {
             ))}
         </aside>
 
-        <section>
-          <div className="mb-5 flex items-center justify-between gap-3">
-            <h2 className="font-display text-3xl">
-              {current.nome} {chapter}
-            </h2>
-            <div className="flex gap-2">
-              <button
-                className="btn-ghost px-3 py-2"
-                disabled={chapter <= 1}
-                onClick={() => setChapter((c) => Math.max(1, c - 1))}
-              >
-                ←
-              </button>
-              <button
-                className="btn-ghost px-3 py-2"
-                disabled={chapter >= current.caps}
-                onClick={() => setChapter((c) => Math.min(current.caps, c + 1))}
-              >
-                →
-              </button>
+        <section className="frame px-5 py-6 md:px-12 md:py-10">
+          <div className="mx-auto max-w-[42rem]">
+            <div className="mb-5 flex items-center justify-between gap-3">
+              <h2 className="font-display text-3xl md:text-4xl">
+                {current.nome} {chapter}
+              </h2>
+              <div className="flex gap-2">
+                <button
+                  className="btn-ghost px-3 py-2"
+                  disabled={chapter <= 1}
+                  onClick={() => setChapter((c) => Math.max(1, c - 1))}
+                >
+                  ←
+                </button>
+                <button
+                  className="btn-ghost px-3 py-2"
+                  disabled={chapter >= current.caps}
+                  onClick={() => setChapter((c) => Math.min(current.caps, c + 1))}
+                >
+                  →
+                </button>
+              </div>
             </div>
-          </div>
-          <p className="mb-4 text-[12px] text-muted">{versionNome} · Comunidade Cristã Ágape</p>
-          {status ? <p className="text-sm text-muted">{status}</p> : null}
-          <div className="space-y-3">
-            {verses.map((v) => (
-              <p key={v.n} className="text-[16px] leading-relaxed">
-                <sup className="mr-2 text-[11px] text-gold">{v.n}</sup>
-                {v.texto}
-              </p>
-            ))}
+            <p className="mb-6 text-[12px] text-muted">{versionNome} · Comunidade Cristã Ágape</p>
+            {status ? <p className="text-sm text-muted">{status}</p> : null}
+            <div className="space-y-3.5">
+              {verses.map((v) => (
+                <p key={v.n} className="text-[16px] leading-[1.75] md:text-[17px]">
+                  <sup className="mr-2 text-[11px] text-gold">{v.n}</sup>
+                  {v.texto}
+                </p>
+              ))}
+            </div>
           </div>
         </section>
       </div>

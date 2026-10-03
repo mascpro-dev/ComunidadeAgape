@@ -130,30 +130,32 @@ export function CommunityHub() {
   }
 
   return (
-    <div className="w-full">
-      <div className="mb-6 grid grid-cols-3 gap-3 sm:grid-cols-6 md:gap-6">
-        {ROOMS.map((r) => (
-          <button
-            key={r}
-            onClick={() => {
-              setSala(r);
-              setTab("salas");
-            }}
-            className="grid justify-items-center gap-1.5"
-          >
-            <span
-              className={`grid h-14 w-14 place-items-center rounded-full border-2 md:h-16 md:w-16 ${
-                sala === r && tab === "salas" ? "border-gold text-gold" : "border-white/20 text-ink"
-              }`}
+    <div className="md:mx-auto md:max-w-6xl">
+      <div className="frame mb-6 px-3 py-4 md:px-8 md:py-5">
+        <div className="grid grid-cols-6 gap-2 md:gap-4">
+          {ROOMS.map((r) => (
+            <button
+              key={r}
+              onClick={() => {
+                setSala(r);
+                setTab("salas");
+              }}
+              className="grid justify-items-center gap-1.5"
             >
-              {r.slice(0, 1)}
-            </span>
-            <span className="text-[11px] text-muted">{r}</span>
-          </button>
-        ))}
+              <span
+                className={`grid h-12 w-12 place-items-center rounded-full border-2 text-sm md:h-16 md:w-16 ${
+                  sala === r && tab === "salas" ? "border-gold text-gold" : "border-white/20 text-ink"
+                }`}
+              >
+                {r.slice(0, 1)}
+              </span>
+              <span className="text-[10px] text-muted md:text-[11px]">{r}</span>
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div className="mb-5 flex w-full gap-2">
+      <div className="mb-5 flex gap-2">
         <button className={tab === "feed" ? "btn-gold" : "btn-ghost"} onClick={() => setTab("feed")}>
           Feed
         </button>
@@ -163,69 +165,107 @@ export function CommunityHub() {
       </div>
 
       {tab === "feed" ? (
-        <div className="grid w-full gap-4 md:grid-cols-2">
-          <form onSubmit={publish} className="card grid gap-2 md:col-span-2">
-            <input name="autor" placeholder="Seu nome" className="field" />
-            <textarea name="texto" required rows={3} placeholder="O que Deus tem feito na casa?" className="field" />
-            <button className="btn-gold w-fit" type="submit">
-              Publicar
-            </button>
-          </form>
-          {posts.map((p) => (
-            <article key={p.id} className="card overflow-hidden p-0">
-              {p.imagem ? (
-                <CardPhoto src={p.imagem} alt={p.autor} className="h-48 md:h-56" />
-              ) : (
-                <div className="h-40 bg-[linear-gradient(135deg,#1a3d8a,#06153a_55%,#d6c08a33)]" />
-              )}
-              <div className="p-4">
-                <p className="text-[13px] font-semibold">{p.autor}</p>
-                <p className="mt-2 text-[15px] leading-relaxed">{p.texto}</p>
-                <p className="meta">{p.quando}</p>
-                <button className="mt-3 text-sm text-gold" onClick={() => like(p.id)}>
-                  ♥ {p.likes}
-                </button>
-                <div className="mt-3 space-y-1">
-                  {p.comentarios.map((c, i) => (
-                    <p key={i} className="text-[13px] text-muted">
-                      {c}
-                    </p>
-                  ))}
-                </div>
-                <form onSubmit={(e) => comment(e, p.id)} className="mt-3 flex gap-2">
-                  <input name="c" placeholder="Comentar" className="field" />
-                  <button className="btn-ghost shrink-0" type="submit">
-                    Enviar
+        <div className="md:grid md:grid-cols-[minmax(0,1fr)_300px] md:items-start md:gap-8">
+          <div className="mx-auto grid w-full max-w-[640px] gap-4">
+            <form onSubmit={publish} className="card grid gap-2">
+              <input name="autor" placeholder="Seu nome" className="field" />
+              <textarea name="texto" required rows={3} placeholder="O que Deus tem feito na casa?" className="field" />
+              <button className="btn-gold w-fit" type="submit">
+                Publicar
+              </button>
+            </form>
+            {posts.map((p) => (
+              <article key={p.id} className="card overflow-hidden p-0">
+                {p.imagem ? (
+                  <CardPhoto src={p.imagem} alt={p.autor} className="h-52 md:h-64" />
+                ) : (
+                  <div className="h-40 bg-[linear-gradient(135deg,#1a3d8a,#06153a_55%,#d6c08a33)]" />
+                )}
+                <div className="p-4 md:p-5">
+                  <p className="text-[13px] font-semibold">{p.autor}</p>
+                  <p className="mt-2 text-[15px] leading-relaxed">{p.texto}</p>
+                  <p className="meta">{p.quando}</p>
+                  <button className="mt-3 text-sm text-gold" onClick={() => like(p.id)}>
+                    ♥ {p.likes}
                   </button>
-                </form>
+                  <div className="mt-3 space-y-1">
+                    {p.comentarios.map((c, i) => (
+                      <p key={i} className="text-[13px] text-muted">
+                        {c}
+                      </p>
+                    ))}
+                  </div>
+                  <form onSubmit={(e) => comment(e, p.id)} className="mt-3 flex gap-2">
+                    <input name="c" placeholder="Comentar" className="field" />
+                    <button className="btn-ghost shrink-0" type="submit">
+                      Enviar
+                    </button>
+                  </form>
+                </div>
+              </article>
+            ))}
+          </div>
+          <aside className="mt-6 hidden md:block">
+            <div className="frame sticky top-24 p-5">
+              <p className="section-label">Salas da casa</p>
+              <div className="grid gap-2">
+                {ROOMS.map((r) => (
+                  <button
+                    key={r}
+                    className={`rounded-xl px-3 py-2.5 text-left text-sm ${
+                      sala === r ? "bg-white/10 text-gold" : "text-[#d7e2f8] hover:bg-white/5"
+                    }`}
+                    onClick={() => {
+                      setSala(r);
+                      setTab("salas");
+                    }}
+                  >
+                    {r}
+                  </button>
+                ))}
               </div>
-            </article>
-          ))}
+            </div>
+          </aside>
         </div>
       ) : (
-        <div className="w-full">
-          <h2 className="mb-3 font-display text-3xl">Sala {sala}</h2>
-          <div className="mb-4 grid min-h-[200px] gap-2 rounded-2xl border border-white/10 p-4">
-            {daSala.length ? (
-              daSala.map((m) => (
-                <div key={m.id}>
-                  <p className="text-[12px] text-gold">
-                    {m.autor} · {m.quando}
-                  </p>
-                  <p className="text-sm">{m.texto}</p>
-                </div>
-              ))
-            ) : (
-              <p className="text-sm text-muted">Seja o primeiro a escrever nesta sala.</p>
-            )}
+        <div className="md:grid md:grid-cols-[240px_minmax(0,1fr)] md:gap-8">
+          <aside className="frame mb-4 hidden p-3 md:block">
+            {ROOMS.map((r) => (
+              <button
+                key={r}
+                onClick={() => setSala(r)}
+                className={`block w-full rounded-lg px-3 py-2 text-left text-sm ${
+                  sala === r ? "bg-white/10 text-gold" : "text-[#d7e2f8]"
+                }`}
+              >
+                {r}
+              </button>
+            ))}
+          </aside>
+          <div className="frame p-4 md:p-6">
+            <h2 className="mb-3 font-display text-3xl">Sala {sala}</h2>
+            <div className="mb-4 grid min-h-[240px] gap-2 rounded-2xl border border-white/10 p-4">
+              {daSala.length ? (
+                daSala.map((m) => (
+                  <div key={m.id}>
+                    <p className="text-[12px] text-gold">
+                      {m.autor} · {m.quando}
+                    </p>
+                    <p className="text-sm">{m.texto}</p>
+                  </div>
+                ))
+              ) : (
+                <p className="text-sm text-muted">Seja o primeiro a escrever nesta sala.</p>
+              )}
+            </div>
+            <form onSubmit={sendRoom} className="grid gap-2 md:grid-cols-[1fr_2fr_auto]">
+              <input name="autor" placeholder="Seu nome" className="field" />
+              <input name="texto" required placeholder={`Mensagem em ${sala}`} className="field" />
+              <button className="btn-gold" type="submit">
+                Enviar na sala
+              </button>
+            </form>
           </div>
-          <form onSubmit={sendRoom} className="grid gap-2 md:grid-cols-[1fr_2fr_auto]">
-            <input name="autor" placeholder="Seu nome" className="field" />
-            <input name="texto" required placeholder={`Mensagem em ${sala}`} className="field" />
-            <button className="btn-gold" type="submit">
-              Enviar na sala
-            </button>
-          </form>
         </div>
       )}
     </div>

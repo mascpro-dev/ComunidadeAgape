@@ -55,7 +55,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-dvh flex-col">
       <header className="sticky top-0 z-40 hidden border-b border-white/[0.06] bg-[#030b1f]/80 backdrop-blur-xl md:block">
-        <div className="mx-auto flex h-[76px] max-w-6xl items-center justify-between px-8">
+        <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-6 lg:px-8">
           <Link href="/" className="flex items-center gap-3 text-white">
             <Logo className="h-9 w-9 text-gold" />
             <span>
@@ -91,26 +91,44 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <p className="font-display text-[22px] font-semibold leading-none">Ágape</p>
           </span>
         </Link>
-        <Link
-          href="/entrar"
-          className="grid h-9 w-9 place-items-center rounded-full border border-gold/40 text-[11px] font-semibold text-gold"
-          aria-label="Entrar"
-        >
-          M
-        </Link>
+        <SessionMenu compact />
       </header>
 
-      <main className="mx-auto w-full max-w-6xl flex-1 px-5 pb-28 pt-3 md:px-8 md:pb-16 md:pt-10">{children}</main>
+      <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-28 pt-3 md:px-8 md:pb-16 md:pt-8">{children}</main>
 
-      <footer className="mt-auto hidden border-t border-white/[0.06] py-10 md:block">
-        <div className="mx-auto flex max-w-6xl items-end justify-between px-8">
+      <footer className="mt-auto hidden border-t border-white/[0.06] py-12 md:block">
+        <div className="mx-auto grid max-w-7xl gap-10 px-8 md:grid-cols-[1.2fr_repeat(3,1fr)]">
           <div>
             <p className="font-display text-2xl text-gold">Ágape</p>
             <p className="mt-2 max-w-sm text-sm text-muted">
               Pessoas formadas por Jesus em uma comunidade viva, para amar, servir e transformar a cidade.
             </p>
+            <p className="mt-3 text-[12px] text-muted">Marília-SP · Visão 2033</p>
           </div>
-          <p className="text-xs tracking-[0.16em] text-muted">VISÃO 2033</p>
+          <div>
+            <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.14em] text-white">Casa</p>
+            <div className="grid gap-2 text-sm text-muted">
+              <Link href="/culto">Culto</Link>
+              <Link href="/celulas">Células</Link>
+              <Link href="/comunidade">Comunidade</Link>
+            </div>
+          </div>
+          <div>
+            <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.14em] text-white">Formação</p>
+            <div className="grid gap-2 text-sm text-muted">
+              <Link href="/biblia">Bíblia</Link>
+              <Link href="/formacao">Universidade da Família</Link>
+              <Link href="/palavra">Áudios</Link>
+            </div>
+          </div>
+          <div>
+            <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.14em] text-white">Visão</p>
+            <div className="grid gap-2 text-sm text-muted">
+              <Link href="/visao">2033</Link>
+              <Link href="/lideranca">Liderança</Link>
+              <Link href="/dashboard">Painel</Link>
+            </div>
+          </div>
         </div>
       </footer>
 

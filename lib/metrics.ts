@@ -44,6 +44,7 @@ export type Membro = {
   estadoCivil: EstadoCivil;
   tempoCasado: string;
   atualizado: string;
+  foto?: string;
 };
 
 export const ADMIN_PRINCIPAL: Membro = {
@@ -76,8 +77,20 @@ export function temFuncao(m: Membro | undefined, fn: FuncaoId) {
 }
 
 export function garantirAdmin(lista: Membro[]) {
+  const salvo = lista.find((m) => m.id === ADMIN_PRINCIPAL.id || m.email === ADMIN_PRINCIPAL.email);
   const outros = lista.filter((m) => m.id !== ADMIN_PRINCIPAL.id && m.email !== ADMIN_PRINCIPAL.email);
-  return [ADMIN_PRINCIPAL, ...outros];
+  return [
+    {
+      ...ADMIN_PRINCIPAL,
+      ...salvo,
+      id: ADMIN_PRINCIPAL.id,
+      email: ADMIN_PRINCIPAL.email,
+      principal: true,
+      funcoes: ADMIN_PRINCIPAL.funcoes,
+      senhaHash: salvo?.senhaHash || ADMIN_PRINCIPAL.senhaHash,
+    },
+    ...outros,
+  ];
 }
 
 export type Relatorio = {

@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { Avatar } from "@/components/Avatar";
 import { clearSession, getSessionId, hashPassword, setSession } from "@/lib/auth";
 import { loadJson, saveJson } from "@/lib/client-store";
 import { ADMIN_PRINCIPAL, MEMBROS_KEY, garantirAdmin, seedMembros, type Membro } from "@/lib/metrics";
@@ -46,41 +47,51 @@ export function LoginForm() {
   );
 }
 
-export function SessionMenu() {
+export function SessionMenu({ compact }: { compact?: boolean }) {
+  const pathname = usePathname();
   const [nome, setNome] = useState("");
+  const [foto, setFoto] = useState("");
   const [id, setId] = useState("");
 
   useEffect(() => {
     const sid = getSessionId();
     setId(sid);
-    if (!sid) return;
+    if (!sid) {
+      setNome("");
+      setFoto("");
+      return;
+    }
     const lista = garantirAdmin(loadJson<Membro[]>(MEMBROS_KEY, seedMembros));
     const u = lista.find((m) => m.id === sid);
     setNome(u?.nome.split(" ")[0] || "");
-  }, []);
+    setFoto(u?.foto || "");
+  }, [pathname]);
 
   if (!id) {
     return (
-      <Link href="/entrar" className="btn-gold">
-        Entrar
+      <Link href="/entrar" className={compact ? "" : "btn-gold"} aria-label="Entrar">
+        {compact ? <Avatar nome="M" size={36} /> : "Entrar"}
       </Link>
     );
   }
 
   return (
     <div className="flex items-center gap-2">
-      <Link href="/perfil" className="text-[13px] text-gold">
-        {nome}
+      <Link href="/perfil" className="flex items-center gap-2 text-[13px] text-gold">
+        <Avatar nome={nome} foto={foto} size={compact ? 36 : 34} />
+        {compact ? null : <span className="hidden lg:inline">{nome}</span>}
       </Link>
-      <button
-        className="btn-ghost py-2 text-[12px]"
-        onClick={() => {
-          clearSession();
-          location.href = "/";
-        }}
-      >
-        Sair
-      </button>
+      {compact ? null : (
+        <button
+          className="btn-ghost py-2 text-[12px]"
+          onClick={() => {
+            clearSession();
+            location.href = "/";
+          }}
+        >
+          Sair
+        </button>
+      )}
     </div>
   );
 }
