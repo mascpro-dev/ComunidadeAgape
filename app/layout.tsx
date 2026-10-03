@@ -32,29 +32,3 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
-
-
-export const metadata: Metadata = {
-  title: "Comunidade Cristã Ágape",
-  description: "Pessoas formadas por Jesus em uma comunidade viva, para amar, servir e transformar a cidade.",
-  applicationName: "Ágape",
-  appleWebApp: { capable: true, title: "Ágape", statusBarStyle: "black-translucent" },
-  icons: { icon: "/logo.svg" },
-};
-
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  viewportFit: "cover",
-  themeColor: "#06153a",
-};
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="pt-BR">
-      <body>
-        <AppShell>{children}</AppShell>
-      </body>
-    </html>
-  );
-}
