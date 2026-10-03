@@ -58,7 +58,6 @@ export default function CultoPage() {
           </div>
         </a>
       </div>
-      </div>
     </div>
   );
 }
