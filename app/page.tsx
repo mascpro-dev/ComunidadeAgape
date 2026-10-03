@@ -2,12 +2,16 @@ import Link from "next/link";
 import { eventos, ministerios } from "@/lib/content";
 
 const atajos = [
+  { href: "/perfil", k: "Meu perfil", t: "Cadastro do membro" },
+  { href: "/dashboard", k: "Painel", t: "Métricas e relatórios" },
+  { href: "/biblia", k: "Bíblia", t: "Leitura online" },
+  { href: "/comunidade", k: "Comunidade", t: "Feed e salas" },
+  { href: "/palavra", k: "Áudios", t: "Palavra dos líderes" },
+  { href: "/culto", k: "Culto", t: "Ao vivo e no templo" },
+];
   { href: "/culto", k: "Culto", t: "Ao vivo e no templo" },
   { href: "/celulas", k: "Células", t: "Encontre o seu grupo" },
-  { href: "/eventos", k: "Agenda", t: "Essa semana na casa" },
-  { href: "/oracao", k: "Oração", t: "Envie um pedido" },
   { href: "/formacao", k: "Formação", t: "Discipulado contínuo" },
-  { href: "/formacao/infantil", k: "Kids", t: "Check-in no templo" },
 ];
 
 export default function HomePage() {

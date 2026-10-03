@@ -6,30 +6,43 @@ import { Logo } from "./Logo";
 
 const tabs = [
   { href: "/", label: "Início", icon: HomeIcon },
+  { href: "/biblia", label: "Bíblia", icon: BookIcon },
+  { href: "/comunidade", label: "Casa", icon: CommunityIcon },
   { href: "/culto", label: "Culto", icon: LiveIcon },
-  { href: "/celulas", label: "Células", icon: CellsIcon },
-  { href: "/formacao", label: "Formação", icon: SparkIcon },
   { href: "/mais", label: "Mais", icon: MenuIcon },
 ];
 
 const desktopNav = [
   { href: "/", label: "Início" },
   { href: "/culto", label: "Culto" },
+  { href: "/biblia", label: "Bíblia" },
+  { href: "/comunidade", label: "Comunidade" },
+  { href: "/palavra", label: "Áudios" },
   { href: "/celulas", label: "Células" },
-  { href: "/formacao", label: "Formação" },
-  { href: "/eventos", label: "Agenda" },
-  { href: "/visao", label: "Visão 2033" },
-  { href: "/oracao", label: "Oração" },
+  { href: "/perfil", label: "Perfil" },
+  { href: "/dashboard", label: "Painel" },
+  { href: "/visao", label: "Visão" },
 ];
 
 function isOn(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
   if (href === "/formacao") return pathname.startsWith("/formacao") || pathname.startsWith("/cursos");
   if (href === "/mais")
-    return ["/mais", "/oracao", "/visao", "/lideranca", "/eventos"].some(
+    return [
+      "/mais",
+      "/oracao",
+      "/visao",
+      "/lideranca",
+      "/eventos",
+      "/celulas",
+      "/formacao",
+      "/cursos",
+      "/palavra",
+      "/perfil",
+      "/dashboard",
+    ].some(
       (p) => pathname === p || pathname.startsWith(`${p}/`),
     );
-  if (href === "/eventos") return pathname.startsWith("/eventos");
   if (href === "/visao") return pathname.startsWith("/visao") || pathname.startsWith("/lideranca");
   return pathname === href || pathname.startsWith(`${href}/`);
 }
@@ -144,21 +157,20 @@ function LiveIcon({ live }: { live?: boolean }) {
     </span>
   );
 }
-function CellsIcon(_p?: { live?: boolean }) {
+function BookIcon(_p?: { live?: boolean }) {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-      <circle cx="12" cy="12" r="3" />
-      <circle cx="6" cy="8" r="2.2" />
-      <circle cx="18" cy="8" r="2.2" />
-      <circle cx="7" cy="17" r="2.2" />
-      <circle cx="17" cy="17" r="2.2" />
+      <path d="M5 4.5h6.5A3.5 3.5 0 0 1 15 8v12H8.5A3.5 3.5 0 0 0 5 20.5zM15 8h4v12h-4" />
     </svg>
   );
 }
-function SparkIcon(_p?: { live?: boolean }) {
+function CommunityIcon(_p?: { live?: boolean }) {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-      <path d="M12 3v4M12 17v4M4.9 6.5l2.8 2.8M16.3 14.7l2.8 2.8M3 12h4M17 12h4M4.9 17.5l2.8-2.8M16.3 9.3l2.8-2.8" />
+      <circle cx="12" cy="8" r="3" />
+      <circle cx="6" cy="10" r="2" />
+      <circle cx="18" cy="10" r="2" />
+      <path d="M4 19c.4-2.5 2.6-4 5-4M15 15c2.4 0 4.6 1.5 5 4M8.5 15c1.1-.6 2.3-1 3.5-1s2.4.4 3.5 1" />
     </svg>
   );
 }

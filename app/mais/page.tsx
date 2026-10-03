@@ -2,6 +2,11 @@ import Link from "next/link";
 import { PageHeader } from "@/components/PageHeader";
 
 const items = [
+  { href: "/perfil", t: "Meu perfil", d: "Nome, CPF, célula, família e cursos" },
+  { href: "/dashboard", t: "Painel e relatórios", d: "Métricas da casa — só liderança" },
+  { href: "/biblia", t: "Bíblia online", d: "Leitura por livro e capítulo" },
+  { href: "/palavra", t: "Áudios da liderança", d: "Pastor e líderes enviam a Palavra" },
+  { href: "/comunidade", t: "Comunidade", d: "Feed da casa e salas por tema" },
   { href: "/visao", t: "Visão 2033", d: "Protótipo, a casa, indicadores e as seis frentes" },
   { href: "/lideranca", t: "Papel do pastor", d: "De fazer tudo, para formar pessoas que fazem juntas" },
   { href: "/visao/educacao", t: "Roda da educação", d: "Novas formas de aprender" },
