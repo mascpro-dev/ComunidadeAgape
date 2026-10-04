@@ -19,7 +19,7 @@ export function LoginForm() {
     e.preventDefault();
     setErro("");
     if (!isSupabaseConfigured()) {
-      setErro("Este site ainda não está ligado ao acesso da comunidade. Falta incluir as chaves no Vercel e republicar.");
+      setErro("Não foi possível conectar ao acesso da comunidade. Tente de novo em instantes.");
       return;
     }
     setBusy(true);
