@@ -42,7 +42,7 @@ export const temasBiblia: Record<GrupoBiblia, TemaBiblia> = {
     card: "#ffffff",
     desenho: "estrela",
     estudo: "Geração Ágape — identidade em Cristo",
-    quando: "Culto pré-adolescentes · 19h · templo",
+    quando: "Culto de Pré Adolescentes · às 19h · templo",
     versiculos: [
       { ref: "1 Tm 4.12", livro: 54, cap: 4, linha: "Sê o exemplo" },
       { ref: "Sl 119.9", livro: 19, cap: 119, linha: "Como guardar o caminho" },

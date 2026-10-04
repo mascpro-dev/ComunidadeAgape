@@ -49,7 +49,7 @@ export default function CultoPage() {
           { href: "/culto", src: fotos.familia, title: "Culto da família", kicker: "Ao vivo · Dom 10h" },
           { href: "/culto", src: fotos.cultoNoite, title: "Culto da noite", kicker: "Domingo 19h" },
           { href: "/formacao/jovens", src: fotos.jovens, title: "Culto de jovens", kicker: "Sábado 20h" },
-          { href: "/formacao/adolescentes", src: fotos.adolescentes, title: "Culto pré-adolescentes", kicker: "19h" },
+          { href: "/formacao/adolescentes", src: fotos.adolescentes, title: "Culto de Pré Adolescentes", kicker: "às 19h" },
           {
             href: church.youtubeUrl,
             src: fotos.youtube,

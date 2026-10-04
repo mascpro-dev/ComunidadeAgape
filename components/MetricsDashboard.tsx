@@ -219,7 +219,7 @@ function NumerosGrid({
             { h: "10:00", t: "Culto da família", d: "Domingo · templo + online", c: "bg-[#7b6cff]" },
             { h: "19:00", t: "Culto da noite", d: "Domingo · templo", c: "bg-[#4ea0ff]" },
             { h: "20:00", t: "Culto de jovens", d: "Sábado · templo", c: "bg-[#3dce8a]" },
-            { h: "19:00", t: "Culto pré-adolescentes", d: "Templo", c: "bg-[#ff6b3d]" },
+            { h: "19:00", t: "Culto de Pré Adolescentes", d: "às 19h · Templo", c: "bg-[#ff6b3d]" },
             { h: "Semana", t: "Células em casas", d: "Grupos nos bairros", c: "bg-gold" },
             { h: "Trilha", t: "Universidade da Família", d: "Formação contínua", c: "bg-[#3dce8a]" },
           ].map((x) => (

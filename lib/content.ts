@@ -462,21 +462,21 @@ export const ministerios: Ministerio[] = [
     nome: "Adolescentes",
     emoji: "⚡",
     tag: "12–17",
-    quando: "Culto pré-adolescentes · 19h",
+    quando: "Culto de Pré Adolescentes · às 19h",
     local: "Sala Geração",
     texto:
       "Formação, comunidade e discipulado com linguagem de hoje — para não haver distanciamento quando saírem da infância.",
     lider: "Time Adolescentes",
     tone: "from-[#3d6fd4] to-[#12245a]",
     proximos: [
-      { titulo: "Culto pré-adolescentes", data: "19h", extra: "Identidade em Cristo" },
+      { titulo: "Culto de Pré Adolescentes", data: "às 19h", extra: "Identidade em Cristo" },
       { titulo: "Retiro", data: "Em breve", extra: "Inscrições abertas" },
     ],
     catalogo: [
       { id: "a1", titulo: "Comece por aqui", kicker: "Módulo 01", tipo: "curso", capa: "adolescentes" },
       { id: "a2", titulo: "Identidade em Cristo", kicker: "Curso · 5 sem", tipo: "curso", capa: "biblia" },
       { id: "a3", titulo: "Escola da geração", kicker: "Curso", tipo: "curso", capa: "educacao" },
-      { id: "a4", titulo: "Culto pré-adolescentes", kicker: "Atividade · 19h", tipo: "atividade", capa: "celulaGeracao" },
+      { id: "a4", titulo: "Culto de Pré Adolescentes", kicker: "Atividade · às 19h", tipo: "atividade", capa: "celulaGeracao" },
       { id: "a5", titulo: "Retiro", kicker: "Atividade", tipo: "atividade", capa: "visao" },
       { id: "a6", titulo: "Célula Geração", kicker: "Atividade · Sex", tipo: "atividade", capa: "celulas", href: "/celulas" },
     ],
@@ -651,7 +651,7 @@ export const eventos = [
   { titulo: "Culto da família", quando: "Dom 10h · templo + online", tag: "Ao vivo", foto: "familia" },
   { titulo: "Culto da noite", quando: "Dom 19h · templo", tag: "Culto", foto: "cultoNoite" },
   { titulo: "Culto de jovens", quando: "Sáb 20h · templo", tag: "Jovens", foto: "jovens" },
-  { titulo: "Culto pré-adolescentes", quando: "19h · templo", tag: "Geração", foto: "adolescentes" },
+  { titulo: "Culto de Pré Adolescentes", quando: "às 19h · templo", tag: "Geração", foto: "adolescentes" },
   { titulo: "Células em casas", quando: "Durante a semana", tag: "Comunidade", foto: "celulas" },
   { titulo: "Ágape Serve", quando: "Ações na cidade", tag: "Missão", foto: "missao" },
 ];

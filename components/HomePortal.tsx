@@ -30,7 +30,7 @@ const destaques = [
   { href: "/culto", src: fotos.familia, k: "Ao vivo", t: "Culto da família", d: "Domingo 10h" },
   { href: "/culto", src: fotos.cultoNoite, k: "Templo", t: "Culto da noite", d: "Domingo 19h" },
   { href: "/formacao/jovens", src: fotos.jovens, k: "Geração", t: "Culto de jovens", d: "Sábado 20h" },
-  { href: "/formacao/adolescentes", src: fotos.adolescentes, k: "Geração", t: "Pré-adolescentes", d: "19h" },
+  { href: "/formacao/adolescentes", src: fotos.adolescentes, k: "Geração", t: "Culto de Pré Adolescentes", d: "às 19h" },
 ];
 
 const jornada = [
@@ -204,7 +204,7 @@ export function HomePortal() {
           { href: "/culto", src: fotos.familia, title: "Culto da família", kicker: "Ao vivo · Dom 10h" },
           { href: "/culto", src: fotos.culto, title: "Culto da noite", kicker: "Domingo 19h" },
           { href: "/formacao/jovens", src: fotos.jovens, title: "Culto de jovens", kicker: "Sábado 20h" },
-          { href: "/formacao/adolescentes", src: fotos.adolescentes, title: "Culto pré-adolescentes", kicker: "19h" },
+          { href: "/formacao/adolescentes", src: fotos.adolescentes, title: "Culto de Pré Adolescentes", kicker: "às 19h" },
           { href: "/palavra", src: fotos.biblia, title: "Áudios", kicker: "Palavra" },
           { href: "/visao", src: fotos.missao, title: "Visão 2033", kicker: "A comunidade" },
         ]}
