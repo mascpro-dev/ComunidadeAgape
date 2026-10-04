@@ -1,44 +1,36 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { maisMenu } from "@/lib/nav";
 
 export function MaisNav() {
-  const pathname = usePathname();
-  const [aberto, setAberto] = useState(true);
+  const router = useRouter();
 
   return (
-    <div className="mb-6 rounded-2xl border border-white/10 bg-[#0b1c3e]/80 md:hidden">
-      <button
-        type="button"
-        className="flex w-full items-center justify-between px-4 py-3.5 text-left"
-        onClick={() => setAberto((v) => !v)}
-        aria-expanded={aberto}
-      >
-        <span>
-          <span className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-gold">Menu</span>
-          <span className="font-display text-xl leading-none text-white">Comunidade, Gerações, Áudios…</span>
-        </span>
-        <span className="text-gold">{aberto ? "−" : "+"}</span>
-      </button>
-      {aberto ? (
-        <nav className="grid border-t border-white/10 px-2 py-2">
-          {maisMenu.map((item) => {
-            const on = pathname === item.href || pathname.startsWith(`${item.href}/`);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`rounded-xl px-3 py-3 text-[15px] ${on ? "bg-white/10 text-gold" : "text-[#d7e2f8]"}`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
-      ) : null}
-    </div>
+    <label className="relative mb-5 block md:hidden">
+      <span className="mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.16em] text-gold">Menu</span>
+      <span className="relative block">
+        <select
+          className="field w-full appearance-none rounded-2xl border-white/15 bg-[#0b1c3e] py-3.5 pl-4 pr-11 font-display text-[20px] text-white"
+          defaultValue=""
+          aria-label="Abrir páginas do menu"
+          onChange={(e) => {
+            const href = e.target.value;
+            e.target.selectedIndex = 0;
+            if (href) router.push(href);
+          }}
+        >
+          <option value="" disabled>
+            Comunidade, Gerações, Áudios…
+          </option>
+          {maisMenu.map((item) => (
+            <option key={item.href} value={item.href}>
+              {item.label}
+            </option>
+          ))}
+        </select>
+        <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gold">▾</span>
+      </span>
+    </label>
   );
 }

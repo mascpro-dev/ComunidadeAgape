@@ -73,9 +73,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       </header>
 
-      <header className="flex items-center justify-between gap-3 px-4 pb-2 pt-[calc(env(safe-area-inset-top)+10px)] md:hidden">
+      <header className="flex items-center justify-between gap-3 px-4 pb-2 pt-[calc(env(safe-area-inset-top)+8px)] md:hidden">
         <Link href="/" className="min-w-0 flex-1">
-          <Logo variant="full" className="h-[58px] w-auto max-w-[78%] object-contain object-left" />
+          <Logo variant="full" className="h-[80px] w-auto max-w-[calc(100vw-108px)] object-contain object-left" />
         </Link>
         <SessionMenu compact />
       </header>
