@@ -2,7 +2,7 @@ export const mobileTabs = [
   { href: "/", label: "Início" },
   { href: "/biblia", label: "Bíblia" },
   { href: "/formacao", label: "Gerações" },
-  { href: "/culto", label: "Culto" },
+  { href: "/comunidade", label: "Comunidade" },
   { href: "/mais", label: "Mais" },
 ] as const;
 
@@ -19,6 +19,6 @@ export const desktopNav = [
   { href: "/visao", label: "Visão" },
 ] as const;
 
-const tabHrefs = new Set(["/", "/culto", "/biblia", "/formacao"]);
+const tabHrefs = new Set(["/", "/biblia", "/formacao", "/comunidade"]);
 
 export const maisMenu = desktopNav.filter((item) => !tabHrefs.has(item.href));

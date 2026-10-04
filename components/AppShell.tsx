@@ -11,7 +11,7 @@ const tabs = [
   { href: "/", label: "Início", icon: HomeIcon },
   { href: "/biblia", label: "Bíblia", icon: BookIcon },
   { href: "/formacao", label: "Gerações", icon: FormacaoIcon },
-  { href: "/culto", label: "Culto", icon: LiveIcon },
+  { href: "/comunidade", label: "Comunidade", icon: ComunidadeIcon },
   { href: "/mais", label: "Mais", icon: MenuIcon },
 ];
 
@@ -30,7 +30,7 @@ function isOn(pathname: string, href: string) {
       "/perfil",
       "/dashboard",
       "/entrar",
-      "/comunidade",
+      "/culto",
     ].some(
       (p) => pathname === p || pathname.startsWith(`${p}/`),
     );
@@ -188,7 +188,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 }`}
                 onClick={() => setMaisAberto(false)}
               >
-                <tab.icon live={tab.href === "/culto"} />
+                <tab.icon />
                 {tab.label}
               </Link>
             );
@@ -206,17 +206,13 @@ function HomeIcon(_p?: { live?: boolean }) {
     </svg>
   );
 }
-function LiveIcon({ live }: { live?: boolean }) {
+function ComunidadeIcon(_p?: { live?: boolean }) {
   return (
-    <span className="relative">
-      {live ? (
-        <span className="absolute -right-0.5 top-0 h-1.5 w-1.5 rounded-full bg-red-500 shadow-[0_0_0_4px_rgba(239,68,68,.25)]" />
-      ) : null}
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-        <circle cx="12" cy="12" r="4" />
-        <path d="M5 12a7 7 0 0 1 14 0M2 12a10 10 0 0 1 20 0" />
-      </svg>
-    </span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+      <circle cx="8" cy="9" r="2.4" />
+      <circle cx="16" cy="9" r="2.4" />
+      <path d="M4.5 18c.6-2.4 2.2-3.8 3.5-3.8s2.9 1.4 3.5 3.8M12.5 18c.6-2.4 2.2-3.8 3.5-3.8s2.9 1.4 3.5 3.8" />
+    </svg>
   );
 }
 function BookIcon(_p?: { live?: boolean }) {
