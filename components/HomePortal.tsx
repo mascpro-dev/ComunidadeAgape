@@ -220,9 +220,10 @@ export function HomePortal() {
         ))}
       </div>
 
-      <div className="mt-8 grid gap-8 md:grid-cols-[minmax(0,1fr)_280px] md:items-end">
-        <div>
+      <div className="mt-8 grid gap-6 md:grid-cols-[minmax(0,1fr)_280px] md:items-stretch">
+        <div className="flex min-h-0 flex-col gap-5 md:h-full">
           <PosterRow
+            fill
             className="mt-0 md:mt-0"
             title="Células"
             href="/celulas"
@@ -235,7 +236,8 @@ export function HomePortal() {
             }))}
           />
           <PosterRow
-            className="mt-6 md:mt-8"
+            fill
+            className="mt-0 md:mt-0"
             title="Atividades da semana"
             href="/eventos"
             hrefLabel="Agenda →"

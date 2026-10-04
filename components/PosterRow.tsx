@@ -19,12 +19,14 @@ export function PosterRow({
   hrefLabel = "Ver todos →",
   items,
   className = "",
+  fill = false,
 }: {
   title: string;
   href?: string;
   hrefLabel?: string;
   items: PosterItem[];
   className?: string;
+  fill?: boolean;
 }) {
   const scroller = useRef<HTMLDivElement>(null);
   const paused = useRef(true);
@@ -82,8 +84,8 @@ export function PosterRow({
   const loopItems = items.length > 3 ? [...items, ...items] : items;
 
   return (
-    <section className={`mt-6 md:mt-10 ${className}`.trim()}>
-      <div className="mb-3 flex items-end justify-between gap-3">
+    <section className={`${fill ? "mt-0 flex min-h-0 flex-1 flex-col" : "mt-6 md:mt-10"} ${className}`.trim()}>
+      <div className="mb-3 flex shrink-0 items-end justify-between gap-3">
         <h3 className="section-label mb-0">{title}</h3>
         {href ? (
           <Link href={href} className="text-[12px] text-[#9fd4ea]">
@@ -93,7 +95,7 @@ export function PosterRow({
       </div>
       <div
         ref={scroller}
-        className="poster-row"
+        className={fill ? "poster-row poster-row-fill" : "poster-row"}
         onMouseEnter={snapAndPause}
         onMouseLeave={resume}
         onPointerDown={snapAndPause}
