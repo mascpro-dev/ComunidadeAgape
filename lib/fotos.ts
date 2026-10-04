@@ -55,6 +55,18 @@ export const fotos = {
     "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=900&q=80",
   celulaGeracao:
     "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=900&q=80",
+  habitudes1: "/cursos/habitudes-autolideranca.jpg",
+  habitudes2: "/cursos/habitudes-conectar.jpg",
+  habitudes3: "/cursos/habitudes-liderar.jpg",
+  habitudes4: "/cursos/habitudes-cultura.jpg",
+  habitudes5: "/cursos/habitudes-espiritual.jpg",
+  ignicao: "/cursos/ignicao.jpg",
+  crownEstudo: "/cursos/crown-estudo.jpg",
+  crownCasamento: "/cursos/crown-casamento.jpg",
+  crownFimMes: "/cursos/crown-fim-mes.jpg",
+  crownAbc: "/cursos/crown-abc.jpg",
+  crownSegredo: "/cursos/crown-segredo.jpg",
+  crownTeens: "/cursos/crown-teens.jpg",
 };
 
 export function fotoCapa(chave: string) {
