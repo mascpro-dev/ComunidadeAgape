@@ -59,18 +59,18 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-dvh flex-col">
       <header className="sticky top-0 z-40 hidden border-b border-white/[0.06] bg-[#030b1f]/80 backdrop-blur-xl md:block">
-        <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-6 lg:px-8">
-          <Link href="/" className="flex items-center">
-            <Logo variant="full" className="h-9 w-auto max-w-[240px]" />
+        <div className="mx-auto flex h-[92px] max-w-7xl items-center gap-5 px-6 lg:px-8">
+          <Link href="/" className="shrink-0">
+            <Logo variant="full" className="h-[58px] w-auto max-w-[380px] object-contain object-left" />
           </Link>
-          <nav className="flex items-center gap-1">
+          <nav className="flex min-w-0 flex-1 items-center">
             {desktopNav.map((item) => {
               const on = isOn(pathname, item.href);
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`rounded-full px-2.5 py-2 text-[12px] tracking-wide transition lg:px-3.5 lg:text-[13px] ${
+                  className={`rounded-full px-2 py-1.5 text-[12px] tracking-wide transition lg:px-2.5 lg:text-[13px] ${
                     on ? "bg-white/10 text-gold" : "text-[#c5d2ea] hover:text-white"
                   }`}
                 >
@@ -83,9 +83,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       </header>
 
-      <header className="flex items-center justify-between px-5 pb-1 pt-[calc(env(safe-area-inset-top)+18px)] md:hidden">
+      <header className="flex items-center justify-between px-5 pb-1 pt-[calc(env(safe-area-inset-top)+14px)] md:hidden">
         <Link href="/" className="flex items-center">
-          <Logo variant="full" className="h-7 w-auto max-w-[200px]" />
+          <Logo variant="full" className="h-10 w-auto max-w-[260px] object-contain object-left" />
         </Link>
         <SessionMenu compact />
       </header>
@@ -95,7 +95,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <footer className="mt-auto hidden md:block">
         <div className="mx-auto grid max-w-7xl gap-10 px-8 py-12 md:grid-cols-[1.2fr_repeat(3,1fr)]">
           <div>
-            <Logo variant="full" className="h-10 w-auto max-w-[260px]" />
+            <Logo variant="full" className="h-14 w-auto max-w-[340px] object-contain object-left" />
             <p className="mt-3 max-w-sm text-sm text-muted">
               Pessoas formadas por Jesus em uma comunidade viva, para amar, servir e transformar a cidade.
             </p>
