@@ -7,7 +7,7 @@ export default function CelulasPage() {
       <PageHeader
         kicker="Comunidade"
         title="Células"
-        lead="Comunhão, estudo bíblico e apoio prático em grupos menores, no bairro e na cidade."
+        lead="A célula grande no topo é a mais perto do seu endereço. As outras ficam na faixa abaixo."
       />
       <CelulasList />
     </div>

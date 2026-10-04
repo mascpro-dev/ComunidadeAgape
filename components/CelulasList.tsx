@@ -1,8 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ActionForm } from "./ActionForm";
 import { PosterRow } from "./PosterRow";
+import { loadMe } from "@/lib/agape-db";
+import { celulaMaisPerto } from "@/lib/celula-proxima";
 import { celulas, dias } from "@/lib/content";
 import { fotos } from "@/lib/fotos";
 
@@ -13,8 +15,26 @@ function capaDe(capa: string) {
 export function CelulasList() {
   const [dia, setDia] = useState<(typeof dias)[number]>("Todos");
   const [sel, setSel] = useState(celulas[0].id);
+  const [perto, setPerto] = useState("");
   const lista = dia === "Todos" ? celulas : celulas.filter((c) => c.dia === dia);
   const atual = useMemo(() => lista.find((c) => c.id === sel) || lista[0], [lista, sel]);
+
+  useEffect(() => {
+    let alive = true;
+    loadMe()
+      .then((me) => celulaMaisPerto(me))
+      .then((id) => {
+        if (!alive || !id) return;
+        setPerto(id);
+        setSel(id);
+      })
+      .catch(() => {
+        if (alive) setSel(celulas[0].id);
+      });
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   return (
     <>
@@ -43,6 +63,7 @@ export function CelulasList() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#030b1f] via-[#030b1f]/60 to-black/20" />
           <div className="relative z-10 flex min-h-[240px] flex-col justify-end p-5 md:min-h-[380px] md:max-w-xl md:p-10">
             <span className="pill">
+              {atual.id === perto ? "Mais perto do seu endereço · " : ""}
               {atual.dia} {atual.hora} · {atual.bairro}
             </span>
             <h2 className="font-display mt-3 text-[34px] font-semibold leading-tight md:text-5xl">{atual.nome}</h2>
@@ -64,7 +85,7 @@ export function CelulasList() {
           items={lista.map((c) => ({
             src: capaDe(c.capa),
             title: c.nome,
-            kicker: `${c.dia} ${c.hora}`,
+            kicker: c.id === perto ? "Mais perto" : `${c.dia} ${c.hora}`,
             selected: atual?.id === c.id,
             onSelect: () => setSel(c.id),
           }))}
