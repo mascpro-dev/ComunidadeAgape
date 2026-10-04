@@ -8,3 +8,6 @@ assets/c__*
 node_modules
 .next
 out
+.env
+.env.local
+.env*.local
