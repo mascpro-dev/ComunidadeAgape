@@ -5,7 +5,7 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { PosterRow } from "@/components/PosterRow";
 import { loadMe } from "@/lib/agape-db";
-import { eventos, ministerios } from "@/lib/content";
+import { celulas, eventos, ministerios } from "@/lib/content";
 import { fotoCapa, fotos } from "@/lib/fotos";
 
 const atajos = [
@@ -243,6 +243,33 @@ export function HomePortal() {
               </Link>
             ))}
           </div>
+
+          <PosterRow
+            title="Células"
+            href="/celulas"
+            hrefLabel="Ver grupos →"
+            items={celulas.map((c) => ({
+              href: "/celulas",
+              src: fotoCapa(c.capa),
+              title: c.nome,
+              kicker: `${c.dia} · ${c.hora}`,
+            }))}
+          />
+          <PosterRow
+            title="Atividades da semana"
+            href="/eventos"
+            hrefLabel="Agenda →"
+            items={ministerios.flatMap((m) =>
+              m.catalogo
+                .filter((i) => i.tipo === "atividade")
+                .map((i) => ({
+                  href: i.href || `/formacao/${m.id}`,
+                  src: fotoCapa(i.capa),
+                  title: i.titulo,
+                  kicker: i.kicker,
+                })),
+            )}
+          />
         </div>
 
         <aside className="grid gap-5">
