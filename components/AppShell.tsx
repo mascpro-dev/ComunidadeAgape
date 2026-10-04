@@ -98,7 +98,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <p className="mt-3 text-[12px] text-muted">Marília-SP · Visão 2033</p>
           </div>
           <div>
-            <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.14em] text-white">Casa</p>
+            <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.14em] text-white">Comunidade</p>
             <div className="grid gap-2 text-sm text-muted">
               <Link href="/culto">Culto</Link>
               <Link href="/celulas">Células</Link>

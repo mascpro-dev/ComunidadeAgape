@@ -6,7 +6,7 @@ import { fotos } from "@/lib/fotos";
 export default function EventosPage() {
   return (
     <div>
-      <PageHeader backHref="/" backLabel="início" kicker="Casa" title="Agenda" lead="Cultos, células e missões da semana." />
+      <PageHeader backHref="/" backLabel="início" kicker="Comunidade" title="Agenda" lead="Cultos, células e missões da semana." />
       <PosterRow
         title="Em cartaz"
         items={eventos.map((e) => ({

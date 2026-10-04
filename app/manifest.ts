@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Comunidade Cristã Ágape",
     short_name: "Ágape",
-    description: "App da Comunidade Cristã Ágape — Palavra, comunidade e casa.",
+    description: "App da Comunidade Cristã Ágape — Palavra e comunidade.",
     start_url: "/",
     scope: "/",
     id: "/",

@@ -27,7 +27,7 @@ const seedPosts: Post[] = [
   {
     id: "p1",
     autor: "Comunidade Ágape",
-    texto: "Jesus para toda a vida. Culto da família às 10h e da noite às 18h — templo e online.",
+    texto: "Jesus para toda a vida. Culto da família às 10h (templo e online) e da noite às 19h no templo.",
     quando: "Hoje",
     likes: 24,
     comentarios: ["Amém, igreja!", "Levando a família."],
@@ -169,7 +169,7 @@ export function CommunityHub() {
           <div className="mx-auto grid w-full max-w-[640px] gap-4">
             <form onSubmit={publish} className="card grid gap-2">
               <input name="autor" placeholder="Seu nome" className="field" />
-              <textarea name="texto" required rows={3} placeholder="O que Deus tem feito na casa?" className="field" />
+              <textarea name="texto" required rows={3} placeholder="O que Deus tem feito na comunidade?" className="field" />
               <button className="btn-gold w-fit" type="submit">
                 Publicar
               </button>
@@ -207,7 +207,7 @@ export function CommunityHub() {
           </div>
           <aside className="mt-6 hidden md:block">
             <div className="frame sticky top-24 p-5">
-              <p className="section-label">Salas da casa</p>
+              <p className="section-label">Salas da comunidade</p>
               <div className="grid gap-2">
                 {ROOMS.map((r) => (
                   <button

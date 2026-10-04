@@ -43,7 +43,7 @@ export default function VisaoPage() {
       </section>
 
       <section className="mt-12">
-        <h2 className="section-label">A casa em 2033</h2>
+        <h2 className="section-label">A comunidade em 2033</h2>
         <div className="grid gap-3 md:grid-cols-3">
           {casa2033.map((c) => (
             <article key={c.titulo} className="card">

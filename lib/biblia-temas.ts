@@ -25,7 +25,7 @@ export const temasBiblia: Record<GrupoBiblia, TemaBiblia> = {
     card: "#ffffff",
     desenho: "fogo",
     estudo: "Grupo de jovens — Palavra e missão",
-    quando: "Sexta · 20h · templo",
+    quando: "Sábado · 20h · templo",
     versiculos: [
       { ref: "Jr 29.11", livro: 24, cap: 29, linha: "Planos de paz e futuro" },
       { ref: "Fp 4.6", livro: 50, cap: 4, linha: "Não andeis ansiosos" },
@@ -42,7 +42,7 @@ export const temasBiblia: Record<GrupoBiblia, TemaBiblia> = {
     card: "#ffffff",
     desenho: "estrela",
     estudo: "Geração Ágape — identidade em Cristo",
-    quando: "Sábado · 16h · templo",
+    quando: "Culto pré-adolescentes · 19h · templo",
     versiculos: [
       { ref: "1 Tm 4.12", livro: 54, cap: 4, linha: "Sê o exemplo" },
       { ref: "Sl 119.9", livro: 19, cap: 119, linha: "Como guardar o caminho" },

@@ -5,7 +5,7 @@ import { fotos } from "@/lib/fotos";
 export default function MaisPage() {
   return (
     <div>
-      <PageHeader kicker="A casa" title="Mais" lead="Tudo o que a comunidade precisa, em um só lugar." />
+      <PageHeader kicker="A comunidade" title="Mais" lead="Tudo o que a comunidade precisa, em um só lugar." />
       <PosterRow
         title="Sua conta"
         items={[
@@ -24,11 +24,11 @@ export default function MaisPage() {
         ]}
       />
       <PosterRow
-        title="A casa"
+        title="A comunidade"
         items={[
-          { href: "/culto", src: fotos.culto, title: "Culto online", kicker: "Ao vivo" },
+          { href: "/culto", src: fotos.familia, title: "Culto da família", kicker: "Ao vivo · 10h" },
           { href: "/eventos", src: fotos.familia, title: "Agenda", kicker: "Semana" },
-          { href: "/visao", src: fotos.visao, title: "Visão 2033", kicker: "A casa" },
+          { href: "/visao", src: fotos.visao, title: "Visão 2033", kicker: "A comunidade" },
           { href: "/lideranca", src: fotos.lideranca, title: "Papel do pastor", kicker: "Liderança" },
         ]}
       />

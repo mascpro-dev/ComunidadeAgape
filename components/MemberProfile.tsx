@@ -150,7 +150,7 @@ export function MemberProfile() {
         <Avatar nome={form.nome} foto={form.foto} size={88} />
         <div>
           <p className="text-sm font-medium">Foto do perfil</p>
-          <p className="meta mb-3">Aparece no menu e na casa. Use uma foto clara do rosto.</p>
+          <p className="meta mb-3">Aparece no menu e na comunidade. Use uma foto clara do rosto.</p>
           <label className="btn-ghost inline-flex cursor-pointer">
             Escolher foto
             <input

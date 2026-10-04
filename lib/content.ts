@@ -437,13 +437,13 @@ export const ministerios: Ministerio[] = [
     nome: "Jovens",
     emoji: "🔥",
     tag: "18–35",
-    quando: "Sábados · 19h",
+    quando: "Sábados · 20h",
     local: "Salão principal",
     texto: "Formação, comunidade, propósito e missão para uma geração relevante na igreja e na sociedade.",
     lider: "Time Jovens",
     tone: "from-[#2a5bb8] to-[#0a2460]",
     proximos: [
-      { titulo: "Encontro de jovens", data: "Sáb 19h", extra: "Louvor + palavra" },
+      { titulo: "Culto de jovens", data: "Sáb 20h", extra: "Louvor + palavra" },
       { titulo: "Missão na cidade", data: "Dom 15h", extra: "Ágape Serve" },
     ],
     catalogo: [
@@ -452,7 +452,7 @@ export const ministerios: Ministerio[] = [
       { id: "j3", titulo: "Identidade e chamado", kicker: "Curso · 4 sem", tipo: "curso", capa: "visao" },
       { id: "j4", titulo: "Célula Jovens", kicker: "Atividade · Ter", tipo: "atividade", capa: "celulaJovens", href: "/celulas" },
       { id: "j5", titulo: "Missão na cidade", kicker: "Atividade", tipo: "atividade", capa: "missao" },
-      { id: "j6", titulo: "Lives e encontros", kicker: "Atividade", tipo: "atividade", capa: "cultoNoite" },
+      { id: "j6", titulo: "Culto de jovens", kicker: "Atividade · Sáb 20h", tipo: "atividade", capa: "cultoNoite" },
     ],
   },
   {
@@ -460,21 +460,21 @@ export const ministerios: Ministerio[] = [
     nome: "Adolescentes",
     emoji: "⚡",
     tag: "12–17",
-    quando: "Sextas · 19h30",
+    quando: "Culto pré-adolescentes · 19h",
     local: "Sala Geração",
     texto:
       "Formação, comunidade e discipulado com linguagem de hoje — para não haver distanciamento quando saírem da infância.",
     lider: "Time Adolescentes",
     tone: "from-[#3d6fd4] to-[#12245a]",
     proximos: [
-      { titulo: "Sexta da geração", data: "Sex 19h30", extra: "Identidade em Cristo" },
+      { titulo: "Culto pré-adolescentes", data: "19h", extra: "Identidade em Cristo" },
       { titulo: "Retiro", data: "Em breve", extra: "Inscrições abertas" },
     ],
     catalogo: [
       { id: "a1", titulo: "Comece por aqui", kicker: "Módulo 01", tipo: "curso", capa: "adolescentes" },
       { id: "a2", titulo: "Identidade em Cristo", kicker: "Curso · 5 sem", tipo: "curso", capa: "biblia" },
       { id: "a3", titulo: "Escola da geração", kicker: "Curso", tipo: "curso", capa: "educacao" },
-      { id: "a4", titulo: "Sexta da geração", kicker: "Atividade · Sex", tipo: "atividade", capa: "celulaGeracao" },
+      { id: "a4", titulo: "Culto pré-adolescentes", kicker: "Atividade · 19h", tipo: "atividade", capa: "celulaGeracao" },
       { id: "a5", titulo: "Retiro", kicker: "Atividade", tipo: "atividade", capa: "visao" },
       { id: "a6", titulo: "Célula Geração", kicker: "Atividade · Sex", tipo: "atividade", capa: "celulas", href: "/celulas" },
     ],
@@ -491,7 +491,7 @@ export const ministerios: Ministerio[] = [
     checkin: true,
     tone: "from-[#e4d3a2] to-[#8a7340] text-[#1a1408]",
     proximos: [
-      { titulo: "Kids no culto", data: "Dom 10h e 18h", extra: "Turmas por idade" },
+      { titulo: "Kids no culto", data: "Dom 10h e 19h", extra: "Turmas por idade" },
       { titulo: "Família no parque", data: "Sáb 16h", extra: "Pais + kids" },
     ],
     catalogo: [
@@ -640,8 +640,10 @@ export const cursos = [
 ];
 
 export const eventos = [
-  { titulo: "Culto da família", quando: "Dom 10h · templo", tag: "Culto", foto: "familia" },
-  { titulo: "Culto da noite", quando: "Dom 18h · templo + online", tag: "Ao vivo", foto: "cultoNoite" },
+  { titulo: "Culto da família", quando: "Dom 10h · templo + online", tag: "Ao vivo", foto: "familia" },
+  { titulo: "Culto da noite", quando: "Dom 19h · templo", tag: "Culto", foto: "cultoNoite" },
+  { titulo: "Culto de jovens", quando: "Sáb 20h · templo", tag: "Jovens", foto: "jovens" },
+  { titulo: "Culto pré-adolescentes", quando: "19h · templo", tag: "Geração", foto: "adolescentes" },
   { titulo: "Células em casas", quando: "Durante a semana", tag: "Comunidade", foto: "celulas" },
   { titulo: "Ágape Serve", quando: "Ações na cidade", tag: "Missão", foto: "missao" },
 ];

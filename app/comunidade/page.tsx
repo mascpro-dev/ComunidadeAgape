@@ -5,9 +5,9 @@ export default function ComunidadePage() {
   return (
     <div>
       <PageHeader
-        kicker="A casa"
+        kicker="A comunidade"
         title="Comunidade"
-        lead="Feed da igreja, como um instagram da casa, e salas por tema: oração, jovens, famílias, missão."
+        lead="Feed da igreja, como um instagram da comunidade, e salas por tema: oração, jovens, famílias, missão."
       />
       <CommunityHub />
     </div>

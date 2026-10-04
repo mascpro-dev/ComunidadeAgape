@@ -22,10 +22,10 @@ const atajos = [
 ];
 
 const avisos = [
-  { t: "Parabéns aos aniversariantes da casa", href: "/comunidade" },
+  { t: "Parabéns aos aniversariantes da comunidade", href: "/comunidade" },
   { t: "Inscrições abertas na Universidade da Família", href: "/formacao" },
   { t: "Células durante a semana — ache a sua", href: "/celulas" },
-  { t: "Culto da noite também online, 18h", href: "/culto" },
+  { t: "Culto da noite no templo, domingo 19h", href: "/culto" },
 ];
 
 const jornada = [
@@ -81,7 +81,7 @@ export function HomePortal() {
               <br />
               Toda a vida.
             </h1>
-            <p className="mt-3 max-w-[28ch] text-sm text-[#c5d6f0] md:text-[15px]">Conheça os heróis da casa este mês</p>
+            <p className="mt-3 max-w-[28ch] text-sm text-[#c5d6f0] md:text-[15px]">Conheça os heróis da comunidade este mês</p>
             <Link href="/culto" className="btn-gold mt-6 w-fit px-6">
               Ler mais
             </Link>
@@ -106,7 +106,7 @@ export function HomePortal() {
         <aside className="bg-gradient-to-b from-[#9fd4ea] to-[#6bb4d4] text-[#0a2348] md:absolute md:inset-y-0 md:right-0 md:w-[236px]">
           <div className="flex h-full flex-col justify-between p-5 md:p-6">
             <div>
-              <p className="text-[13px] font-semibold">Heróis da casa este mês</p>
+              <p className="text-[13px] font-semibold">Heróis da comunidade este mês</p>
               <ul className="mt-4 space-y-3 text-[13px] leading-snug">
                 {avisos.map((a, i) => (
                   <li key={a.t} className={i === aviso ? "font-semibold" : "opacity-80"}>
@@ -143,7 +143,7 @@ export function HomePortal() {
           <input
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
-            placeholder="Buscar na casa…"
+            placeholder="Buscar na comunidade…"
             className="field rounded-full border-white/5 bg-[#0b1c3e] py-3.5 pl-4 pr-12"
           />
           <button type="submit" className="absolute right-4 top-1/2 -translate-y-1/2 text-muted" aria-label="Buscar">
@@ -180,10 +180,12 @@ export function HomePortal() {
         title="Assistir"
         href="/culto"
         items={[
-          { href: "/culto", src: fotos.culto, title: "Culto da noite", kicker: "Ao vivo" },
-          { href: "/culto", src: fotos.familia, title: "Culto da família", kicker: "Domingo 10h" },
+          { href: "/culto", src: fotos.familia, title: "Culto da família", kicker: "Ao vivo · Dom 10h" },
+          { href: "/culto", src: fotos.culto, title: "Culto da noite", kicker: "Domingo 19h" },
+          { href: "/formacao/jovens", src: fotos.jovens, title: "Culto de jovens", kicker: "Sábado 20h" },
+          { href: "/formacao/adolescentes", src: fotos.adolescentes, title: "Culto pré-adolescentes", kicker: "19h" },
           { href: "/palavra", src: fotos.biblia, title: "Áudios", kicker: "Palavra" },
-          { href: "/visao", src: fotos.missao, title: "Visão 2033", kicker: "A casa" },
+          { href: "/visao", src: fotos.missao, title: "Visão 2033", kicker: "A comunidade" },
         ]}
       />
 
@@ -207,7 +209,7 @@ export function HomePortal() {
       <div className="mt-8 grid gap-8 md:grid-cols-[minmax(0,1fr)_280px] md:items-start">
         <div>
           <div className="flex items-end justify-between">
-            <h3 className="section-label mb-0">Atalhos da casa</h3>
+            <h3 className="section-label mb-0">Atalhos da comunidade</h3>
             <Link href="/mais" className="text-[12px] text-[#9fd4ea]">
               Ver todos →
             </Link>

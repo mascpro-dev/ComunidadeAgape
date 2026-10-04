@@ -97,7 +97,7 @@ export function MetricsDashboard() {
   }
 
   return (
-    <LeaderGate title="Painel da casa" funcao="painel">
+    <LeaderGate title="Painel da comunidade" funcao="painel">
       <div className="md:grid md:grid-cols-[68px_minmax(0,1fr)] md:gap-5">
         <nav className="mb-4 flex gap-2 overflow-x-auto md:mb-0 md:flex-col md:items-center md:rounded-[28px] md:bg-[#0a1733]/90 md:py-4">
           <SideBtn on={tab === "numeros"} label="Números" onClick={() => setTab("numeros")}>
@@ -135,7 +135,7 @@ export function MetricsDashboard() {
               <p className="mt-1 text-[12px] capitalize text-muted">
                 {agora
                   ? agora.toLocaleDateString("pt-BR", { weekday: "long", day: "numeric", month: "long" })
-                  : "Painel da casa"}
+                  : "Painel da comunidade"}
               </p>
             </div>
           </header>
@@ -223,11 +223,13 @@ function NumerosGrid({
       </article>
 
       <article className="dash-card md:col-span-5">
-        <p className="mb-3 text-[13px] font-medium">Agenda da casa</p>
+        <p className="mb-3 text-[13px] font-medium">Agenda da comunidade</p>
         <ul className="space-y-2.5">
           {[
-            { h: "10:00", t: "Culto da família", d: "Templo", c: "bg-[#7b6cff]" },
-            { h: "18:00", t: "Culto da noite", d: "Templo + online", c: "bg-[#4ea0ff]" },
+            { h: "10:00", t: "Culto da família", d: "Domingo · templo + online", c: "bg-[#7b6cff]" },
+            { h: "19:00", t: "Culto da noite", d: "Domingo · templo", c: "bg-[#4ea0ff]" },
+            { h: "20:00", t: "Culto de jovens", d: "Sábado · templo", c: "bg-[#3dce8a]" },
+            { h: "19:00", t: "Culto pré-adolescentes", d: "Templo", c: "bg-[#ff6b3d]" },
             { h: "Semana", t: "Células em casas", d: "Grupos nos bairros", c: "bg-gold" },
             { h: "Trilha", t: "Universidade da Família", d: "Formação contínua", c: "bg-[#3dce8a]" },
           ].map((x) => (
@@ -244,7 +246,7 @@ function NumerosGrid({
       </article>
 
       <article className="dash-card flex flex-col items-center justify-center text-center md:col-span-3">
-        <p className="self-start text-[13px] font-medium">Casa hoje</p>
+        <p className="self-start text-[13px] font-medium">Comunidade hoje</p>
         <p className="mt-4 font-display text-5xl text-gold">{s.total}</p>
         <p className="mt-1 text-sm text-muted">membros no cadastro</p>
         <p className="mt-4 text-[12px] text-[#d7e2f8]">
@@ -339,7 +341,7 @@ function NumerosGrid({
       </article>
 
       <article className="dash-card md:col-span-5">
-        <p className="mb-3 text-[13px] font-medium">Hábitos da casa</p>
+        <p className="mb-3 text-[13px] font-medium">Hábitos da comunidade</p>
         <ul className="space-y-2.5">
           {["Culto", "Células", "Jovens", "Famílias"].map((nome) => {
             const ok = (s.porMinisterio.find((m) => m.nome === nome)?.relatorios || 0) > 0;
