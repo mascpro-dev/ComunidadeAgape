@@ -11,6 +11,8 @@ export const church = {
   youtubeUrl: "https://www.youtube.com",
   youtubeChannelId: "",
   youtubeVideoId: "",
+  temaPalavra: "Jesus. Toda a vida.",
+  temaPalavraLinha: "Culto da família · domingo 10h",
 };
 
 export const principios = [

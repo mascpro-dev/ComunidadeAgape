@@ -5,7 +5,7 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { PosterRow } from "@/components/PosterRow";
 import { loadMe } from "@/lib/agape-db";
-import { celulas, eventos, ministerios } from "@/lib/content";
+import { celulas, church, eventos, ministerios } from "@/lib/content";
 import { fotoCapa, fotos } from "@/lib/fotos";
 
 const buscaRotas = [
@@ -75,28 +75,35 @@ export function HomePortal() {
   }
 
   const avisoAtual = avisos[aviso];
+  const temaPalavraLinhas = useMemo(() => {
+    const t = church.temaPalavra.trim();
+    const parts = t.split(/(?<=\.)\s+/).filter(Boolean);
+    if (parts.length >= 2) return [parts[0], parts.slice(1).join(" ")];
+    return [t, ""];
+  }, []);
 
   return (
     <div className="min-w-0 max-w-full overflow-x-clip">
       <section className="relative -mx-4 overflow-hidden md:mx-0 md:rounded-[28px]">
-        <div className="relative min-h-[460px] md:min-h-[560px]">
+        <div className="relative min-h-[280px] md:min-h-[560px]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={fotos.familia} alt="" className="absolute inset-0 h-full w-full object-cover object-center" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#030b1f] via-[#030b1f]/55 to-black/20" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#030b1f]/80 via-transparent to-transparent" />
-          <div className="relative z-10 flex min-h-[460px] flex-col justify-end px-5 pb-6 pt-16 md:min-h-[560px] md:max-w-3xl md:px-12 md:pb-12">
+          <div className="relative z-10 flex min-h-[280px] flex-col justify-end px-5 pb-5 pt-8 md:min-h-[560px] md:max-w-3xl md:px-12 md:pb-12 md:pt-16">
             <span className="pill">
               <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
               ao vivo · domingo 10h
             </span>
-            <h1 className="font-display max-w-[10ch] text-[48px] font-semibold leading-[0.9] tracking-tight md:text-[72px]">
-              Jesus.
-              <span className="block text-gold">Toda a vida.</span>
+            <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-gold">Tema da palavra</p>
+            <h1 className="font-display max-w-[14ch] text-[34px] font-semibold leading-[0.92] tracking-tight md:max-w-[10ch] md:text-[72px]">
+              {temaPalavraLinhas[0]}
+              {temaPalavraLinhas[1] ? <span className="block text-gold">{temaPalavraLinhas[1]}</span> : null}
             </h1>
-            <p className="mt-4 max-w-[36ch] text-sm leading-relaxed text-[#d7e2f8] md:text-base">
-              Palavra, comunidade e gerações — no templo, na transmissão e na cidade.
+            <p className="mt-3 max-w-[36ch] text-sm leading-relaxed text-[#d7e2f8] md:mt-4 md:text-base">
+              {church.temaPalavraLinha}
             </p>
-            <div className="mt-6 flex flex-wrap gap-3">
+            <div className="mt-4 flex flex-wrap gap-3 md:mt-6">
               <Link href="/culto" className="btn-gold px-6">
                 Assistir o culto
               </Link>

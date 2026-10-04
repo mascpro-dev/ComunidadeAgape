@@ -162,7 +162,13 @@ export function SessionMenu({ compact }: { compact?: boolean }) {
   if (!id) {
     return (
       <Link href="/entrar" className={compact ? "" : "btn-gold"} aria-label="Entrar">
-        {compact ? <Avatar nome="M" size={36} /> : "Entrar"}
+        {compact ? (
+          <span className="block overflow-hidden rounded-full ring-2 ring-gold/80">
+            <Avatar nome="M" size={54} />
+          </span>
+        ) : (
+          "Entrar"
+        )}
       </Link>
     );
   }
@@ -170,7 +176,13 @@ export function SessionMenu({ compact }: { compact?: boolean }) {
   return (
     <div className="flex items-center gap-2">
       <Link href="/perfil" className="flex items-center gap-2 text-[13px] text-gold">
-        <Avatar nome={nome} foto={foto} size={compact ? 36 : 34} />
+        {compact ? (
+          <span className="block overflow-hidden rounded-full ring-2 ring-gold/80">
+            <Avatar nome={nome} foto={foto} size={54} />
+          </span>
+        ) : (
+          <Avatar nome={nome} foto={foto} size={34} />
+        )}
         {compact ? null : <span className="hidden lg:inline">{nome}</span>}
       </Link>
       {compact ? null : (
