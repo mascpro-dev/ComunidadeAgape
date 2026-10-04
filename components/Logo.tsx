@@ -1,8 +1,13 @@
-export function Logo({ className = "h-8 w-8" }: { className?: string }) {
+export function Logo({
+  className = "h-8 w-auto",
+  variant = "mark",
+}: {
+  className?: string;
+  variant?: "mark" | "full";
+}) {
+  const src = variant === "full" ? "/logo-horizontal.png" : "/logo-marca.png";
   return (
-    <svg viewBox="0 0 120 108" fill="none" className={className} aria-hidden>
-      <path d="M60 6 L114 102 H6 Z" stroke="currentColor" strokeWidth="9" strokeLinejoin="miter" />
-      <path d="M60 34 L92 90 H28 Z" stroke="currentColor" strokeWidth="9" strokeLinejoin="miter" />
-    </svg>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src={src} alt="Comunidade Cristã Ágape" className={className} />
   );
 }

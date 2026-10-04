@@ -56,12 +56,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <div className="flex min-h-dvh flex-col">
       <header className="sticky top-0 z-40 hidden border-b border-white/[0.06] bg-[#030b1f]/80 backdrop-blur-xl md:block">
         <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-6 lg:px-8">
-          <Link href="/" className="flex items-center gap-3 text-white">
-            <Logo className="h-9 w-9 text-gold" />
-            <span>
-              <p className="text-[10px] uppercase tracking-[0.22em] text-muted">Comunidade Cristã</p>
-              <p className="font-display text-[26px] font-semibold leading-none tracking-wide">Ágape</p>
-            </span>
+          <Link href="/" className="flex items-center">
+            <Logo variant="full" className="h-9 w-auto max-w-[240px]" />
           </Link>
           <nav className="flex items-center gap-1">
             {desktopNav.map((item) => {
@@ -84,12 +80,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </header>
 
       <header className="flex items-center justify-between px-5 pb-1 pt-[calc(env(safe-area-inset-top)+18px)] md:hidden">
-        <Link href="/" className="flex items-center gap-2.5 text-white">
-          <Logo className="h-7 w-7 text-gold" />
-          <span>
-            <p className="text-[9px] uppercase tracking-[0.2em] text-muted">Comunidade Cristã</p>
-            <p className="font-display text-[22px] font-semibold leading-none">Ágape</p>
-          </span>
+        <Link href="/" className="flex items-center">
+          <Logo variant="full" className="h-7 w-auto max-w-[200px]" />
         </Link>
         <SessionMenu compact />
       </header>
@@ -99,8 +91,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <footer className="mt-auto hidden md:block">
         <div className="mx-auto grid max-w-7xl gap-10 px-8 py-12 md:grid-cols-[1.2fr_repeat(3,1fr)]">
           <div>
-            <p className="font-display text-2xl text-gold">Ágape</p>
-            <p className="mt-2 max-w-sm text-sm text-muted">
+            <Logo variant="full" className="h-10 w-auto max-w-[260px]" />
+            <p className="mt-3 max-w-sm text-sm text-muted">
               Pessoas formadas por Jesus em uma comunidade viva, para amar, servir e transformar a cidade.
             </p>
             <p className="mt-3 text-[12px] text-muted">Marília-SP · Visão 2033</p>
