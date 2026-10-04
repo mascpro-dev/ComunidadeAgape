@@ -146,12 +146,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
       <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-white/10 bg-[#06153a]/92 px-2 pb-[max(10px,env(safe-area-inset-bottom))] pt-2 backdrop-blur-xl md:hidden">
         {maisAberto ? (
-          <div className="absolute bottom-[calc(100%+8px)] right-3 w-[min(240px,calc(100vw-24px))] overflow-hidden rounded-2xl border border-gold/50 bg-[#eef6fc] shadow-[0_16px_40px_rgba(0,0,0,.4)]">
+          <div className="absolute bottom-[calc(100%+8px)] right-3 w-[min(240px,calc(100vw-24px))] overflow-hidden rounded-none border border-gold/40 bg-[#0b2a5c] shadow-[0_16px_40px_rgba(0,0,0,.4)]">
             {maisMenu.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="block border-b border-[#c5d6ea] px-4 py-3.5 font-display text-[18px] font-semibold text-[#b8953c] last:border-b-0"
+                className="block border-b border-white/10 px-4 py-3.5 font-display text-[18px] font-semibold text-gold last:border-b-0"
                 onClick={() => setMaisAberto(false)}
               >
                 {item.label}
