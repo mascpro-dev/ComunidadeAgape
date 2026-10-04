@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 export type PosterItem = {
   href?: string;
@@ -29,30 +29,33 @@ export function PosterRow({
   fill?: boolean;
 }) {
   const scroller = useRef<HTMLDivElement>(null);
-  const paused = useRef(true);
+  const paused = useRef(false);
   const looping = useRef(false);
+  const loopItems = useMemo(() => (items.length > 1 ? [...items, ...items] : items), [items]);
+  const itemCount = items.length;
 
   useEffect(() => {
     const el = scroller.current;
-    if (!el || items.length < 2) return;
+    if (!el || itemCount < 2) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const measure = () => {
-      looping.current = el.scrollWidth > el.clientWidth + 24;
+      looping.current = el.scrollWidth / 2 > el.clientWidth + 8;
     };
     measure();
     const ro = new ResizeObserver(measure);
     ro.observe(el);
+    const imgs = el.querySelectorAll("img");
+    imgs.forEach((img) => {
+      if (!img.complete) img.addEventListener("load", measure, { once: true });
+    });
 
-    paused.current = false;
     let frame = 0;
     const tick = () => {
       if (looping.current && !paused.current) {
-        el.scrollLeft += 0.38;
-        const resetAt = el.scrollWidth / 2;
-        if (resetAt > 0 && el.scrollLeft >= resetAt) {
-          el.scrollLeft -= resetAt;
-        }
+        el.scrollLeft += 0.7;
+        const half = el.scrollWidth / 2;
+        if (half > 0 && el.scrollLeft >= half) el.scrollLeft -= half;
       }
       frame = requestAnimationFrame(tick);
     };
@@ -61,11 +64,11 @@ export function PosterRow({
       cancelAnimationFrame(frame);
       ro.disconnect();
     };
-  }, [items]);
+  }, [itemCount, title]);
 
   function snapAndPause() {
-    const el = scroller.current;
     paused.current = true;
+    const el = scroller.current;
     if (!el) return;
     const card = el.querySelector(".poster") as HTMLElement | null;
     if (!card) return;
@@ -73,15 +76,12 @@ export function PosterRow({
     const gap = parseFloat(styles.columnGap || styles.gap || "12") || 12;
     const step = card.getBoundingClientRect().width + gap;
     if (step <= 0) return;
-    const next = Math.round(el.scrollLeft / step) * step;
-    el.scrollTo({ left: next, behavior: "smooth" });
+    el.scrollTo({ left: Math.round(el.scrollLeft / step) * step, behavior: "smooth" });
   }
 
   function resume() {
     paused.current = false;
   }
-
-  const loopItems = items.length > 3 ? [...items, ...items] : items;
 
   return (
     <section className={`${fill ? "mt-0 flex min-h-0 flex-1 flex-col" : "mt-6 md:mt-10"} ${className}`.trim()}>
@@ -99,7 +99,6 @@ export function PosterRow({
         onMouseEnter={snapAndPause}
         onMouseLeave={resume}
         onPointerDown={snapAndPause}
-        onPointerUp={resume}
       >
         {loopItems.map((item, i) => (
           <PosterCard key={`${item.title}-${item.href || ""}-${i}`} item={item} />
