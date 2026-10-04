@@ -2,8 +2,8 @@
 
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { loadJson, saveJson } from "@/lib/client-store";
-import { getSessionId } from "@/lib/auth";
-import { MEMBROS_KEY, garantirAdmin, seedMembros, temFuncao, type Membro } from "@/lib/metrics";
+import { loadMe } from "@/lib/agape-db";
+import { temFuncao } from "@/lib/metrics";
 
 type AudioItem = {
   id: string;
@@ -24,9 +24,9 @@ export function AudioFeed() {
 
   useEffect(() => {
     setItems(loadJson<AudioItem[]>(KEY, []));
-    const lista = garantirAdmin(loadJson<Membro[]>(MEMBROS_KEY, seedMembros));
-    const u = lista.find((m) => m.id === getSessionId());
-    setLeader(temFuncao(u, "audios"));
+    loadMe()
+      .then((u) => setLeader(temFuncao(u || undefined, "audios")))
+      .catch(() => setLeader(false));
   }, []);
 
   function persist(next: AudioItem[]) {

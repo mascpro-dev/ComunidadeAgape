@@ -3,20 +3,10 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { Avatar } from "@/components/Avatar";
 import { celulas, cursos } from "@/lib/content";
-import { loadJson, saveJson } from "@/lib/client-store";
 import { buscarCep } from "@/lib/cep";
 import { comprimirFoto } from "@/lib/foto-perfil";
-import { getSessionId, hashPassword } from "@/lib/auth";
-import {
-  ADMIN_PRINCIPAL,
-  MEU_PERFIL_KEY,
-  MEMBROS_KEY,
-  estadosCivis,
-  garantirAdmin,
-  seedMembros,
-  type EstadoCivil,
-  type Membro,
-} from "@/lib/metrics";
+import { loadMe, saveProfile, signUp, updatePassword } from "@/lib/agape-db";
+import { estadosCivis, type EstadoCivil, type Membro } from "@/lib/metrics";
 
 const empty: Omit<Membro, "id" | "atualizado" | "senhaHash" | "funcoes" | "principal"> = {
   nome: "",
@@ -38,7 +28,6 @@ const empty: Omit<Membro, "id" | "atualizado" | "senhaHash" | "funcoes" | "princ
 };
 
 export function MemberProfile() {
-  const [membros, setMembros] = useState<Membro[]>(seedMembros);
   const [meuId, setMeuId] = useState("");
   const [form, setForm] = useState(empty);
   const [senha, setSenha] = useState("");
@@ -46,13 +35,13 @@ export function MemberProfile() {
   const [ok, setOk] = useState("");
 
   useEffect(() => {
-    const all = garantirAdmin(loadJson(MEMBROS_KEY, seedMembros));
-    saveJson(MEMBROS_KEY, all);
-    setMembros(all);
-    const id = getSessionId() || localStorage.getItem(MEU_PERFIL_KEY) || "";
-    setMeuId(id);
-    const mine = all.find((m) => m.id === id);
-    if (mine) fill(mine);
+    loadMe()
+      .then((mine) => {
+        if (!mine) return;
+        setMeuId(mine.id);
+        fill(mine);
+      })
+      .catch(() => setOk("Não foi possível carregar o perfil."));
   }, []);
 
   function fill(mine: Membro) {
@@ -108,30 +97,39 @@ export function MemberProfile() {
 
   async function save(e: FormEvent) {
     e.preventDefault();
-    const prev = membros.find((m) => m.id === meuId);
-    const isPrincipal = !!prev?.principal || meuId === ADMIN_PRINCIPAL.id;
-    const id = isPrincipal ? ADMIN_PRINCIPAL.id : meuId || crypto.randomUUID();
-    const senhaHash = senha ? await hashPassword(senha) : prev?.senhaHash || (isPrincipal ? ADMIN_PRINCIPAL.senhaHash : "");
-    const membro: Membro = {
-      ...form,
-      id,
-      qtdFilhos: form.temFilhos ? Number(form.qtdFilhos) || 0 : 0,
-      tempoCasado: casado ? form.tempoCasado : "",
-      querIndicacao: semCelula ? form.querIndicacao : false,
-      atualizado: new Date().toLocaleDateString("pt-BR"),
-      senhaHash,
-      principal: isPrincipal,
-      funcoes: isPrincipal ? ADMIN_PRINCIPAL.funcoes : prev?.funcoes || [],
-      email: (form.email || "").toLowerCase(),
-      foto: form.foto || "",
-    };
-    const next = garantirAdmin([membro, ...membros.filter((m) => m.id !== id)]);
-    setMembros(next);
-    saveJson(MEMBROS_KEY, next);
-    localStorage.setItem(MEU_PERFIL_KEY, id);
-    setMeuId(id);
-    setSenha("");
-    setOk("Cadastro salvo.");
+    setOk("");
+    try {
+      let id = meuId;
+      if (!id) {
+        if (!senha) {
+          setOk("Defina uma senha para criar o cadastro.");
+          return;
+        }
+        const created = await signUp((form.email || "").toLowerCase(), senha, form.nome);
+        if (created.error || !created.userId) {
+          setOk(created.error || "Não foi possível criar a conta.");
+          return;
+        }
+        id = created.userId;
+        setMeuId(id);
+      } else if (senha) {
+        await updatePassword(senha);
+      }
+      const membro: Membro = {
+        ...form,
+        id,
+        qtdFilhos: form.temFilhos ? Number(form.qtdFilhos) || 0 : 0,
+        tempoCasado: casado ? form.tempoCasado : "",
+        querIndicacao: semCelula ? form.querIndicacao : false,
+        atualizado: new Date().toLocaleDateString("pt-BR"),
+        email: (form.email || "").toLowerCase(),
+      };
+      await saveProfile(membro);
+      setSenha("");
+      setOk("Cadastro salvo na comunidade.");
+    } catch (err) {
+      setOk(err instanceof Error ? err.message : "Não foi possível salvar.");
+    }
   }
 
   async function onFoto(file?: File) {
@@ -150,7 +148,7 @@ export function MemberProfile() {
         <Avatar nome={form.nome} foto={form.foto} size={88} />
         <div>
           <p className="text-sm font-medium">Foto do perfil</p>
-          <p className="meta mb-3">Aparece no menu e na comunidade. Use uma foto clara do rosto.</p>
+          <p className="meta mb-3">Por enquanto a foto fica só neste aparelho. Ainda não vai para o servidor.</p>
           <label className="btn-ghost inline-flex cursor-pointer">
             Escolher foto
             <input
@@ -177,7 +175,14 @@ export function MemberProfile() {
       </label>
       <label className="grid gap-1 text-sm">
         E-mail
-        <input className="field" type="email" required value={form.email} onChange={(e) => set("email", e.target.value)} />
+        <input
+          className="field"
+          type="email"
+          required
+          value={form.email}
+          disabled={!!meuId}
+          onChange={(e) => set("email", e.target.value)}
+        />
       </label>
       <label className="grid gap-1 text-sm">
         Senha {meuId ? "(em branco mantém a atual)" : ""}

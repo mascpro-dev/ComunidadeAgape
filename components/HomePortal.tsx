@@ -4,11 +4,9 @@ import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { PosterRow } from "@/components/PosterRow";
-import { getSessionId } from "@/lib/auth";
-import { loadJson } from "@/lib/client-store";
+import { loadMe } from "@/lib/agape-db";
 import { eventos, ministerios } from "@/lib/content";
 import { fotoCapa, fotos } from "@/lib/fotos";
-import { MEMBROS_KEY, seedMembros, type Membro } from "@/lib/metrics";
 
 const atajos = [
   { href: "/perfil", k: "Perfil", icon: "user" },
@@ -51,11 +49,9 @@ export function HomePortal() {
   const [aviso, setAviso] = useState(0);
 
   useEffect(() => {
-    const sid = getSessionId();
-    if (!sid) return;
-    const lista = loadJson<Membro[]>(MEMBROS_KEY, seedMembros);
-    const u = lista.find((m) => m.id === sid);
-    setNome(u?.nome.split(" ")[0] || "");
+    loadMe()
+      .then((u) => setNome(u?.nome.split(" ")[0] || ""))
+      .catch(() => setNome(""));
   }, []);
 
   const tituloSaudacao = useMemo(

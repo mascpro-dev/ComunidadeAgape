@@ -2,26 +2,20 @@
 
 import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { loadJson, saveJson } from "@/lib/client-store";
 import { LeaderGate } from "./LeaderGate";
 import {
   FUNCOES,
-  MEMBROS_KEY,
-  RELATORIOS_KEY,
   estadosCivis,
-  garantirAdmin,
   maskCpf,
   ministeriosPainel,
   parseCursos,
-  seedMembros,
-  seedRelatorios,
   summarize,
   temFuncao,
   type FuncaoId,
   type Membro,
   type Relatorio,
 } from "@/lib/metrics";
-import { getSessionId } from "@/lib/auth";
+import { insertRelatorio, loadMe, loadMembros, loadRelatorios, setFuncao } from "@/lib/agape-db";
 
 const MESES = [
   "janeiro",
@@ -47,19 +41,20 @@ function saudacaoHora(h: number) {
 
 export function MetricsDashboard() {
   const [tab, setTab] = useState<"numeros" | "relatorios" | "pessoas">("numeros");
-  const [membros, setMembros] = useState<Membro[]>(seedMembros);
-  const [relatorios, setRelatorios] = useState<Relatorio[]>(seedRelatorios);
+  const [membros, setMembros] = useState<Membro[]>([]);
+  const [relatorios, setRelatorios] = useState<Relatorio[]>([]);
   const [eu, setEu] = useState<Membro | undefined>();
   const [agora, setAgora] = useState<Date | null>(null);
 
-  useEffect(() => {
-    const m = garantirAdmin(loadJson(MEMBROS_KEY, seedMembros));
-    const r = loadJson(RELATORIOS_KEY, seedRelatorios);
-    saveJson(MEMBROS_KEY, m);
-    if (!localStorage.getItem(RELATORIOS_KEY)) saveJson(RELATORIOS_KEY, r);
+  async function recarregar() {
+    const [m, r, me] = await Promise.all([loadMembros(), loadRelatorios(), loadMe()]);
     setMembros(m);
     setRelatorios(r);
-    setEu(m.find((x) => x.id === getSessionId()));
+    setEu(me || undefined);
+  }
+
+  useEffect(() => {
+    recarregar().catch(() => undefined);
     setAgora(new Date());
     const t = setInterval(() => setAgora(new Date()), 30000);
     return () => clearInterval(t);
@@ -73,26 +68,20 @@ export function MetricsDashboard() {
   const podePessoas = temFuncao(eu, "pessoas") || temFuncao(eu, "liberar");
   const podeRel = temFuncao(eu, "relatorios") || temFuncao(eu, "painel");
 
-  function saveRel(e: FormEvent<HTMLFormElement>) {
+  async function saveRel(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const d = new FormData(e.currentTarget);
-    const next = [
-      {
-        id: crypto.randomUUID(),
-        ministerio: String(d.get("ministerio")),
-        lider: String(d.get("lider") || "").trim(),
-        periodo: String(d.get("periodo") || "").trim(),
-        presentes: Number(d.get("presentes") || 0),
-        visitantes: Number(d.get("visitantes") || 0),
-        decisoes: Number(d.get("decisoes") || 0),
-        observacao: String(d.get("observacao") || "").trim(),
-        quando: new Date().toLocaleDateString("pt-BR"),
-      },
-      ...relatorios,
-    ];
-    setRelatorios(next);
-    saveJson(RELATORIOS_KEY, next);
+    await insertRelatorio({
+      ministerio: String(d.get("ministerio")),
+      lider: String(d.get("lider") || "").trim(),
+      periodo: String(d.get("periodo") || "").trim(),
+      presentes: Number(d.get("presentes") || 0),
+      visitantes: Number(d.get("visitantes") || 0),
+      decisoes: Number(d.get("decisoes") || 0),
+      observacao: String(d.get("observacao") || "").trim(),
+    });
     e.currentTarget.reset();
+    await recarregar();
     setTab("numeros");
   }
 
@@ -183,10 +172,11 @@ export function MetricsDashboard() {
 
           {tab === "pessoas" && podePessoas ? (
             <PessoasAdmin
+              eu={eu}
               membros={membros}
-              onChange={(next) => {
-                setMembros(next);
-                saveJson(MEMBROS_KEY, next);
+              onToggle={async (id, fn, on) => {
+                await setFuncao(id, fn, on);
+                await recarregar();
               }}
             />
           ) : null}
@@ -506,24 +496,20 @@ function IconPeople() {
 }
 
 function PessoasAdmin({
+  eu,
   membros,
-  onChange,
+  onToggle,
 }: {
+  eu?: Membro;
   membros: Membro[];
-  onChange: (m: Membro[]) => void;
+  onToggle: (id: string, fn: FuncaoId, on: boolean) => Promise<void>;
 }) {
-  const eu = membros.find((m) => m.id === getSessionId());
   const podeLiberar = temFuncao(eu, "liberar");
 
-  function toggle(id: string, fn: FuncaoId) {
-    onChange(
-      membros.map((m) => {
-        if (m.id !== id || m.principal) return m;
-        const tem = (m.funcoes || []).includes(fn);
-        const funcoes = tem ? (m.funcoes || []).filter((f) => f !== fn) : [...(m.funcoes || []), fn];
-        return { ...m, funcoes };
-      }),
-    );
+  function toggle(m: Membro, fn: FuncaoId) {
+    if (m.principal) return;
+    const tem = (m.funcoes || []).includes(fn);
+    void onToggle(m.id, fn, !tem);
   }
 
   return (
@@ -555,7 +541,7 @@ function PessoasAdmin({
                     type="checkbox"
                     disabled={!!m.principal}
                     checked={m.principal || (m.funcoes || []).includes(f.id)}
-                    onChange={() => toggle(m.id, f.id)}
+                    onChange={() => toggle(m, f.id)}
                   />
                   {f.label}
                 </label>

@@ -4,9 +4,9 @@ import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Avatar } from "@/components/Avatar";
-import { clearSession, getSessionId, hashPassword, setSession } from "@/lib/auth";
-import { loadJson, saveJson } from "@/lib/client-store";
-import { ADMIN_PRINCIPAL, MEMBROS_KEY, garantirAdmin, seedMembros, type Membro } from "@/lib/metrics";
+import { loadMe, signIn, signOut } from "@/lib/agape-db";
+import { isSupabaseConfigured } from "@/lib/supabase";
+import { ADMIN_PRINCIPAL } from "@/lib/metrics";
 
 export function LoginForm() {
   const router = useRouter();
@@ -15,21 +15,22 @@ export function LoginForm() {
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setErro("");
+    if (!isSupabaseConfigured()) {
+      setErro("Falta configurar URL e chave anon no arquivo .env.local");
+      return;
+    }
     const d = new FormData(e.currentTarget);
     const email = String(d.get("email") || "")
       .trim()
       .toLowerCase();
     const senha = String(d.get("senha") || "");
-    const lista = garantirAdmin(loadJson<Membro[]>(MEMBROS_KEY, seedMembros));
-    saveJson(MEMBROS_KEY, lista);
-    const hash = await hashPassword(senha);
-    const user = lista.find((m) => (m.email || "").toLowerCase() === email && m.senhaHash === hash);
-    if (!user) {
-      setErro("E-mail ou senha não conferem.");
+    const res = await signIn(email, senha);
+    if (res.error) {
+      setErro(res.error);
       return;
     }
-    setSession(user.id);
-    router.push(user.principal ? "/dashboard" : "/perfil");
+    const me = await loadMe();
+    router.push(me?.principal ? "/dashboard" : "/perfil");
     router.refresh();
   }
 
@@ -50,21 +51,24 @@ export function LoginForm() {
 export function SessionMenu({ compact }: { compact?: boolean }) {
   const pathname = usePathname();
   const [nome, setNome] = useState("");
-  const [foto, setFoto] = useState("");
   const [id, setId] = useState("");
 
   useEffect(() => {
-    const sid = getSessionId();
-    setId(sid);
-    if (!sid) {
-      setNome("");
-      setFoto("");
-      return;
-    }
-    const lista = garantirAdmin(loadJson<Membro[]>(MEMBROS_KEY, seedMembros));
-    const u = lista.find((m) => m.id === sid);
-    setNome(u?.nome.split(" ")[0] || "");
-    setFoto(u?.foto || "");
+    let alive = true;
+    loadMe()
+      .then((u) => {
+        if (!alive) return;
+        setId(u?.id || "");
+        setNome(u?.nome.split(" ")[0] || "");
+      })
+      .catch(() => {
+        if (!alive) return;
+        setId("");
+        setNome("");
+      });
+    return () => {
+      alive = false;
+    };
   }, [pathname]);
 
   if (!id) {
@@ -78,14 +82,14 @@ export function SessionMenu({ compact }: { compact?: boolean }) {
   return (
     <div className="flex items-center gap-2">
       <Link href="/perfil" className="flex items-center gap-2 text-[13px] text-gold">
-        <Avatar nome={nome} foto={foto} size={compact ? 36 : 34} />
+        <Avatar nome={nome} size={compact ? 36 : 34} />
         {compact ? null : <span className="hidden lg:inline">{nome}</span>}
       </Link>
       {compact ? null : (
         <button
           className="btn-ghost py-2 text-[12px]"
-          onClick={() => {
-            clearSession();
+          onClick={async () => {
+            await signOut();
             location.href = "/";
           }}
         >

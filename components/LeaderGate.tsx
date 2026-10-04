@@ -2,9 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useState, type ReactNode } from "react";
-import { getSessionId } from "@/lib/auth";
-import { loadJson, saveJson } from "@/lib/client-store";
-import { MEMBROS_KEY, garantirAdmin, seedMembros, temFuncao, type FuncaoId, type Membro } from "@/lib/metrics";
+import { loadMe } from "@/lib/agape-db";
+import { temFuncao, type FuncaoId, type Membro } from "@/lib/metrics";
 
 export function LeaderGate({
   title,
@@ -19,11 +18,10 @@ export function LeaderGate({
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const lista = garantirAdmin(loadJson<Membro[]>(MEMBROS_KEY, seedMembros));
-    saveJson(MEMBROS_KEY, lista);
-    const u = lista.find((m) => m.id === getSessionId()) || null;
-    setUser(u);
-    setReady(true);
+    loadMe()
+      .then((u) => setUser(u))
+      .catch(() => setUser(null))
+      .finally(() => setReady(true));
   }, []);
 
   if (!ready) return <p className="text-sm text-muted">Carregando…</p>;
