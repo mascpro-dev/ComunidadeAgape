@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useRef } from "react";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 
 export type PosterItem = {
   href?: string;
@@ -28,63 +28,77 @@ export function PosterRow({
   className?: string;
   fill?: boolean;
 }) {
-  const scroller = useRef<HTMLDivElement>(null);
+  const viewport = useRef<HTMLDivElement>(null);
+  const track = useRef<HTMLDivElement>(null);
   const paused = useRef(false);
-  const looping = useRef(false);
-  const loopItems = useMemo(() => (items.length > 1 ? [...items, ...items] : items), [items]);
-  const itemCount = items.length;
+  const offset = useRef(0);
+  const [marquee, setMarquee] = useState(false);
+  const signature = items.map((i) => `${i.title}:${i.href || ""}:${i.src}`).join("|");
+  const shown = useMemo(
+    () => (marquee && items.length > 1 ? [...items, ...items] : items),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [marquee, signature],
+  );
 
-  useEffect(() => {
-    const el = scroller.current;
-    if (!el || itemCount < 2) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  useLayoutEffect(() => {
+    const view = viewport.current;
+    const rail = track.current;
+    if (!view || !rail) return;
+
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const contentWidth = () => {
+      if (marquee && items.length > 1) return rail.scrollWidth / 2;
+      return rail.scrollWidth;
+    };
 
     const measure = () => {
-      looping.current = el.scrollWidth / 2 > el.clientWidth + 8;
+      if (reduce || items.length < 2) {
+        setMarquee(false);
+        offset.current = 0;
+        rail.style.transform = "translate3d(0,0,0)";
+        return;
+      }
+      const need = contentWidth() > view.clientWidth + 2;
+      setMarquee((prev) => (prev === need ? prev : need));
+      if (!need) {
+        offset.current = 0;
+        rail.style.transform = "translate3d(0,0,0)";
+      }
     };
+
     measure();
     const ro = new ResizeObserver(measure);
-    ro.observe(el);
-    const imgs = el.querySelectorAll("img");
-    imgs.forEach((img) => {
-      if (!img.complete) img.addEventListener("load", measure, { once: true });
-    });
+    ro.observe(view);
+    ro.observe(rail);
 
     let frame = 0;
     const tick = () => {
-      if (looping.current && !paused.current) {
-        el.scrollLeft += 0.7;
-        const half = el.scrollWidth / 2;
-        if (half > 0 && el.scrollLeft >= half) el.scrollLeft -= half;
+      if (marquee && !paused.current) {
+        offset.current += 0.7;
+        const half = rail.scrollWidth / 2;
+        if (half > 0 && offset.current >= half) offset.current -= half;
+        rail.style.transform = `translate3d(${-offset.current}px,0,0)`;
       }
       frame = requestAnimationFrame(tick);
     };
     frame = requestAnimationFrame(tick);
+
     return () => {
       cancelAnimationFrame(frame);
       ro.disconnect();
     };
-  }, [itemCount, title]);
+  }, [items.length, signature, marquee, title]);
 
-  function snapAndPause() {
+  function pause() {
     paused.current = true;
-    const el = scroller.current;
-    if (!el) return;
-    const card = el.querySelector(".poster") as HTMLElement | null;
-    if (!card) return;
-    const styles = getComputedStyle(el);
-    const gap = parseFloat(styles.columnGap || styles.gap || "12") || 12;
-    const step = card.getBoundingClientRect().width + gap;
-    if (step <= 0) return;
-    el.scrollTo({ left: Math.round(el.scrollLeft / step) * step, behavior: "smooth" });
   }
-
   function resume() {
     paused.current = false;
   }
 
   return (
-    <section className={`${fill ? "mt-0 flex min-h-0 flex-1 flex-col" : "mt-6 md:mt-10"} ${className}`.trim()}>
+    <section className={`min-w-0 ${fill ? "mt-0 flex min-h-0 flex-1 flex-col" : "mt-6 md:mt-10"} ${className}`.trim()}>
       <div className="mb-3 flex shrink-0 items-end justify-between gap-3">
         <h3 className="section-label mb-0">{title}</h3>
         {href ? (
@@ -94,15 +108,18 @@ export function PosterRow({
         ) : null}
       </div>
       <div
-        ref={scroller}
-        className={fill ? "poster-row poster-row-fill" : "poster-row"}
-        onMouseEnter={snapAndPause}
+        ref={viewport}
+        className={`${fill ? "poster-row poster-row-fill" : "poster-row"} ${marquee ? "is-marquee" : ""}`.trim()}
+        onMouseEnter={pause}
         onMouseLeave={resume}
-        onPointerDown={snapAndPause}
+        onPointerDown={pause}
+        onPointerUp={resume}
       >
-        {loopItems.map((item, i) => (
-          <PosterCard key={`${item.title}-${item.href || ""}-${i}`} item={item} />
-        ))}
+        <div ref={track} className="poster-track">
+          {shown.map((item, i) => (
+            <PosterCard key={`${item.title}-${item.href || ""}-${i}`} item={item} />
+          ))}
+        </div>
       </div>
     </section>
   );

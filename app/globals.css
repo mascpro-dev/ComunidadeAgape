@@ -73,15 +73,31 @@ body {
     @apply rounded-[22px] border border-white/[0.08] bg-[#0a1733]/80 p-4 backdrop-blur-md md:p-5;
   }
   .poster-row {
-    @apply -mx-4 flex gap-2.5 overflow-x-auto overscroll-x-contain px-4 pb-5 [scrollbar-width:none] md:mx-0 md:gap-3 md:px-0 md:pb-3;
+    @apply -mx-4 min-w-0 w-full overflow-x-auto overscroll-x-contain px-4 pb-5 [scrollbar-width:none] md:mx-0 md:px-0 md:pb-3;
     -webkit-overflow-scrolling: touch;
     touch-action: pan-x;
+  }
+  .poster-row.is-marquee {
+    @apply overflow-hidden;
   }
   .poster-row::-webkit-scrollbar {
     display: none;
   }
+  .poster-track {
+    @apply flex w-max gap-2.5 md:gap-3;
+    will-change: transform;
+  }
+  .poster-row:not(.is-marquee) .poster-track {
+    @apply w-full;
+  }
+  .poster-row:not(.is-marquee) .poster {
+    @apply md:flex-1 md:max-w-[210px];
+  }
   .poster-row-fill {
-    @apply min-h-[220px] flex-1 pb-2 md:min-h-0 md:items-stretch md:pb-1;
+    @apply min-h-[220px] flex-1 pb-2 md:min-h-0 md:pb-1;
+  }
+  .poster-row-fill .poster-track {
+    @apply h-full min-h-[220px] md:min-h-0;
   }
   .poster-row-fill .poster {
     @apply md:h-full md:w-auto md:min-w-[152px] md:max-w-none;
