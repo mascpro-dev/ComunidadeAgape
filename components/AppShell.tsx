@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { desktopNav } from "@/lib/nav";
 import { Logo } from "./Logo";
 import { SessionMenu } from "./LoginForm";
 
@@ -11,19 +12,6 @@ const tabs = [
   { href: "/formacao", label: "Formação", icon: FormacaoIcon },
   { href: "/culto", label: "Culto", icon: LiveIcon },
   { href: "/mais", label: "Mais", icon: MenuIcon },
-];
-
-const desktopNav = [
-  { href: "/", label: "Início" },
-  { href: "/culto", label: "Culto" },
-  { href: "/biblia", label: "Bíblia" },
-  { href: "/comunidade", label: "Comunidade" },
-  { href: "/formacao", label: "Gerações" },
-  { href: "/palavra", label: "Áudios" },
-  { href: "/celulas", label: "Células" },
-  { href: "/perfil", label: "Perfil" },
-  { href: "/dashboard", label: "Painel" },
-  { href: "/visao", label: "Visão" },
 ];
 
 function isOn(pathname: string, href: string) {

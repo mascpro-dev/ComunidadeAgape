@@ -138,22 +138,24 @@ export function SessionMenu({ compact }: { compact?: boolean }) {
   const pathname = usePathname();
   const [nome, setNome] = useState("");
   const [id, setId] = useState("");
+  const [foto, setFoto] = useState("");
 
   useEffect(() => {
     let alive = true;
-    loadMe()
-      .then((u) => {
-        if (!alive) return;
-        setId(u?.id || "");
-        setNome(u?.nome.split(" ")[0] || "");
-      })
-      .catch(() => {
-        if (!alive) return;
-        setId("");
-        setNome("");
-      });
+    function aplicar(u: Awaited<ReturnType<typeof loadMe>>) {
+      if (!alive) return;
+      setId(u?.id || "");
+      setNome(u?.nome.split(" ")[0] || "");
+      setFoto(u?.foto || "");
+    }
+    loadMe().then(aplicar).catch(() => aplicar(null));
+    const onMe = () => {
+      loadMe().then(aplicar).catch(() => aplicar(null));
+    };
+    window.addEventListener("agape-me", onMe);
     return () => {
       alive = false;
+      window.removeEventListener("agape-me", onMe);
     };
   }, [pathname]);
 
@@ -168,7 +170,7 @@ export function SessionMenu({ compact }: { compact?: boolean }) {
   return (
     <div className="flex items-center gap-2">
       <Link href="/perfil" className="flex items-center gap-2 text-[13px] text-gold">
-        <Avatar nome={nome} size={compact ? 36 : 34} />
+        <Avatar nome={nome} foto={foto} size={compact ? 36 : 34} />
         {compact ? null : <span className="hidden lg:inline">{nome}</span>}
       </Link>
       {compact ? null : (

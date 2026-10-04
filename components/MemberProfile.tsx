@@ -137,6 +137,19 @@ export function MemberProfile() {
     try {
       const data = await comprimirFoto(file);
       set("foto", data);
+      if (meuId) {
+        await saveProfile({
+          ...form,
+          foto: data,
+          id: meuId,
+          qtdFilhos: form.temFilhos ? Number(form.qtdFilhos) || 0 : 0,
+          tempoCasado: casado ? form.tempoCasado : "",
+          querIndicacao: semCelula ? form.querIndicacao : false,
+          atualizado: new Date().toLocaleDateString("pt-BR"),
+          email: (form.email || "").toLowerCase(),
+        });
+        setOk("Foto salva no perfil.");
+      }
     } catch {
       setOk("Não foi possível usar esta foto.");
     }
@@ -148,7 +161,7 @@ export function MemberProfile() {
         <Avatar nome={form.nome} foto={form.foto} size={88} />
         <div>
           <p className="text-sm font-medium">Foto do perfil</p>
-          <p className="meta mb-3">Por enquanto a foto fica só neste aparelho. Ainda não vai para o servidor.</p>
+          <p className="meta mb-3">A foto faz parte do cadastro e aparece no seu perfil e no menu.</p>
           <label className="btn-ghost inline-flex cursor-pointer">
             Escolher foto
             <input
@@ -159,7 +172,30 @@ export function MemberProfile() {
             />
           </label>
           {form.foto ? (
-            <button type="button" className="ml-2 text-[13px] text-muted" onClick={() => set("foto", "")}>
+            <button
+              type="button"
+              className="ml-2 text-[13px] text-muted"
+              onClick={async () => {
+                set("foto", "");
+                if (meuId) {
+                  try {
+                    await saveProfile({
+                      ...form,
+                      foto: "",
+                      id: meuId,
+                      qtdFilhos: form.temFilhos ? Number(form.qtdFilhos) || 0 : 0,
+                      tempoCasado: casado ? form.tempoCasado : "",
+                      querIndicacao: semCelula ? form.querIndicacao : false,
+                      atualizado: new Date().toLocaleDateString("pt-BR"),
+                      email: (form.email || "").toLowerCase(),
+                    });
+                    setOk("Foto removida.");
+                  } catch {
+                    setOk("Não foi possível remover a foto.");
+                  }
+                }
+              }}
+            >
               Remover
             </button>
           ) : null}

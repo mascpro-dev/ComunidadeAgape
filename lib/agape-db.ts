@@ -20,6 +20,7 @@ type ProfileRow = {
   qtd_filhos: number;
   estado_civil: string;
   tempo_casado: string | null;
+  foto: string | null;
   updated_at: string;
 };
 
@@ -51,7 +52,23 @@ function mapMembro(row: ProfileRow, funcoes: string[]): Membro {
     estadoCivil: asCivil(row.estado_civil),
     tempoCasado: row.tempo_casado || "",
     atualizado: row.updated_at ? new Date(row.updated_at).toLocaleDateString("pt-BR") : "",
+    foto: row.foto || "",
   };
+}
+
+function fotoKey(id: string) {
+  return `agape-foto-${id}`;
+}
+
+function cacheFoto(id: string, foto?: string) {
+  if (typeof window === "undefined" || !id) return;
+  if (foto) localStorage.setItem(fotoKey(id), foto);
+  else localStorage.removeItem(fotoKey(id));
+}
+
+function cachedFoto(id: string) {
+  if (typeof window === "undefined" || !id) return "";
+  return localStorage.getItem(fotoKey(id)) || "";
 }
 
 export async function getSessionUserId() {
@@ -111,7 +128,9 @@ export async function loadMe(): Promise<Membro | null> {
   if (error) throw error;
   if (!data) return null;
   const fmap = await funcoesDe([id]);
-  return mapMembro(data as ProfileRow, fmap.get(id) || []);
+  const membro = mapMembro(data as ProfileRow, fmap.get(id) || []);
+  membro.foto = membro.foto || cachedFoto(id);
+  return membro;
 }
 
 export async function loadMembros(): Promise<Membro[]> {
@@ -145,9 +164,35 @@ export async function saveProfile(membro: Membro) {
       qtd_filhos: membro.qtdFilhos,
       estado_civil: membro.estadoCivil,
       tempo_casado: membro.tempoCasado,
+      foto: membro.foto || "",
     })
     .eq("id", membro.id);
-  if (error) throw error;
+  if (error && /foto/i.test(error.message || "")) {
+    const retry = await sb
+      .from("profiles")
+      .update({
+        nome: membro.nome,
+        cpf,
+        endereco: membro.endereco,
+        bairro: membro.bairro,
+        cep: membro.cep,
+        cidade: membro.cidade,
+        celula: membro.celula,
+        quer_indicacao: membro.querIndicacao,
+        convertido: membro.convertido,
+        cursos: membro.cursos,
+        tem_filhos: membro.temFilhos,
+        qtd_filhos: membro.qtdFilhos,
+        estado_civil: membro.estadoCivil,
+        tempo_casado: membro.tempoCasado,
+      })
+      .eq("id", membro.id);
+    if (retry.error) throw retry.error;
+  } else if (error) {
+    throw error;
+  }
+  cacheFoto(membro.id, membro.foto);
+  if (typeof window !== "undefined") window.dispatchEvent(new Event("agape-me"));
 }
 
 export async function updatePassword(senha: string) {

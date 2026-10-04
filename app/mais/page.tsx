@@ -1,3 +1,4 @@
+import { MaisNav } from "@/components/MaisNav";
 import { PageHeader } from "@/components/PageHeader";
 import { PosterRow } from "@/components/PosterRow";
 import { fotos } from "@/lib/fotos";
@@ -6,6 +7,7 @@ export default function MaisPage() {
   return (
     <div>
       <PageHeader kicker="A comunidade" title="Mais" lead="Tudo o que a comunidade precisa, em um só lugar." />
+      <MaisNav />
       <PosterRow
         title="Sua conta"
         items={[
