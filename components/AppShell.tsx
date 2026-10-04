@@ -10,7 +10,7 @@ import { SessionMenu } from "./LoginForm";
 const tabs = [
   { href: "/", label: "Início", icon: HomeIcon },
   { href: "/biblia", label: "Bíblia", icon: BookIcon },
-  { href: "/formacao", label: "Formação", icon: FormacaoIcon },
+  { href: "/formacao", label: "Gerações", icon: FormacaoIcon },
   { href: "/culto", label: "Culto", icon: LiveIcon },
   { href: "/mais", label: "Mais", icon: MenuIcon },
 ];
