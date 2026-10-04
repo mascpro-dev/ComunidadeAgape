@@ -15,7 +15,7 @@ export default async function MinisterioPage({ params }: { params: Promise<{ id:
 
   function posters(itens: ItemGeracao[]) {
     return itens.map((i) => ({
-      href: i.href || `/formacao/${m.id}`,
+        href: i.href || `/formacao/${id}`,
       src: fotoCapa(i.capa),
       title: i.titulo,
       kicker: i.kicker,
