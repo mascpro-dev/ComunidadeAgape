@@ -77,7 +77,7 @@ export function HomePortal() {
   const avisoAtual = avisos[aviso];
 
   return (
-    <div>
+    <div className="min-w-0 max-w-full overflow-x-clip">
       <section className="relative -mx-4 overflow-hidden md:mx-0 md:rounded-[28px]">
         <div className="relative min-h-[460px] md:min-h-[560px]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -220,8 +220,8 @@ export function HomePortal() {
         ))}
       </div>
 
-      <div className="mt-8 grid gap-6 md:grid-cols-[minmax(0,1fr)_280px] md:items-stretch">
-        <div className="flex min-h-0 flex-col gap-5 md:h-full">
+      <div className="mt-8 grid min-w-0 gap-6 md:grid-cols-[minmax(0,1fr)_280px] md:items-stretch">
+        <div className="flex min-h-0 min-w-0 flex-col gap-5 md:h-full">
           <PosterRow
             fill
             className="mt-0 md:mt-0"

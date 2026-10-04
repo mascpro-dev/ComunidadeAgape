@@ -98,7 +98,9 @@ export function PosterRow({
   }
 
   return (
-    <section className={`min-w-0 ${fill ? "mt-0 flex min-h-0 flex-1 flex-col" : "mt-6 md:mt-10"} ${className}`.trim()}>
+    <section
+      className={`min-w-0 max-w-full overflow-x-clip ${fill ? "mt-0 flex min-h-0 flex-1 flex-col" : "mt-6 md:mt-10"} ${className}`.trim()}
+    >
       <div className="mb-3 flex shrink-0 items-end justify-between gap-3">
         <h3 className="section-label mb-0">{title}</h3>
         {href ? (

@@ -57,7 +57,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="flex min-h-dvh flex-col">
+    <div className="flex min-h-dvh min-w-0 max-w-full flex-col overflow-x-clip">
       <header className="sticky top-0 z-40 hidden border-b border-white/[0.06] bg-[#030b1f]/80 backdrop-blur-xl md:block">
         <div className="mx-auto flex h-[108px] max-w-7xl items-center gap-8 px-6 lg:px-8">
           <Link href="/" className="shrink-0">
@@ -92,7 +92,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <SessionMenu compact />
       </header>
 
-      <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-28 pt-3 md:px-8 md:pb-16 md:pt-8">{children}</main>
+      <main className="mx-auto min-w-0 w-full max-w-7xl flex-1 overflow-x-clip px-4 pb-28 pt-3 md:px-8 md:pb-16 md:pt-8">
+        {children}
+      </main>
 
       <footer className="mt-auto hidden md:block">
         <div className="mx-auto grid max-w-7xl gap-10 px-8 py-12 md:grid-cols-[1.2fr_repeat(3,1fr)]">
