@@ -65,7 +65,7 @@ export async function signIn(email: string, senha: string) {
   const sb = getSupabase();
   if (!sb) return { error: "Supabase ainda não está configurado neste app." };
   const { data, error } = await sb.auth.signInWithPassword({ email, password: senha });
-  if (error) return { error: "E-mail ou senha não conferem." };
+  if (error) return { error: "E-mail ou senha não conferem. Use a senha criada no acesso da comunidade, não a antiga do protótipo." };
   return { userId: data.user?.id || "", principal: false };
 }
 
