@@ -8,15 +8,15 @@ import { loadMe } from "@/lib/agape-db";
 import { celulas, eventos, ministerios } from "@/lib/content";
 import { fotoCapa, fotos } from "@/lib/fotos";
 
-const atajos = [
-  { href: "/perfil", k: "Perfil", icon: "user", src: fotos.perfil },
-  { href: "/dashboard", k: "Painel", icon: "chart", src: fotos.painel },
-  { href: "/biblia", k: "Bíblia", icon: "book", src: fotos.biblia },
-  { href: "/formacao", k: "Formação", icon: "star", src: fotos.educacao },
-  { href: "/comunidade", k: "Comunidade", icon: "people", src: fotos.celulas },
-  { href: "/celulas", k: "Células", icon: "home", src: fotos.celulas },
-  { href: "/culto", k: "Culto", icon: "live", src: fotos.culto },
-  { href: "/palavra", k: "Áudios", icon: "mic", src: fotos.youtube },
+const buscaRotas = [
+  { href: "/perfil", k: "Perfil" },
+  { href: "/dashboard", k: "Painel" },
+  { href: "/biblia", k: "Bíblia" },
+  { href: "/formacao", k: "Formação" },
+  { href: "/comunidade", k: "Comunidade" },
+  { href: "/celulas", k: "Células" },
+  { href: "/culto", k: "Culto" },
+  { href: "/palavra", k: "Áudios" },
 ];
 
 const avisos = [
@@ -70,7 +70,7 @@ export function HomePortal() {
     e.preventDefault();
     const q = busca.trim().toLowerCase();
     if (!q) return;
-    const hit = atajos.find((a) => a.k.toLowerCase().includes(q));
+    const hit = buscaRotas.find((a) => a.k.toLowerCase().includes(q));
     router.push(hit?.href || "/biblia");
   }
 
@@ -220,31 +220,10 @@ export function HomePortal() {
         ))}
       </div>
 
-      <div className="mt-8 grid gap-8 md:grid-cols-[minmax(0,1fr)_280px] md:items-start">
+      <div className="mt-8 grid gap-8 md:grid-cols-[minmax(0,1fr)_280px] md:items-end">
         <div>
-          <div className="flex items-end justify-between">
-            <h3 className="section-label mb-0">Atalhos da comunidade</h3>
-            <Link href="/mais" className="text-[12px] text-[#9fd4ea]">
-              Ver todos →
-            </Link>
-          </div>
-          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {atajos.map((a) => (
-              <Link key={a.href} href={a.href} className="group relative overflow-hidden rounded-2xl">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={a.src} alt="" className="h-28 w-full object-cover transition duration-300 group-hover:scale-105 md:h-32" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#030b1f] via-[#030b1f]/50 to-black/10" />
-                <div className="absolute inset-x-0 bottom-0 flex items-center gap-2 p-3">
-                  <span className="text-gold">
-                    <TileIcon name={a.icon} />
-                  </span>
-                  <b className="text-[13px] font-medium">{a.k}</b>
-                </div>
-              </Link>
-            ))}
-          </div>
-
           <PosterRow
+            className="mt-0 md:mt-0"
             title="Células"
             href="/celulas"
             hrefLabel="Ver grupos →"
@@ -256,6 +235,7 @@ export function HomePortal() {
             }))}
           />
           <PosterRow
+            className="mt-6 md:mt-8"
             title="Atividades da semana"
             href="/eventos"
             hrefLabel="Agenda →"
@@ -322,60 +302,5 @@ export function HomePortal() {
         </aside>
       </div>
     </div>
-  );
-}
-
-function TileIcon({ name }: { name: string }) {
-  const p = { width: 22, height: 22, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.5 } as const;
-  if (name === "book")
-    return (
-      <svg {...p}>
-        <path d="M5 4.5h6.5A3.5 3.5 0 0 1 15 8v12H8.5A3.5 3.5 0 0 0 5 20.5zM15 8h4v12h-4" />
-      </svg>
-    );
-  if (name === "people")
-    return (
-      <svg {...p}>
-        <circle cx="12" cy="8" r="3" />
-        <path d="M4 19c.4-2.5 2.6-4 5-4M15 15c2.4 0 4.6 1.5 5 4" />
-      </svg>
-    );
-  if (name === "chart")
-    return (
-      <svg {...p}>
-        <path d="M4 19h16M7 16v-5M12 16V8M17 16v-8" />
-      </svg>
-    );
-  if (name === "mic")
-    return (
-      <svg {...p}>
-        <rect x="9" y="3" width="6" height="11" rx="3" />
-        <path d="M6 11a6 6 0 0 0 12 0M12 17v4" />
-      </svg>
-    );
-  if (name === "live")
-    return (
-      <svg {...p}>
-        <circle cx="12" cy="12" r="3" />
-        <path d="M5 12a7 7 0 0 1 14 0" />
-      </svg>
-    );
-  if (name === "home")
-    return (
-      <svg {...p}>
-        <path d="M4 10.5 12 4l8 6.5V20h-6v-6H10v6H4z" />
-      </svg>
-    );
-  if (name === "star")
-    return (
-      <svg {...p}>
-        <path d="M12 3.5 14.2 9h5.8l-4.7 3.5 1.8 5.5L12 14.8 6.9 18l1.8-5.5L4 9h5.8z" />
-      </svg>
-    );
-  return (
-    <svg {...p}>
-      <circle cx="12" cy="8" r="3.2" />
-      <path d="M5 20c.6-3.2 3.2-5 7-5s6.4 1.8 7 5" />
-    </svg>
   );
 }

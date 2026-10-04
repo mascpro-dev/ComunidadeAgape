@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 
 export type PosterItem = {
   href?: string;
@@ -15,14 +18,71 @@ export function PosterRow({
   href,
   hrefLabel = "Ver todos →",
   items,
+  className = "",
 }: {
   title: string;
   href?: string;
   hrefLabel?: string;
   items: PosterItem[];
+  className?: string;
 }) {
+  const scroller = useRef<HTMLDivElement>(null);
+  const paused = useRef(true);
+  const looping = useRef(false);
+
+  useEffect(() => {
+    const el = scroller.current;
+    if (!el || items.length < 2) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const measure = () => {
+      looping.current = el.scrollWidth > el.clientWidth + 24;
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+
+    paused.current = false;
+    let frame = 0;
+    const tick = () => {
+      if (looping.current && !paused.current) {
+        el.scrollLeft += 0.38;
+        const resetAt = el.scrollWidth / 2;
+        if (resetAt > 0 && el.scrollLeft >= resetAt) {
+          el.scrollLeft -= resetAt;
+        }
+      }
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => {
+      cancelAnimationFrame(frame);
+      ro.disconnect();
+    };
+  }, [items]);
+
+  function snapAndPause() {
+    const el = scroller.current;
+    paused.current = true;
+    if (!el) return;
+    const card = el.querySelector(".poster") as HTMLElement | null;
+    if (!card) return;
+    const styles = getComputedStyle(el);
+    const gap = parseFloat(styles.columnGap || styles.gap || "12") || 12;
+    const step = card.getBoundingClientRect().width + gap;
+    if (step <= 0) return;
+    const next = Math.round(el.scrollLeft / step) * step;
+    el.scrollTo({ left: next, behavior: "smooth" });
+  }
+
+  function resume() {
+    paused.current = false;
+  }
+
+  const loopItems = items.length > 3 ? [...items, ...items] : items;
+
   return (
-    <section className="mt-6 md:mt-10">
+    <section className={`mt-6 md:mt-10 ${className}`.trim()}>
       <div className="mb-3 flex items-end justify-between gap-3">
         <h3 className="section-label mb-0">{title}</h3>
         {href ? (
@@ -31,9 +91,16 @@ export function PosterRow({
           </Link>
         ) : null}
       </div>
-      <div className="poster-row">
-        {items.map((item) => (
-          <PosterCard key={(item.href || item.title) + item.title} item={item} />
+      <div
+        ref={scroller}
+        className="poster-row"
+        onMouseEnter={snapAndPause}
+        onMouseLeave={resume}
+        onPointerDown={snapAndPause}
+        onPointerUp={resume}
+      >
+        {loopItems.map((item, i) => (
+          <PosterCard key={`${item.title}-${item.href || ""}-${i}`} item={item} />
         ))}
       </div>
     </section>
