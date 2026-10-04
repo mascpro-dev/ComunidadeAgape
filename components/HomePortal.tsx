@@ -9,14 +9,14 @@ import { eventos, ministerios } from "@/lib/content";
 import { fotoCapa, fotos } from "@/lib/fotos";
 
 const atajos = [
-  { href: "/perfil", k: "Perfil", icon: "user" },
-  { href: "/dashboard", k: "Painel", icon: "chart" },
-  { href: "/biblia", k: "Bíblia", icon: "book" },
-  { href: "/formacao", k: "Formação", icon: "star" },
-  { href: "/comunidade", k: "Comunidade", icon: "people" },
-  { href: "/celulas", k: "Células", icon: "home" },
-  { href: "/culto", k: "Culto", icon: "live" },
-  { href: "/palavra", k: "Áudios", icon: "mic" },
+  { href: "/perfil", k: "Perfil", icon: "user", src: fotos.perfil },
+  { href: "/dashboard", k: "Painel", icon: "chart", src: fotos.painel },
+  { href: "/biblia", k: "Bíblia", icon: "book", src: fotos.biblia },
+  { href: "/formacao", k: "Formação", icon: "star", src: fotos.educacao },
+  { href: "/comunidade", k: "Comunidade", icon: "people", src: fotos.celulas },
+  { href: "/celulas", k: "Células", icon: "home", src: fotos.celulas },
+  { href: "/culto", k: "Culto", icon: "live", src: fotos.culto },
+  { href: "/palavra", k: "Áudios", icon: "mic", src: fotos.youtube },
 ];
 
 const avisos = [
@@ -24,6 +24,13 @@ const avisos = [
   { t: "Inscrições abertas na Universidade da Família", href: "/formacao" },
   { t: "Células durante a semana — ache a sua", href: "/celulas" },
   { t: "Culto da noite no templo, domingo 19h", href: "/culto" },
+];
+
+const destaques = [
+  { href: "/culto", src: fotos.familia, k: "Ao vivo", t: "Culto da família", d: "Domingo 10h" },
+  { href: "/culto", src: fotos.cultoNoite, k: "Templo", t: "Culto da noite", d: "Domingo 19h" },
+  { href: "/formacao/jovens", src: fotos.jovens, k: "Geração", t: "Culto de jovens", d: "Sábado 20h" },
+  { href: "/formacao/adolescentes", src: fotos.adolescentes, k: "Geração", t: "Pré-adolescentes", d: "19h" },
 ];
 
 const jornada = [
@@ -67,80 +74,70 @@ export function HomePortal() {
     router.push(hit?.href || "/biblia");
   }
 
+  const avisoAtual = avisos[aviso];
+
   return (
     <div>
-      <article className="relative overflow-hidden rounded-[20px] bg-[#0a2348] md:rounded-[22px]">
-        <div className="grid md:grid-cols-[0.9fr_1.1fr] md:pr-[236px]">
-          <div className="flex flex-col justify-center px-6 py-7 md:px-10 md:py-12">
-            <h1 className="font-display text-[40px] font-semibold leading-[0.92] tracking-tight md:text-[52px]">
+      <section className="relative -mx-4 overflow-hidden md:mx-0 md:rounded-[28px]">
+        <div className="relative min-h-[460px] md:min-h-[560px]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={fotos.familia} alt="" className="absolute inset-0 h-full w-full object-cover object-center" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#030b1f] via-[#030b1f]/55 to-black/20" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#030b1f]/80 via-transparent to-transparent" />
+          <div className="relative z-10 flex min-h-[460px] flex-col justify-end px-5 pb-6 pt-16 md:min-h-[560px] md:max-w-3xl md:px-12 md:pb-12">
+            <span className="pill">
+              <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+              ao vivo · domingo 10h
+            </span>
+            <h1 className="font-display max-w-[10ch] text-[48px] font-semibold leading-[0.9] tracking-tight md:text-[72px]">
               Jesus.
-              <br />
-              Toda a vida.
+              <span className="block text-gold">Toda a vida.</span>
             </h1>
-            <p className="mt-3 max-w-[28ch] text-sm text-[#c5d6f0] md:text-[15px]">Conheça os heróis da comunidade este mês</p>
-            <Link href="/culto" className="btn-gold mt-6 w-fit px-6">
-              Ler mais
-            </Link>
-          </div>
-
-          <div className="relative flex min-h-[190px] items-end justify-center gap-0 md:min-h-[300px]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={fotos.heroEsq}
-              alt=""
-              className="h-[200px] w-1/2 object-cover object-top md:h-[300px]"
-            />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={fotos.heroDir}
-              alt=""
-              className="h-[200px] w-1/2 object-cover object-top md:h-[300px]"
-            />
+            <p className="mt-4 max-w-[36ch] text-sm leading-relaxed text-[#d7e2f8] md:text-base">
+              Palavra, comunidade e gerações — no templo, na transmissão e na cidade.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link href="/culto" className="btn-gold px-6">
+                Assistir o culto
+              </Link>
+              <Link href="/celulas" className="btn-ghost px-6">
+                Achar uma célula
+              </Link>
+            </div>
           </div>
         </div>
+      </section>
 
-        <aside className="bg-gradient-to-b from-[#9fd4ea] to-[#6bb4d4] text-[#0a2348] md:absolute md:inset-y-0 md:right-0 md:w-[236px]">
-          <div className="flex h-full flex-col justify-between p-5 md:p-6">
-            <div>
-              <p className="text-[13px] font-semibold">Heróis da comunidade este mês</p>
-              <ul className="mt-4 space-y-3 text-[13px] leading-snug">
-                {avisos.map((a, i) => (
-                  <li key={a.t} className={i === aviso ? "font-semibold" : "opacity-80"}>
-                    <Link href={a.href}>{a.t}</Link>
-                  </li>
-                ))}
-              </ul>
+      <div className="-mx-4 mt-3 flex gap-3 overflow-x-auto px-4 pb-1 [scrollbar-width:none] md:mx-0 md:mt-5 md:grid md:grid-cols-4 md:overflow-visible md:px-0">
+        {destaques.map((d) => (
+          <Link
+            key={d.t}
+            href={d.href}
+            className="relative min-w-[220px] shrink-0 overflow-hidden rounded-2xl border border-white/10 md:min-w-0"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={d.src} alt="" className="h-28 w-full object-cover md:h-36" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#030b1f] via-[#030b1f]/40 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 p-3">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-gold">{d.k}</p>
+              <p className="font-display text-xl leading-none">{d.t}</p>
+              <p className="mt-1 text-[12px] text-[#c5d6f0]">{d.d}</p>
             </div>
-            <div className="mt-4 flex items-center justify-end gap-2">
-              <button
-                type="button"
-                className="grid h-7 w-7 place-items-center rounded-md bg-white/25"
-                aria-label="Aviso anterior"
-                onClick={() => setAviso((n) => (n === 0 ? avisos.length - 1 : n - 1))}
-              >
-                ⌃
-              </button>
-              <button
-                type="button"
-                className="grid h-7 w-7 place-items-center rounded-md bg-white/25"
-                aria-label="Próximo aviso"
-                onClick={() => setAviso((n) => (n + 1) % avisos.length)}
-              >
-                ⌄
-              </button>
-            </div>
-          </div>
-        </aside>
-      </article>
+          </Link>
+        ))}
+      </div>
 
-      <div className="mt-8 md:mt-10">
-        <h2 className="font-display text-[28px] font-semibold md:text-[32px]">{tituloSaudacao}</h2>
-        <form onSubmit={onSearch} className="relative mt-4 md:max-w-xl">
+      <div className="mt-8 flex flex-col gap-4 md:mt-10 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p className="page-kicker mb-1">Início</p>
+          <h2 className="font-display text-[32px] font-semibold leading-none md:text-[40px]">{tituloSaudacao}</h2>
+        </div>
+        <form onSubmit={onSearch} className="relative w-full md:max-w-md">
           <input
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
             placeholder="Buscar na comunidade…"
-            className="field rounded-full border-white/5 bg-[#0b1c3e] py-3.5 pl-4 pr-12"
+            className="field rounded-full border-white/10 bg-[#0b1c3e]/80 py-3.5 pl-4 pr-12"
           />
           <button type="submit" className="absolute right-4 top-1/2 -translate-y-1/2 text-muted" aria-label="Buscar">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
@@ -150,6 +147,27 @@ export function HomePortal() {
           </button>
         </form>
       </div>
+
+      <Link
+        href={avisoAtual.href}
+        className="mt-5 flex items-center justify-between gap-4 rounded-2xl border border-gold/25 bg-gold/10 px-4 py-4 md:px-5"
+      >
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-gold">Na comunidade agora</p>
+          <p className="mt-1 text-[15px] font-medium leading-snug">{avisoAtual.t}</p>
+        </div>
+        <button
+          type="button"
+          className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/15 text-gold"
+          aria-label="Próximo aviso"
+          onClick={(e) => {
+            e.preventDefault();
+            setAviso((n) => (n + 1) % avisos.length);
+          }}
+        >
+          →
+        </button>
+      </Link>
 
       <PosterRow
         title="Na semana"
@@ -212,11 +230,16 @@ export function HomePortal() {
           </div>
           <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
             {atajos.map((a) => (
-              <Link key={a.href} href={a.href} className="topic-tile">
-                <span className="mb-2.5 text-[#9fd4ea]">
-                  <TileIcon name={a.icon} />
-                </span>
-                <b className="block text-[13px] font-medium text-[#d7e2f8]">{a.k}</b>
+              <Link key={a.href} href={a.href} className="group relative overflow-hidden rounded-2xl">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={a.src} alt="" className="h-28 w-full object-cover transition duration-300 group-hover:scale-105 md:h-32" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#030b1f] via-[#030b1f]/50 to-black/10" />
+                <div className="absolute inset-x-0 bottom-0 flex items-center gap-2 p-3">
+                  <span className="text-gold">
+                    <TileIcon name={a.icon} />
+                  </span>
+                  <b className="text-[13px] font-medium">{a.k}</b>
+                </div>
               </Link>
             ))}
           </div>
@@ -225,18 +248,21 @@ export function HomePortal() {
         <aside className="grid gap-5">
           <div>
             <h3 className="section-label">Na sua jornada</h3>
-            <Link href="/perfil" className="block rounded-2xl bg-[#5b9cff] px-5 py-7 text-center text-white">
-              <p className="text-[40px] font-semibold leading-none">9</p>
-              <p className="mt-2 text-sm">Próximos passos</p>
+            <Link
+              href="/perfil"
+              className="block overflow-hidden rounded-2xl border border-gold/30 bg-gradient-to-br from-[#1a3a72] to-[#06153a] px-5 py-7 text-center"
+            >
+              <p className="font-display text-[48px] font-semibold leading-none text-gold">9</p>
+              <p className="mt-2 text-sm text-[#d7e2f8]">Próximos passos</p>
             </Link>
             <div className="mt-2.5 grid grid-cols-2 gap-2.5">
               {jornada.map((x) => (
                 <Link
                   key={x.k}
                   href={x.href}
-                  className="rounded-xl bg-[#0b1c3e] px-3 py-3.5 text-center"
+                  className="rounded-xl border border-white/10 bg-[#0b1c3e] px-3 py-3.5 text-center hover:border-gold/35"
                 >
-                  <p className="text-lg font-semibold">{x.n}</p>
+                  <p className="text-lg font-semibold text-gold">{x.n}</p>
                   <p className="text-[11px] text-muted">{x.k}</p>
                 </Link>
               ))}
@@ -244,7 +270,7 @@ export function HomePortal() {
           </div>
           <div>
             <h3 className="section-label">Tarefas rápidas</h3>
-            <div className="rounded-2xl bg-[#0b1c3e] p-4">
+            <div className="rounded-2xl border border-white/10 bg-[#0b1c3e] p-4">
               <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-red-300">Em aberto</p>
               <p className="mt-1.5 text-[15px] font-medium">Célula — encontre o seu grupo</p>
               <p className="meta">Indicação perto de você</p>
@@ -257,7 +283,7 @@ export function HomePortal() {
                 </Link>
               </div>
             </div>
-            <div className="mt-2.5 rounded-2xl bg-[#0b1c3e] p-4">
+            <div className="mt-2.5 rounded-2xl border border-white/10 bg-[#0b1c3e] p-4">
               <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#9fd4ea]">Novo</p>
               <p className="mt-1.5 text-[15px] font-medium">Universidade da Família</p>
               <p className="meta">Trilhas abertas o ano todo</p>
@@ -273,7 +299,7 @@ export function HomePortal() {
 }
 
 function TileIcon({ name }: { name: string }) {
-  const p = { width: 26, height: 26, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.5 } as const;
+  const p = { width: 22, height: 22, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.5 } as const;
   if (name === "book")
     return (
       <svg {...p}>
