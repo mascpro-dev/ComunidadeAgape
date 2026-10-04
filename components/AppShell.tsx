@@ -59,18 +59,18 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-dvh flex-col">
       <header className="sticky top-0 z-40 hidden border-b border-white/[0.06] bg-[#030b1f]/80 backdrop-blur-xl md:block">
-        <div className="mx-auto flex h-[92px] max-w-7xl items-center gap-6 px-6 lg:px-8">
+        <div className="mx-auto flex h-[108px] max-w-7xl items-center gap-8 px-6 lg:px-8">
           <Link href="/" className="shrink-0">
-            <Logo variant="full" className="h-[58px] w-auto max-w-[380px] object-contain object-left" />
+            <Logo variant="full" className="h-[76px] w-auto max-w-[460px] object-contain object-left" />
           </Link>
-          <nav className="flex min-w-0 flex-1 items-center justify-evenly">
+          <nav className="flex min-w-0 flex-1 items-center justify-between gap-1">
             {desktopNav.map((item) => {
               const on = isOn(pathname, item.href);
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`shrink-0 rounded-full px-3 py-2 text-[14px] tracking-wide transition ${
+                  className={`flex-1 rounded-full px-2 py-2.5 text-center text-[15px] font-medium tracking-wide transition ${
                     on ? "bg-white/10 text-gold" : "text-[#c5d2ea] hover:text-white"
                   }`}
                 >
