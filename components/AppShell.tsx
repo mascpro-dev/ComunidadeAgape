@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { desktopNav } from "@/lib/nav";
+import { useEffect, useState } from "react";
+import { desktopNav, maisMenu } from "@/lib/nav";
 import { Logo } from "./Logo";
 import { SessionMenu } from "./LoginForm";
 
@@ -39,6 +40,11 @@ function isOn(pathname: string, href: string) {
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const [maisAberto, setMaisAberto] = useState(false);
+
+  useEffect(() => {
+    setMaisAberto(false);
+  }, [pathname]);
 
   if (pathname === "/entrar") {
     return <div className="min-h-dvh bg-deep">{children}</div>;
@@ -129,10 +135,50 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       </footer>
 
-      <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-white/10 bg-[#06153a]/92 px-2 pb-[max(10px,env(safe-area-inset-bottom))] pt-2 backdrop-blur-xl md:hidden">
+      {maisAberto ? (
+        <button
+          type="button"
+          className="fixed inset-0 z-40 bg-black/45 md:hidden"
+          aria-label="Fechar menu"
+          onClick={() => setMaisAberto(false)}
+        />
+      ) : null}
+
+      <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-white/10 bg-[#06153a]/92 px-2 pb-[max(10px,env(safe-area-inset-bottom))] pt-2 backdrop-blur-xl md:hidden">
+        {maisAberto ? (
+          <div className="absolute bottom-[calc(100%+8px)] right-3 w-[min(240px,calc(100vw-24px))] overflow-hidden rounded-2xl border border-gold/50 bg-[#eef6fc] shadow-[0_16px_40px_rgba(0,0,0,.4)]">
+            {maisMenu.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="block border-b border-[#c5d6ea] px-4 py-3.5 font-display text-[18px] font-semibold text-[#b8953c] last:border-b-0"
+                onClick={() => setMaisAberto(false)}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        ) : null}
         <div className="mx-auto grid max-w-md grid-cols-5">
           {tabs.map((tab) => {
-            const on = isOn(pathname, tab.href);
+            const on = tab.href === "/mais" ? maisAberto || isOn(pathname, "/mais") : isOn(pathname, tab.href);
+            if (tab.href === "/mais") {
+              return (
+                <button
+                  key={tab.href}
+                  type="button"
+                  onClick={() => setMaisAberto((v) => !v)}
+                  className={`grid justify-items-center gap-1 py-1 text-[10px] tracking-wide ${
+                    on ? "text-gold" : "text-[#7d91b8]"
+                  }`}
+                  aria-expanded={maisAberto}
+                  aria-label="Mais"
+                >
+                  <tab.icon />
+                  {tab.label}
+                </button>
+              );
+            }
             return (
               <Link
                 key={tab.href}
@@ -140,6 +186,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 className={`grid justify-items-center gap-1 py-1 text-[10px] tracking-wide ${
                   on ? "text-gold" : "text-[#7d91b8]"
                 }`}
+                onClick={() => setMaisAberto(false)}
               >
                 <tab.icon live={tab.href === "/culto"} />
                 {tab.label}
