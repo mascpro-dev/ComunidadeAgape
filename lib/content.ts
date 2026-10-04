@@ -406,6 +406,15 @@ export const rodas: Roda[] = [
   },
 ];
 
+export type ItemGeracao = {
+  id: string;
+  titulo: string;
+  kicker: string;
+  tipo: "curso" | "atividade";
+  capa: string;
+  href?: string;
+};
+
 export type Ministerio = {
   id: string;
   nome: string;
@@ -417,6 +426,7 @@ export type Ministerio = {
   lider: string;
   tone: string;
   proximos: { titulo: string; data: string; extra: string }[];
+  catalogo: ItemGeracao[];
   checkin?: boolean;
   cursos?: boolean;
 };
@@ -436,6 +446,14 @@ export const ministerios: Ministerio[] = [
       { titulo: "Encontro de jovens", data: "Sáb 19h", extra: "Louvor + palavra" },
       { titulo: "Missão na cidade", data: "Dom 15h", extra: "Ágape Serve" },
     ],
+    catalogo: [
+      { id: "j1", titulo: "Comece por aqui", kicker: "Módulo 01", tipo: "curso", capa: "jovens" },
+      { id: "j2", titulo: "Namoro com propósito", kicker: "Curso · 6 sem", tipo: "curso", capa: "perfil", href: "/cursos" },
+      { id: "j3", titulo: "Identidade e chamado", kicker: "Curso · 4 sem", tipo: "curso", capa: "visao" },
+      { id: "j4", titulo: "Célula Jovens", kicker: "Atividade · Ter", tipo: "atividade", capa: "celulaJovens", href: "/celulas" },
+      { id: "j5", titulo: "Missão na cidade", kicker: "Atividade", tipo: "atividade", capa: "missao" },
+      { id: "j6", titulo: "Lives e encontros", kicker: "Atividade", tipo: "atividade", capa: "cultoNoite" },
+    ],
   },
   {
     id: "adolescentes",
@@ -451,6 +469,14 @@ export const ministerios: Ministerio[] = [
     proximos: [
       { titulo: "Sexta da geração", data: "Sex 19h30", extra: "Identidade em Cristo" },
       { titulo: "Retiro", data: "Em breve", extra: "Inscrições abertas" },
+    ],
+    catalogo: [
+      { id: "a1", titulo: "Comece por aqui", kicker: "Módulo 01", tipo: "curso", capa: "adolescentes" },
+      { id: "a2", titulo: "Identidade em Cristo", kicker: "Curso · 5 sem", tipo: "curso", capa: "biblia" },
+      { id: "a3", titulo: "Escola da geração", kicker: "Curso", tipo: "curso", capa: "educacao" },
+      { id: "a4", titulo: "Sexta da geração", kicker: "Atividade · Sex", tipo: "atividade", capa: "celulaGeracao" },
+      { id: "a5", titulo: "Retiro", kicker: "Atividade", tipo: "atividade", capa: "visao" },
+      { id: "a6", titulo: "Célula Geração", kicker: "Atividade · Sex", tipo: "atividade", capa: "celulas", href: "/celulas" },
     ],
   },
   {
@@ -468,6 +494,14 @@ export const ministerios: Ministerio[] = [
       { titulo: "Kids no culto", data: "Dom 10h e 18h", extra: "Turmas por idade" },
       { titulo: "Família no parque", data: "Sáb 16h", extra: "Pais + kids" },
     ],
+    catalogo: [
+      { id: "k1", titulo: "Comece por aqui", kicker: "Módulo 01", tipo: "curso", capa: "infantil" },
+      { id: "k2", titulo: "Histórias da Bíblia", kicker: "Curso", tipo: "curso", capa: "biblia" },
+      { id: "k3", titulo: "Escola kids", kicker: "Curso", tipo: "curso", capa: "educacao" },
+      { id: "k4", titulo: "Kids no culto", kicker: "Atividade · Dom", tipo: "atividade", capa: "culto" },
+      { id: "k5", titulo: "Família no parque", kicker: "Atividade", tipo: "atividade", capa: "familia" },
+      { id: "k6", titulo: "Check-in kids", kicker: "Atividade", tipo: "atividade", capa: "entrar" },
+    ],
   },
   {
     id: "homens",
@@ -480,6 +514,14 @@ export const ministerios: Ministerio[] = [
     lider: "Time Homens",
     tone: "from-[#16305f] to-[#071433]",
     proximos: [{ titulo: "Café & Palavra", data: "Sáb 8h", extra: "Café da manhã" }],
+    catalogo: [
+      { id: "h1", titulo: "Comece por aqui", kicker: "Módulo 01", tipo: "curso", capa: "homens" },
+      { id: "h2", titulo: "Pai de propósito", kicker: "Curso · 5 sem", tipo: "curso", capa: "familia" },
+      { id: "h3", titulo: "Finanças com visão", kicker: "Curso · 6 sem", tipo: "curso", capa: "economia", href: "/cursos" },
+      { id: "h4", titulo: "Café & Palavra", kicker: "Atividade · Sáb", tipo: "atividade", capa: "lideranca" },
+      { id: "h5", titulo: "Célula Homens", kicker: "Atividade · Sáb", tipo: "atividade", capa: "celulaHomens", href: "/celulas" },
+      { id: "h6", titulo: "Irmandade na cidade", kicker: "Atividade", tipo: "atividade", capa: "missao" },
+    ],
   },
   {
     id: "mulheres",
@@ -492,6 +534,14 @@ export const ministerios: Ministerio[] = [
     lider: "Time Mulheres",
     tone: "from-[#2a5bb8] to-[#0a2460]",
     proximos: [{ titulo: "Círculo de irmãs", data: "Ter 20h", extra: "Louvor + partilha" }],
+    catalogo: [
+      { id: "m1", titulo: "Comece por aqui", kicker: "Módulo 01", tipo: "curso", capa: "mulheres" },
+      { id: "m2", titulo: "Mulher e a Palavra", kicker: "Curso · 6 sem", tipo: "curso", capa: "biblia" },
+      { id: "m3", titulo: "Mentoria de irmãs", kicker: "Curso", tipo: "curso", capa: "lideranca" },
+      { id: "m4", titulo: "Círculo de irmãs", kicker: "Atividade · Ter", tipo: "atividade", capa: "celulaMulheres" },
+      { id: "m5", titulo: "Célula Mulheres", kicker: "Atividade · Qui", tipo: "atividade", capa: "perfil", href: "/celulas" },
+      { id: "m6", titulo: "Vigília de oração", kicker: "Atividade", tipo: "atividade", capa: "oracao" },
+    ],
   },
   {
     id: "familia",
@@ -506,16 +556,79 @@ export const ministerios: Ministerio[] = [
     cursos: true,
     tone: "from-[#7eb6ff] to-[#1a4a8c] text-[#041218]",
     proximos: [{ titulo: "Nova turma Casais", data: "Início 12 out", extra: "8 semanas" }],
+    catalogo: [
+      { id: "f1", titulo: "Comece por aqui", kicker: "Módulo 01", tipo: "curso", capa: "familia" },
+      { id: "f2", titulo: "Namoro com propósito", kicker: "Curso · 6 sem", tipo: "curso", capa: "jovens", href: "/cursos" },
+      { id: "f3", titulo: "Noivos Ágape", kicker: "Curso · 8 sem", tipo: "curso", capa: "entrar", href: "/cursos" },
+      { id: "f4", titulo: "Casais em missão", kicker: "Curso · 8 sem", tipo: "curso", capa: "celulaFamilias", href: "/cursos" },
+      { id: "f5", titulo: "Pais que discipulam", kicker: "Curso · 5 sem", tipo: "curso", capa: "infantil", href: "/cursos" },
+      { id: "f6", titulo: "Célula Famílias", kicker: "Atividade · Qua", tipo: "atividade", capa: "celulas", href: "/celulas" },
+      { id: "f7", titulo: "Culto da família", kicker: "Atividade · Dom", tipo: "atividade", capa: "culto", href: "/culto" },
+    ],
   },
 ];
 
 export const celulas = [
-  { id: "c1", nome: "Célula Norte", dia: "Seg", hora: "20h", bairro: "Centro", host: "Ana e Pedro", vagas: 3 },
-  { id: "c2", nome: "Célula Jovens", dia: "Ter", hora: "19h30", bairro: "Jardins", host: "Lucas", vagas: 5 },
-  { id: "c3", nome: "Célula Famílias", dia: "Qua", hora: "20h", bairro: "Vila Nova", host: "Carla", vagas: 2 },
-  { id: "c4", nome: "Célula Mulheres", dia: "Qui", hora: "19h", bairro: "Centro", host: "Bia", vagas: 4 },
-  { id: "c5", nome: "Célula Homens", dia: "Sáb", hora: "7h30", bairro: "Parque", host: "Rafa", vagas: 6 },
-  { id: "c6", nome: "Célula Geração", dia: "Sex", hora: "18h", bairro: "Jardins", host: "Mari", vagas: 8 },
+  {
+    id: "c1",
+    nome: "Célula Norte",
+    dia: "Seg",
+    hora: "20h",
+    bairro: "Centro",
+    host: "Ana e Pedro",
+    vagas: 3,
+    capa: "celulaNorte",
+  },
+  {
+    id: "c2",
+    nome: "Célula Jovens",
+    dia: "Ter",
+    hora: "19h30",
+    bairro: "Jardins",
+    host: "Lucas",
+    vagas: 5,
+    capa: "celulaJovens",
+  },
+  {
+    id: "c3",
+    nome: "Célula Famílias",
+    dia: "Qua",
+    hora: "20h",
+    bairro: "Vila Nova",
+    host: "Carla",
+    vagas: 2,
+    capa: "celulaFamilias",
+  },
+  {
+    id: "c4",
+    nome: "Célula Mulheres",
+    dia: "Qui",
+    hora: "19h",
+    bairro: "Centro",
+    host: "Bia",
+    vagas: 4,
+    capa: "celulaMulheres",
+  },
+  {
+    id: "c5",
+    nome: "Célula Homens",
+    dia: "Sáb",
+    hora: "7h30",
+    bairro: "Parque",
+    host: "Rafa",
+    vagas: 6,
+    capa: "celulaHomens",
+  },
+  {
+    id: "c6",
+    nome: "Célula Geração",
+    dia: "Sex",
+    hora: "18h",
+    bairro: "Jardins",
+    host: "Mari",
+    vagas: 8,
+    capa: "celulaGeracao",
+  },
 ];
 
 export const cursos = [

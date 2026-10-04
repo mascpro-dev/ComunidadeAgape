@@ -3,11 +3,11 @@
 import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { CardPhoto } from "@/components/CardPhoto";
+import { PosterRow } from "@/components/PosterRow";
 import { getSessionId } from "@/lib/auth";
 import { loadJson } from "@/lib/client-store";
 import { eventos, ministerios } from "@/lib/content";
-import { fotos } from "@/lib/fotos";
+import { fotoCapa, fotos } from "@/lib/fotos";
 import { MEMBROS_KEY, seedMembros, type Membro } from "@/lib/metrics";
 
 const atajos = [
@@ -36,8 +36,6 @@ const jornada = [
   { n: "1", k: "Perfil", href: "/perfil" },
   { n: "6", k: "Gerações", href: "/formacao" },
 ];
-
-const tints = ["from-[#9b4d7a]/55", "from-[#2f6f9a]/55", "from-[#2f7a62]/55"] as const;
 
 function saudacaoHora() {
   const h = new Date().getHours();
@@ -139,25 +137,76 @@ export function HomePortal() {
         </aside>
       </article>
 
-      <div className="mt-8 grid gap-8 md:mt-10 md:grid-cols-[minmax(0,1fr)_280px] md:items-start md:gap-8">
-        <div>
-          <h2 className="font-display text-[28px] font-semibold md:text-[32px]">{tituloSaudacao}</h2>
-          <form onSubmit={onSearch} className="relative mt-4">
-            <input
-              value={busca}
-              onChange={(e) => setBusca(e.target.value)}
-              placeholder="Buscar na casa…"
-              className="field rounded-full border-white/5 bg-[#0b1c3e] py-3.5 pl-4 pr-12"
-            />
-            <button type="submit" className="absolute right-4 top-1/2 -translate-y-1/2 text-muted" aria-label="Buscar">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                <circle cx="11" cy="11" r="7" />
-                <path d="M20 20 16.5 16.5" />
-              </svg>
-            </button>
-          </form>
+      <div className="mt-8 md:mt-10">
+        <h2 className="font-display text-[28px] font-semibold md:text-[32px]">{tituloSaudacao}</h2>
+        <form onSubmit={onSearch} className="relative mt-4 md:max-w-xl">
+          <input
+            value={busca}
+            onChange={(e) => setBusca(e.target.value)}
+            placeholder="Buscar na casa…"
+            className="field rounded-full border-white/5 bg-[#0b1c3e] py-3.5 pl-4 pr-12"
+          />
+          <button type="submit" className="absolute right-4 top-1/2 -translate-y-1/2 text-muted" aria-label="Buscar">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <circle cx="11" cy="11" r="7" />
+              <path d="M20 20 16.5 16.5" />
+            </svg>
+          </button>
+        </form>
+      </div>
 
-          <div className="mt-8 flex items-end justify-between">
+      <PosterRow
+        title="Na semana"
+        href="/eventos"
+        hrefLabel="Agenda →"
+        items={eventos.map((e) => ({
+          href: "/eventos",
+          src: fotos[e.foto as keyof typeof fotos],
+          title: e.titulo,
+          kicker: e.tag,
+        }))}
+      />
+      <PosterRow
+        title="Gerações"
+        href="/formacao"
+        items={ministerios.map((m) => ({
+          href: `/formacao/${m.id}`,
+          src: fotos[m.id as keyof typeof fotos] || fotos.familia,
+          title: m.nome,
+          kicker: m.tag,
+        }))}
+      />
+      <PosterRow
+        title="Assistir"
+        href="/culto"
+        items={[
+          { href: "/culto", src: fotos.culto, title: "Culto da noite", kicker: "Ao vivo" },
+          { href: "/culto", src: fotos.familia, title: "Culto da família", kicker: "Domingo 10h" },
+          { href: "/palavra", src: fotos.biblia, title: "Áudios", kicker: "Palavra" },
+          { href: "/visao", src: fotos.missao, title: "Visão 2033", kicker: "A casa" },
+        ]}
+      />
+
+      <div className="md:hidden">
+        {ministerios.map((m) => (
+          <PosterRow
+            key={m.id}
+            title={`${m.nome} · cursos e atividades`}
+            href={`/formacao/${m.id}`}
+            hrefLabel="Abrir →"
+            items={m.catalogo.map((i) => ({
+              href: i.href || `/formacao/${m.id}`,
+              src: fotoCapa(i.capa),
+              title: i.titulo,
+              kicker: i.kicker,
+            }))}
+          />
+        ))}
+      </div>
+
+      <div className="mt-8 grid gap-8 md:grid-cols-[minmax(0,1fr)_280px] md:items-start">
+        <div>
+          <div className="flex items-end justify-between">
             <h3 className="section-label mb-0">Atalhos da casa</h3>
             <Link href="/mais" className="text-[12px] text-[#9fd4ea]">
               Ver todos →
@@ -170,40 +219,6 @@ export function HomePortal() {
                   <TileIcon name={a.icon} />
                 </span>
                 <b className="block text-[13px] font-medium text-[#d7e2f8]">{a.k}</b>
-              </Link>
-            ))}
-          </div>
-
-          <div className="mt-10 flex items-end justify-between">
-            <h3 className="section-label mb-0">Na semana</h3>
-            <Link href="/eventos" className="text-[12px] text-[#9fd4ea]">
-              Agenda →
-            </Link>
-          </div>
-          <div className="mt-4 grid gap-3 sm:grid-cols-3">
-            {eventos.slice(0, 3).map((e, i) => (
-              <Link key={e.titulo} href="/eventos" className="relative overflow-hidden rounded-2xl">
-                <CardPhoto src={fotos[e.foto as keyof typeof fotos]} alt={e.titulo} className="h-44 md:h-48" />
-                <div className={`pointer-events-none absolute inset-0 bg-gradient-to-t ${tints[i]} to-transparent`} />
-                <p className="absolute bottom-3 left-0 right-0 text-center font-display text-[22px] text-white drop-shadow">
-                  {e.titulo}
-                </p>
-              </Link>
-            ))}
-          </div>
-
-          <h3 className="section-label mt-10">Gerações</h3>
-          <div className="grid grid-cols-3 gap-2.5 md:grid-cols-6">
-            {ministerios.map((m) => (
-              <Link
-                key={m.id}
-                href={`/formacao/${m.id}`}
-                className="relative overflow-hidden rounded-2xl border border-white/[0.08]"
-              >
-                <CardPhoto src={fotos[m.id as keyof typeof fotos] || fotos.familia} alt={m.nome} className="h-24 md:h-28" />
-                <p className="absolute bottom-1.5 left-0 right-0 text-center font-display text-[15px] text-white drop-shadow md:text-lg">
-                  {m.nome}
-                </p>
               </Link>
             ))}
           </div>

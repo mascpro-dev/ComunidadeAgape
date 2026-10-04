@@ -8,7 +8,7 @@ import { SessionMenu } from "./LoginForm";
 const tabs = [
   { href: "/", label: "Início", icon: HomeIcon },
   { href: "/biblia", label: "Bíblia", icon: BookIcon },
-  { href: "/comunidade", label: "Casa", icon: CommunityIcon },
+  { href: "/formacao", label: "Formação", icon: FormacaoIcon },
   { href: "/culto", label: "Culto", icon: LiveIcon },
   { href: "/mais", label: "Mais", icon: MenuIcon },
 ];
@@ -18,6 +18,7 @@ const desktopNav = [
   { href: "/culto", label: "Culto" },
   { href: "/biblia", label: "Bíblia" },
   { href: "/comunidade", label: "Comunidade" },
+  { href: "/formacao", label: "Gerações" },
   { href: "/palavra", label: "Áudios" },
   { href: "/celulas", label: "Células" },
   { href: "/perfil", label: "Perfil" },
@@ -36,12 +37,11 @@ function isOn(pathname: string, href: string) {
       "/lideranca",
       "/eventos",
       "/celulas",
-      "/formacao",
-      "/cursos",
       "/palavra",
       "/perfil",
       "/dashboard",
       "/entrar",
+      "/comunidade",
     ].some(
       (p) => pathname === p || pathname.startsWith(`${p}/`),
     );
@@ -191,13 +191,11 @@ function BookIcon(_p?: { live?: boolean }) {
     </svg>
   );
 }
-function CommunityIcon(_p?: { live?: boolean }) {
+function FormacaoIcon(_p?: { live?: boolean }) {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-      <circle cx="12" cy="8" r="3" />
-      <circle cx="6" cy="10" r="2" />
-      <circle cx="18" cy="10" r="2" />
-      <path d="M4 19c.4-2.5 2.6-4 5-4M15 15c2.4 0 4.6 1.5 5 4M8.5 15c1.1-.6 2.3-1 3.5-1s2.4.4 3.5 1" />
+      <path d="M12 3 3 8l9 5 9-5-9-5z" />
+      <path d="M7 10.5v5.2c0 .7 2.2 2.3 5 2.3s5-1.6 5-2.3v-5.2" />
     </svg>
   );
 }

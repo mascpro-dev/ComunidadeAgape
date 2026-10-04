@@ -1,37 +1,48 @@
-import Link from "next/link";
 import { PageHeader } from "@/components/PageHeader";
-
-const items = [
-  { href: "/entrar", t: "Entrar", d: "Login do membro e do administrador" },
-  { href: "/perfil", t: "Meu perfil", d: "Nome, CPF, célula, família e cursos" },
-  { href: "/dashboard", t: "Painel e relatórios", d: "Métricas da casa — só liderança" },
-  { href: "/biblia", t: "Bíblia online", d: "Leitura por livro e capítulo" },
-  { href: "/palavra", t: "Áudios da liderança", d: "Pastor e líderes enviam a Palavra" },
-  { href: "/comunidade", t: "Comunidade", d: "Feed da casa e salas por tema" },
-  { href: "/visao", t: "Visão 2033", d: "Protótipo, a casa, indicadores e as seis frentes" },
-  { href: "/lideranca", t: "Papel do pastor", d: "De fazer tudo, para formar pessoas que fazem juntas" },
-  { href: "/visao/educacao", t: "Roda da educação", d: "Novas formas de aprender" },
-  { href: "/visao/social", t: "Roda social", d: "Famílias e relações entre gerações" },
-  { href: "/visao/economia", t: "Roda da economia", d: "Educação financeira e empreendedora" },
-  { href: "/oracao", t: "Pedido de oração", d: "Acompanhamento pastoral" },
-  { href: "/eventos", t: "Agenda", d: "Cultos, células e Ágape Serve" },
-  { href: "/cursos", t: "Trilhas de formação", d: "Família, fé e finanças" },
-  { href: "/formacao/infantil", t: "Check-in infantil", d: "Segurança no Kids Hall" },
-  { href: "/culto", t: "Culto online", d: "Presencial e transmissão" },
-];
+import { PosterRow } from "@/components/PosterRow";
+import { fotos } from "@/lib/fotos";
 
 export default function MaisPage() {
   return (
     <div>
       <PageHeader kicker="A casa" title="Mais" lead="Tudo o que a comunidade precisa, em um só lugar." />
-      <div className="grid gap-3 md:grid-cols-2">
-        {items.map((i) => (
-          <Link key={i.href} href={i.href} className="card">
-            <h3 className="font-display text-2xl">{i.t}</h3>
-            <p className="meta">{i.d}</p>
-          </Link>
-        ))}
-      </div>
+      <PosterRow
+        title="Sua conta"
+        items={[
+          { href: "/entrar", src: fotos.entrar, title: "Entrar", kicker: "Acesso" },
+          { href: "/perfil", src: fotos.perfil, title: "Meu perfil", kicker: "Membro" },
+          { href: "/dashboard", src: fotos.painel, title: "Painel", kicker: "Liderança" },
+        ]}
+      />
+      <PosterRow
+        title="Palavra"
+        items={[
+          { href: "/biblia", src: fotos.biblia, title: "Bíblia online", kicker: "Leitura" },
+          { href: "/palavra", src: fotos.youtube, title: "Áudios", kicker: "Liderança" },
+          { href: "/comunidade", src: fotos.celulas, title: "Comunidade", kicker: "Feed" },
+          { href: "/oracao", src: fotos.oracao, title: "Oração", kicker: "Pedido" },
+        ]}
+      />
+      <PosterRow
+        title="A casa"
+        items={[
+          { href: "/culto", src: fotos.culto, title: "Culto online", kicker: "Ao vivo" },
+          { href: "/eventos", src: fotos.familia, title: "Agenda", kicker: "Semana" },
+          { href: "/visao", src: fotos.visao, title: "Visão 2033", kicker: "A casa" },
+          { href: "/lideranca", src: fotos.lideranca, title: "Papel do pastor", kicker: "Liderança" },
+        ]}
+      />
+      <PosterRow
+        title="Formação"
+        href="/formacao"
+        items={[
+          { href: "/cursos", src: fotos.familia, title: "Trilhas", kicker: "Família" },
+          { href: "/formacao/infantil", src: fotos.infantil, title: "Check-in kids", kicker: "Infantil" },
+          { href: "/visao/educacao", src: fotos.educacao, title: "Roda da educação", kicker: "2033" },
+          { href: "/visao/social", src: fotos.celulas, title: "Roda social", kicker: "2033" },
+          { href: "/visao/economia", src: fotos.economia, title: "Roda da economia", kicker: "2033" },
+        ]}
+      />
     </div>
   );
 }

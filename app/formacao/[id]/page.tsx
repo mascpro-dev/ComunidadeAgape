@@ -1,42 +1,50 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ActionForm } from "@/components/ActionForm";
-import { ministerios } from "@/lib/content";
+import { PosterRow } from "@/components/PosterRow";
+import { ministerios, type ItemGeracao } from "@/lib/content";
+import { fotoCapa, fotos } from "@/lib/fotos";
 
 export default async function MinisterioPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const m = ministerios.find((x) => x.id === id);
   if (!m) notFound();
+  const capa = fotos[m.id as keyof typeof fotos] || fotos.familia;
+  const cursos = m.catalogo.filter((i) => i.tipo === "curso");
+  const atividades = m.catalogo.filter((i) => i.tipo === "atividade");
+
+  function posters(itens: ItemGeracao[]) {
+    return itens.map((i) => ({
+      href: i.href || `/formacao/${m.id}`,
+      src: fotoCapa(i.capa),
+      title: i.titulo,
+      kicker: i.kicker,
+    }));
+  }
 
   return (
     <div>
       <Link href="/formacao" className="mb-3 inline-flex text-[13px] font-medium text-gold md:hidden">
         ← formação
       </Link>
-      <article className="hero min-h-[180px] md:min-h-[280px]">
-        <span className="pill">{m.tag}</span>
-        <h1 className="font-display text-[40px] font-semibold leading-none md:text-6xl">{m.nome}</h1>
-        <p className="mt-3 text-sm text-[#d7e2f8]">
-          {m.quando} · {m.local}
-        </p>
-      </article>
-      <div className="mt-8 grid gap-8 md:grid-cols-[1.2fr_0.8fr]">
-        <div>
-          <p className="max-w-[52ch] text-[15px] leading-relaxed text-[#d7e2f8]">{m.texto}</p>
-          <section className="mt-8">
-            <h2 className="section-label">Próximos</h2>
-            <div className="grid gap-3">
-              {m.proximos.map((p) => (
-                <article key={p.titulo} className="card">
-                  <h3 className="font-display text-2xl">{p.titulo}</h3>
-                  <p className="meta">
-                    {p.data} · {p.extra}
-                  </p>
-                </article>
-              ))}
-            </div>
-          </section>
+      <article className="relative min-h-[200px] overflow-hidden rounded-[24px] md:min-h-[320px]">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={capa} alt="" className="absolute inset-0 h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#030b1f] via-[#030b1f]/55 to-black/15" />
+        <div className="relative z-10 flex min-h-[200px] flex-col justify-end p-5 md:min-h-[320px] md:p-10">
+          <span className="pill">{m.tag}</span>
+          <h1 className="font-display text-[40px] font-semibold leading-none md:text-6xl">{m.nome}</h1>
+          <p className="mt-3 text-sm text-[#d7e2f8]">
+            {m.quando} · {m.local}
+          </p>
         </div>
+      </article>
+
+      <PosterRow title="Cursos" items={posters(cursos)} />
+      <PosterRow title="Atividades" items={posters(atividades)} />
+
+      <div className="mt-8 grid gap-8 md:grid-cols-[1.2fr_0.8fr]">
+        <p className="max-w-[52ch] text-[15px] leading-relaxed text-[#d7e2f8]">{m.texto}</p>
         <aside>
           <h2 className="section-label">Liderança</h2>
           <div className="card">
