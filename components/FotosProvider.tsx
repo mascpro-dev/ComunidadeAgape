@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { lerBannersLocais } from "@/lib/banner-idb";
 import { loadBannerOverrides } from "@/lib/banners";
 import { fotos, mesclarFotos, type FotosMap } from "@/lib/fotos";
 
@@ -11,8 +12,8 @@ export function FotosProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     function puxar() {
-      loadBannerOverrides()
-        .then(setExtras)
+      Promise.all([loadBannerOverrides().catch(() => ({})), lerBannersLocais().catch(() => ({}))])
+        .then(([remoto, local]) => setExtras({ ...remoto, ...local }))
         .catch(() => undefined);
     }
     puxar();
@@ -30,5 +31,7 @@ export function useFotos() {
 }
 
 export function recarregarBanners(set: (m: FotosMap) => void) {
-  return loadBannerOverrides().then(set);
+  return Promise.all([loadBannerOverrides().catch(() => ({})), lerBannersLocais().catch(() => ({}))]).then(
+    ([remoto, local]) => set({ ...remoto, ...local }),
+  );
 }

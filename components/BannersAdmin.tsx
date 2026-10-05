@@ -1,7 +1,7 @@
 "use client";
 
-import { getSupabase } from "@/lib/supabase";
 import { BANNER_SLOTS, rotuloTamanho, type BannerSlot } from "@/lib/banner-slots";
+import { apagarBannerLocal, blobParaDataUrl, salvarBannerLocal } from "@/lib/banner-idb";
 import { prepararBanner } from "@/lib/banners";
 import { fotoCapa } from "@/lib/fotos";
 import { useFotos } from "@/components/FotosProvider";
@@ -9,53 +9,13 @@ import { useMemo, useState } from "react";
 
 const grupos = ["Início", "Cultos", "Gerações", "Cursos"];
 
-async function tokenSessao() {
-  const sb = getSupabase();
-  if (!sb) throw new Error("Supabase não configurado");
-  const { data } = await sb.auth.getSession();
-  const token = data.session?.access_token;
-  if (!token) throw new Error("Entre na conta para trocar as imagens.");
-  return token;
-}
-
-async function blobParaJpegBase64(blob: Blob) {
-  const bytes = new Uint8Array(await blob.arrayBuffer());
-  let binario = "";
-  for (let i = 0; i < bytes.length; i += 0x8000) {
-    binario += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
-  }
-  return btoa(binario);
-}
-
 async function enviarBanner(slot: BannerSlot, file: File) {
   const blob = await prepararBanner(file, slot.largura, slot.altura);
-  const token = await tokenSessao();
-  const r = await fetch("/api/banners", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ id: slot.id, jpeg: await blobParaJpegBase64(blob) }),
-  });
-  const texto = await r.text();
-  let body: { error?: string } = {};
-  try {
-    body = JSON.parse(texto) as { error?: string };
-  } catch {
-    body = {};
-  }
-  if (!r.ok) throw new Error(body.error || `Não foi possível enviar a imagem (${r.status}).`);
+  await salvarBannerLocal(slot.id, await blobParaDataUrl(blob));
 }
 
 async function restaurarBanner(id: string) {
-  const token = await tokenSessao();
-  const r = await fetch(`/api/banners?id=${encodeURIComponent(id)}`, {
-    method: "DELETE",
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  const body = (await r.json().catch(() => ({}))) as { error?: string };
-  if (!r.ok) throw new Error(body.error || "Não foi possível restaurar.");
+  await apagarBannerLocal(id);
 }
 
 function CardBanner({ slot }: { slot: BannerSlot }) {
@@ -71,7 +31,7 @@ function CardBanner({ slot }: { slot: BannerSlot }) {
       window.dispatchEvent(new Event("agape-banners"));
       setBusy("Atualizado");
     } catch (e) {
-      setBusy(e instanceof Error ? e.message : "Não foi possível enviar. Rode o SQL 005_banners no Supabase.");
+      setBusy(e instanceof Error ? e.message : "Não foi possível enviar a imagem.");
     }
   }
 

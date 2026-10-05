@@ -1,7 +1,9 @@
+"use client";
+
 import { ministeriosNaAgenda, type ItemGeracao, type Ministerio } from "@/lib/content";
 import { PageHeader } from "@/components/PageHeader";
 import { PosterRow } from "@/components/PosterRow";
-import { loadBannerOverrides } from "@/lib/banners";
+import { useFotos } from "@/components/FotosProvider";
 import { fotoCapa, fotoGeracao } from "@/lib/fotos";
 
 function postersDe(m: Ministerio, extras: Record<string, string>, tipo?: ItemGeracao["tipo"]) {
@@ -14,8 +16,8 @@ function postersDe(m: Ministerio, extras: Record<string, string>, tipo?: ItemGer
   }));
 }
 
-export default async function FormacaoPage() {
-  const extras = await loadBannerOverrides();
+export default function FormacaoPage() {
+  const extras = useFotos();
   const ministerios = ministeriosNaAgenda();
   return (
     <div>

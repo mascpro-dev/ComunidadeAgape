@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import { ActionForm } from "@/components/ActionForm";
 import { PosterRow } from "@/components/PosterRow";
 import { ministeriosNaAgenda, type ItemGeracao } from "@/lib/content";
-import { fotoCapa, fotoGeracao } from "@/lib/fotos";
+import { CapaGeracao } from "@/components/CapaGeracao";
+import { fotoCapa } from "@/lib/fotos";
 import { loadBannerOverrides } from "@/lib/banners";
 
 export default async function MinisterioPage({ params }: { params: Promise<{ id: string }> }) {
@@ -11,7 +12,6 @@ export default async function MinisterioPage({ params }: { params: Promise<{ id:
   const m = ministeriosNaAgenda().find((x) => x.id === id);
   if (!m) notFound();
   const extras = await loadBannerOverrides();
-  const capa = fotoGeracao(m.id, extras);
   const cursos = m.catalogo.filter((i) => i.tipo === "curso");
   const atividades = m.catalogo.filter((i) => i.tipo === "atividade");
 
@@ -30,8 +30,7 @@ export default async function MinisterioPage({ params }: { params: Promise<{ id:
         ← formação
       </Link>
       <article className="relative min-h-[200px] overflow-hidden rounded-[24px] md:min-h-[320px]">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={capa} alt="" className="absolute inset-0 h-full w-full object-cover" />
+        <CapaGeracao id={m.id} nome={m.nome} />
         <div className="absolute inset-0 bg-gradient-to-t from-[#030b1f] via-[#030b1f]/55 to-black/15" />
         <div className="relative z-10 flex min-h-[200px] flex-col justify-end p-5 md:min-h-[320px] md:p-10">
           <span className="pill">{m.tag}</span>
