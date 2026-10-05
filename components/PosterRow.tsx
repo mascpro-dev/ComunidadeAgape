@@ -29,7 +29,7 @@ export function PosterRow({
   items: PosterItem[];
   className?: string;
   fill?: boolean;
-  size?: "md" | "lg" | "gen";
+  size?: "md" | "lg" | "gen" | "week";
 }) {
   const viewport = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
@@ -42,7 +42,8 @@ export function PosterRow({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [marquee, signature],
   );
-  const speed = size === "lg" ? 0.42 : size === "gen" ? 0.28 : 0.7;
+  const speed = size === "lg" ? 0.42 : size === "gen" || size === "week" ? 0.28 : 0.7;
+  const railSize = size === "gen" || size === "week";
 
   useLayoutEffect(() => {
     const view = viewport.current;
@@ -115,7 +116,7 @@ export function PosterRow({
       </div>
       <div
         ref={viewport}
-        className={`${fill ? "poster-row poster-row-fill" : "poster-row"} ${size === "lg" ? "poster-row-lg" : ""} ${size === "gen" ? "poster-row-gen" : ""} ${marquee ? "is-marquee" : ""}`.trim()}
+        className={`${fill ? "poster-row poster-row-fill" : "poster-row"} ${size === "lg" ? "poster-row-lg" : ""} ${railSize ? "poster-row-gen" : ""} ${size === "week" ? "poster-row-week" : ""} ${marquee ? "is-marquee" : ""}`.trim()}
         onMouseEnter={pause}
         onMouseLeave={resume}
         onPointerDown={pause}
@@ -131,12 +132,13 @@ export function PosterRow({
   );
 }
 
-export function PosterCard({ item, size = "md" }: { item: PosterItem; size?: "md" | "lg" | "gen" }) {
+export function PosterCard({ item, size = "md" }: { item: PosterItem; size?: "md" | "lg" | "gen" | "week" }) {
   const className = `${item.selected ? "poster group ring-2 ring-gold" : "poster group"} ${item.reel ? "reel" : ""}`.trim();
+  const lift = size === "gen" || size === "week";
   const inner = (
     <>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={item.src} alt={item.title} className={size === "gen" ? "" : "transition duration-500 group-hover:scale-110"} />
+      <img src={item.src} alt={item.title} className={lift ? "" : "transition duration-500 group-hover:scale-110"} />
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
       {item.reel ? (
         <div className="absolute left-1/2 top-[42%] flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-black/45 text-white backdrop-blur-sm">
@@ -147,7 +149,7 @@ export function PosterCard({ item, size = "md" }: { item: PosterItem; size?: "md
         {item.kicker ? (
           <p className={`font-semibold uppercase tracking-[0.14em] text-gold ${size === "lg" ? "text-[11px] md:text-xs" : "text-[10px]"}`}>{item.kicker}</p>
         ) : null}
-        <p className={`font-display leading-tight text-white drop-shadow ${item.reel ? "text-[15px] md:text-xl" : size === "lg" ? "text-lg md:text-2xl" : "text-[15px] md:text-xl"}`}>{item.title}</p>
+        <p className={`font-display leading-tight text-white drop-shadow ${item.reel ? "text-[15px] md:text-xl" : size === "lg" ? "text-lg md:text-2xl" : size === "week" ? "text-base md:text-xl" : "text-[15px] md:text-xl"}`}>{item.title}</p>
       </div>
     </>
   );

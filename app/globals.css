@@ -121,25 +121,33 @@ body {
     @apply md:!max-w-[260px] md:flex-none;
   }
   .poster-row-gen {
+    --poster-n: 6;
+    --poster-gap: 0.625rem;
     @apply overflow-hidden pb-8 md:pb-10;
     container-type: inline-size;
     container-name: posters;
+  }
+  .poster-row-week {
+    --poster-n: 7;
   }
   .poster-row-gen .poster-track {
     @apply w-max items-end gap-2.5 md:gap-3;
   }
   .poster-row-gen .poster {
     @apply !h-auto max-w-none shrink-0 grow-0 basis-auto rounded-lg;
-    width: calc((100cqw - 1.5 * 0.625rem) / 2.35);
-    min-width: calc((100cqw - 1.5 * 0.625rem) / 2.35);
+    width: calc((100cqw - 1.35 * var(--poster-gap)) / 2.35);
+    min-width: calc((100cqw - 1.35 * var(--poster-gap)) / 2.35);
     aspect-ratio: 2 / 3;
     transform-origin: center bottom;
     transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.55s ease;
   }
   @media (min-width: 768px) {
+    .poster-row-gen {
+      --poster-gap: 0.75rem;
+    }
     .poster-row-gen .poster {
-      width: calc((100cqw - 5 * 0.75rem) / 6);
-      min-width: calc((100cqw - 5 * 0.75rem) / 6);
+      width: calc((100cqw - (var(--poster-n) - 1) * var(--poster-gap)) / var(--poster-n));
+      min-width: calc((100cqw - (var(--poster-n) - 1) * var(--poster-gap)) / var(--poster-n));
     }
   }
   .poster-row-gen:not(.is-marquee) .poster {

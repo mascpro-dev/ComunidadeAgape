@@ -118,19 +118,19 @@ export function HomePortal() {
         </div>
       </section>
 
-      <div className="-mx-4 mt-3 flex gap-3 overflow-x-auto px-4 pb-1 [scrollbar-width:none] md:mx-0 md:mt-5 md:grid md:grid-cols-4 md:overflow-visible md:px-0">
+      <div className="-mx-4 mt-3 flex gap-2.5 overflow-x-auto px-4 pb-1 [scrollbar-width:none] md:mx-0 md:mt-5 md:grid md:grid-cols-5 md:gap-3 md:overflow-visible md:px-0">
         {destaques.map((d) => (
           <Link
             key={d.t}
             href={d.href}
-            className="relative min-w-[220px] shrink-0 overflow-hidden rounded-2xl border border-white/10 md:min-w-0"
+            className="relative min-w-[200px] shrink-0 overflow-hidden rounded-2xl border border-white/10 md:min-w-0"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={d.src} alt="" className="h-28 w-full object-cover md:h-36" />
+            <img src={d.src} alt="" className="h-28 w-full object-cover md:h-32 lg:h-36" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#030b1f] via-[#030b1f]/40 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-3">
               <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-gold">{d.k}</p>
-              <p className="font-display text-xl leading-none">{d.t}</p>
+              <p className="font-display text-lg leading-tight lg:text-xl">{d.t}</p>
               <p className="mt-1 text-[12px] text-[#c5d6f0]">{d.d}</p>
             </div>
           </Link>
@@ -183,6 +183,7 @@ export function HomePortal() {
         title="Na semana"
         href="/eventos"
         hrefLabel="Agenda →"
+        size="week"
         items={eventos.map((e) => ({
           href: "/eventos",
           src: fotos[e.foto as keyof typeof fotos],
