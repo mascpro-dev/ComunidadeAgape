@@ -27,7 +27,7 @@ const seedPosts: Post[] = [
   {
     id: "p1",
     autor: "Comunidade Ágape",
-    texto: "Jesus para toda a vida. Culto da família às 10h (templo e online) e da noite às 19h no templo.",
+    texto: "Jesus para toda a vida. Culto da família às 10h no templo e ao vivo; noite às 19h no templo.",
     quando: "Hoje",
     likes: 24,
     comentarios: ["Amém, igreja!", "Levando a família."],

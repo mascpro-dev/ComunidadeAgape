@@ -27,9 +27,9 @@ const avisos = [
 ];
 
 const destaques = [
-  { href: "/culto", src: fotos.familia, k: "Ao vivo", t: "Culto da família", d: "Domingo 10h" },
+  { href: "/culto", src: fotos.familia, k: "Templo + ao vivo", t: "Culto da família", d: "Domingo 10h" },
   { href: "/culto", src: fotos.cultoNoite, k: "Templo", t: "Culto da noite", d: "Domingo 19h" },
-  { href: "/formacao/jovens", src: fotos.jovens, k: "Geração", t: "Culto de jovens", d: "Sábado 20h" },
+  { href: "/formacao/jovens", src: fotos.cultoJovens, k: "Geração", t: "Culto de jovens", d: "Sábado 20h" },
   { href: "/formacao/adolescentes", src: fotos.adolescentes, k: "Geração", t: "Culto de Pré Adolescentes", d: "às 19h" },
   { href: "/formacao/infantil", src: fotos.infantil, k: "Kids", t: "Culto Infantil", d: "Domingo 10h · igreja" },
 ];
@@ -96,7 +96,7 @@ export function HomePortal() {
           <div className="relative z-10 flex min-h-[280px] flex-col justify-end px-5 pb-5 pt-8 md:min-h-[560px] md:max-w-3xl md:px-12 md:pb-12 md:pt-16">
             <span className="pill">
               <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
-              ao vivo · domingo 10h
+              templo + ao vivo · domingo 10h
             </span>
             <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-gold">Tema da palavra</p>
             <h1 className="font-display max-w-[14ch] text-[34px] font-semibold leading-[0.92] tracking-tight md:max-w-[10ch] md:text-[72px]">
@@ -205,9 +205,9 @@ export function HomePortal() {
         title="Assistir"
         href="/culto"
         items={[
-          { href: "/culto", src: fotos.familia, title: "Culto da família", kicker: "Ao vivo · Dom 10h" },
+          { href: "/culto", src: fotos.familia, title: "Culto da família", kicker: "Dom 10h · templo e ao vivo" },
           { href: "/culto", src: fotos.culto, title: "Culto da noite", kicker: "Domingo 19h" },
-          { href: "/formacao/jovens", src: fotos.jovens, title: "Culto de jovens", kicker: "Sábado 20h" },
+          { href: "/formacao/jovens", src: fotos.cultoJovens, title: "Culto de jovens", kicker: "Sábado 20h" },
           { href: "/formacao/adolescentes", src: fotos.adolescentes, title: "Culto de Pré Adolescentes", kicker: "às 19h" },
           { href: "/formacao/infantil", src: fotos.infantil, title: "Culto Infantil", kicker: "Domingo 10h · igreja" },
           { href: "/palavra", src: fotos.biblia, title: "Áudios", kicker: "Palavra" },

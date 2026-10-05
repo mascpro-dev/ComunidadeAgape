@@ -229,7 +229,7 @@ function NumerosGrid({
         <p className="mb-3 text-[13px] font-medium">Agenda da comunidade</p>
         <ul className="space-y-2.5">
           {[
-            { h: "10:00", t: "Culto da família", d: "Domingo · templo + online", c: "bg-[#7b6cff]" },
+            { h: "10:00", t: "Culto da família", d: "Domingo · templo e ao vivo", c: "bg-[#7b6cff]" },
             { h: "19:00", t: "Culto da noite", d: "Domingo · templo", c: "bg-[#4ea0ff]" },
             { h: "20:00", t: "Culto de jovens", d: "Sábado · templo", c: "bg-[#3dce8a]" },
             { h: "19:00", t: "Culto de Pré Adolescentes", d: "às 19h · Templo", c: "bg-[#ff6b3d]" },

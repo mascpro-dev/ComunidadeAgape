@@ -220,7 +220,7 @@ export const seedRelatorios: Relatorio[] = [
     presentes: 420,
     visitantes: 38,
     decisoes: 7,
-    observacao: "Culto da família com transmissão; noite no templo às 19h.",
+    observacao: "Culto da família às 10h no templo e ao vivo; noite no templo às 19h.",
     quando: "01/10/2026",
   },
   {

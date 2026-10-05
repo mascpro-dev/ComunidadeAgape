@@ -12,7 +12,7 @@ export const church = {
   youtubeChannelId: "",
   youtubeVideoId: "",
   temaPalavra: "Jesus. Toda a vida.",
-  temaPalavraLinha: "Culto da família · domingo 10h",
+  temaPalavraLinha: "Culto da família · domingo 10h · templo e ao vivo",
 };
 
 export const principios = [
@@ -529,7 +529,7 @@ export const ministerios: Ministerio[] = [
       { id: "jff8", titulo: "Vencendo a Ira", kicker: "A partir de 13 · fim de semana", tipo: "curso", capa: "ffiIra", href: "/cursos/ff8" },
       { id: "j4", titulo: "Célula Universitários", kicker: "Atividade · Sex 23h", tipo: "atividade", capa: "celulaJovens", href: "/celulas" },
       { id: "j5", titulo: "Missão na cidade", kicker: "Atividade", tipo: "atividade", capa: "missao" },
-      { id: "j6", titulo: "Culto de jovens", kicker: "Atividade · Sáb 20h", tipo: "atividade", capa: "cultoNoite" },
+      { id: "j6", titulo: "Culto de jovens", kicker: "Atividade · Sáb 20h", tipo: "atividade", capa: "cultoJovens", href: "/formacao/jovens" },
     ],
   },
   {
@@ -1821,10 +1821,10 @@ export const cursos: Curso[] = [
 
 export function agendaEventos() {
   return [
-    { titulo: "Culto da família", quando: "Dom 10h · templo + online", tag: "Ao vivo", foto: "familia" },
+    { titulo: "Culto da família", quando: "Dom 10h · templo e ao vivo", tag: "Família", foto: "familia" },
     { titulo: "Culto Infantil", quando: "Dom 10h · igreja", tag: "Kids", foto: "infantil" },
     { titulo: "Culto da noite", quando: "Dom 19h · templo", tag: "Culto", foto: "cultoNoite" },
-    { titulo: "Culto de jovens", quando: "Sáb 20h · templo", tag: "Jovens", foto: "jovens" },
+    { titulo: "Culto de jovens", quando: "Sáb 20h · templo", tag: "Jovens", foto: "cultoJovens" },
     { titulo: "Culto de Pré Adolescentes", quando: "às 19h · templo", tag: "Geração", foto: "adolescentes" },
     { titulo: "Célula de Adolescentes", quando: "Sexta 20h", tag: "Geração", foto: "adolescentes" },
     { titulo: "Célula Universitários", quando: "Sexta 23h", tag: "Jovens", foto: "jovens" },

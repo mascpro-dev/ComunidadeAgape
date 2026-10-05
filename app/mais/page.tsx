@@ -26,7 +26,7 @@ export default function MaisPage() {
       <PosterRow
         title="A comunidade"
         items={[
-          { href: "/culto", src: fotos.familia, title: "Culto da família", kicker: "Ao vivo · 10h" },
+          { href: "/culto", src: fotos.familia, title: "Culto da família", kicker: "Dom 10h · templo e ao vivo" },
           { href: "/eventos", src: fotos.familia, title: "Agenda", kicker: "Semana" },
           { href: "/visao", src: fotos.visao, title: "Visão 2033", kicker: "A comunidade" },
           { href: "/lideranca", src: fotos.lideranca, title: "Papel do pastor", kicker: "Liderança" },
