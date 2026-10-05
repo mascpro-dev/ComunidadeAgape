@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { ActionForm } from "@/components/ActionForm";
 import { PosterRow } from "@/components/PosterRow";
 import { ministeriosNaAgenda, type ItemGeracao } from "@/lib/content";
-import { fotoCapa } from "@/lib/fotos";
+import { fotoCapa, fotoGeracao } from "@/lib/fotos";
 import { loadBannerOverrides } from "@/lib/banners";
 
 export default async function MinisterioPage({ params }: { params: Promise<{ id: string }> }) {
@@ -11,7 +11,7 @@ export default async function MinisterioPage({ params }: { params: Promise<{ id:
   const m = ministeriosNaAgenda().find((x) => x.id === id);
   if (!m) notFound();
   const extras = await loadBannerOverrides();
-  const capa = fotoCapa(m.id, extras);
+  const capa = fotoGeracao(m.id, extras);
   const cursos = m.catalogo.filter((i) => i.tipo === "curso");
   const atividades = m.catalogo.filter((i) => i.tipo === "atividade");
 

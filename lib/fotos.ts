@@ -108,6 +108,12 @@ export const fotos = {
   gfiPureza: "/cursos/proteger-pureza.jpg",
   gfiAdolescente: "/cursos/coracao-adolescente.jpg",
   gfiVoar: "/cursos/convite-voar.jpg",
+  geracaoCriancas: "/geracoes/criancas.jpg",
+  geracaoAdolescentes: "/geracoes/adolescentes.jpg",
+  geracaoJovens: "/geracoes/jovens.jpg",
+  geracaoMulheres: "/geracoes/mulheres.jpg",
+  geracaoHomens: "/geracoes/homens.jpg",
+  geracaoFamilias: "/geracoes/familias.jpg",
 };
 
 export type FotosMap = Record<string, string>;
@@ -119,4 +125,17 @@ export function mesclarFotos(extras?: FotosMap): FotosMap {
 export function fotoCapa(chave: string, extras?: FotosMap) {
   const mapa = mesclarFotos(extras);
   return mapa[chave] || mapa.familia || fotos.familia;
+}
+
+const GERACAO_FOTO: Record<string, string> = {
+  infantil: "geracaoCriancas",
+  adolescentes: "geracaoAdolescentes",
+  jovens: "geracaoJovens",
+  mulheres: "geracaoMulheres",
+  homens: "geracaoHomens",
+  familia: "geracaoFamilias",
+};
+
+export function fotoGeracao(id: string, extras?: FotosMap) {
+  return fotoCapa(GERACAO_FOTO[id] || id, extras);
 }

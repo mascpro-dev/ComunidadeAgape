@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { PosterRow } from "@/components/PosterRow";
 import { loadMe } from "@/lib/agape-db";
 import { agendaEventos, celulas, church, ministeriosNaAgenda } from "@/lib/content";
-import { fotoCapa } from "@/lib/fotos";
+import { fotoCapa, fotoGeracao } from "@/lib/fotos";
 import { useFotos } from "@/components/FotosProvider";
 
 const buscaRotas = [
@@ -195,9 +195,10 @@ export function HomePortal() {
       <PosterRow
         title="Gerações"
         href="/formacao"
+        size="gen"
         items={ministerios.map((m) => ({
           href: `/formacao/${m.id}`,
-          src: fotoCapa(m.id, F),
+          src: fotoGeracao(m.id, F),
           title: m.nome,
           kicker: m.tag,
         }))}

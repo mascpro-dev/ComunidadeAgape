@@ -2,7 +2,7 @@ import { ministeriosNaAgenda, type ItemGeracao, type Ministerio } from "@/lib/co
 import { PageHeader } from "@/components/PageHeader";
 import { PosterRow } from "@/components/PosterRow";
 import { loadBannerOverrides } from "@/lib/banners";
-import { fotoCapa } from "@/lib/fotos";
+import { fotoCapa, fotoGeracao } from "@/lib/fotos";
 
 function postersDe(m: Ministerio, extras: Record<string, string>, tipo?: ItemGeracao["tipo"]) {
   const itens = tipo ? m.catalogo.filter((i) => i.tipo === tipo) : m.catalogo;
@@ -26,9 +26,10 @@ export default async function FormacaoPage() {
       />
       <PosterRow
         title="Gerações"
+        size="gen"
         items={ministerios.map((m) => ({
           href: `/formacao/${m.id}`,
-          src: fotoCapa(m.id, extras),
+          src: fotoGeracao(m.id, extras),
           title: m.nome,
           kicker: m.tag,
         }))}

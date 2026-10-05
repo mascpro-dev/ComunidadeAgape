@@ -580,7 +580,7 @@ export const ministerios: Ministerio[] = [
   },
   {
     id: "infantil",
-    nome: "Infantil",
+    nome: "Crianças",
     emoji: "🌈",
     tag: "0–11",
     quando: "Domingo · 10h",
@@ -680,7 +680,7 @@ export const ministerios: Ministerio[] = [
   },
   {
     id: "familia",
-    nome: "Famílias",
+    nome: "Família",
     emoji: "🏠",
     tag: "Gerações",
     quando: "Turmas contínuas",
@@ -722,15 +722,19 @@ export const ministerios: Ministerio[] = [
 
 export function ministeriosNaAgenda(): Ministerio[] {
   const encontro = rotuloEncontroHomens();
-  return ministerios.map((m) => {
-    if (m.id !== "homens") return m;
-    return {
-      ...m,
-      quando: encontro,
-      proximos: [{ titulo: "Encontro de Homens", data: encontro, extra: "Toda 1ª segunda-feira do mês" }],
-      catalogo: m.catalogo.map((i) => (i.id === "h4" ? { ...i, kicker: encontro } : i)),
-    };
-  });
+  const ordem = ["infantil", "adolescentes", "jovens", "mulheres", "homens", "familia"];
+  return ordem
+    .map((id) => ministerios.find((m) => m.id === id))
+    .filter((m): m is Ministerio => Boolean(m))
+    .map((m) => {
+      if (m.id !== "homens") return m;
+      return {
+        ...m,
+        quando: encontro,
+        proximos: [{ titulo: "Encontro de Homens", data: encontro, extra: "Toda 1ª segunda-feira do mês" }],
+        catalogo: m.catalogo.map((i) => (i.id === "h4" ? { ...i, kicker: encontro } : i)),
+      };
+    });
 }
 
 export const celulas = [
