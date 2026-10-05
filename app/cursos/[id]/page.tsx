@@ -4,6 +4,7 @@ import { ActionForm } from "@/components/ActionForm";
 import { PosterRow } from "@/components/PosterRow";
 import { cursos, getCurso, type Curso } from "@/lib/content";
 import { cursoComLanding } from "@/lib/curso-landing";
+import { loadBannerOverrides } from "@/lib/banners";
 import { fotoCapa } from "@/lib/fotos";
 
 export function generateStaticParams() {
@@ -62,7 +63,8 @@ export default async function CursoLandingPage({ params }: { params: Promise<{ i
   const base = getCurso(id);
   if (!base) notFound();
   const c = cursoComLanding(base);
-  const capa = fotoCapa(c.capa);
+  const extras = await loadBannerOverrides();
+  const capa = fotoCapa(c.capa, extras);
   const glow = c.glow || "#d6c08a";
   const reels = c.reels || [];
   const stats = [

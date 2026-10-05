@@ -1,10 +1,13 @@
 import { church, youtubeSrc } from "@/lib/content";
 import { PageHeader } from "@/components/PageHeader";
 import { PosterRow } from "@/components/PosterRow";
-import { fotos } from "@/lib/fotos";
+import { loadBannerOverrides } from "@/lib/banners";
+import { fotoCapa } from "@/lib/fotos";
 
-export default function CultoPage() {
+export default async function CultoPage() {
   const src = youtubeSrc();
+  const F = await loadBannerOverrides();
+  const familia = fotoCapa("cultoFamilia", F);
   return (
     <div>
       <PageHeader
@@ -30,7 +33,7 @@ export default function CultoPage() {
           className="relative block min-h-[220px] overflow-hidden rounded-[24px] md:min-h-[380px]"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={fotos.familia} alt="Culto da família Ágape" className="absolute inset-0 h-full w-full object-cover" />
+          <img src={familia} alt="Culto da família Ágape" className="absolute inset-0 h-full w-full object-cover object-center" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#030b1f] via-[#030b1f]/55 to-black/20" />
           <div className="relative z-10 flex min-h-[220px] flex-col justify-end p-5 md:min-h-[380px] md:p-10">
             <span className="pill">
@@ -46,14 +49,14 @@ export default function CultoPage() {
       <PosterRow
         title="Na comunidade"
         items={[
-          { href: "/culto", src: fotos.familia, title: "Culto da família", kicker: "Dom 10h · templo e ao vivo" },
-          { href: "/culto", src: fotos.cultoNoite, title: "Culto da noite", kicker: "Domingo 19h" },
-          { href: "/formacao/jovens", src: fotos.cultoJovens, title: "Culto de jovens", kicker: "Sábado 20h" },
-          { href: "/formacao/adolescentes", src: fotos.adolescentes, title: "Culto de Pré Adolescentes", kicker: "às 19h" },
-          { href: "/formacao/infantil", src: fotos.infantil, title: "Culto Infantil", kicker: "Domingo 10h · igreja" },
+          { href: "/culto", src: familia, title: "Culto da família", kicker: "Dom 10h · templo e ao vivo" },
+          { href: "/culto", src: fotoCapa("cultoNoite", F), title: "Culto da noite", kicker: "Domingo 19h" },
+          { href: "/formacao/jovens", src: fotoCapa("cultoJovens", F), title: "Culto de jovens", kicker: "Sábado 20h" },
+          { href: "/formacao/adolescentes", src: fotoCapa("cultoPre", F), title: "Culto de Pré Adolescentes", kicker: "às 19h" },
+          { href: "/formacao/infantil", src: fotoCapa("cultoKids", F), title: "Culto Infantil", kicker: "Domingo 10h · igreja" },
           {
             href: church.youtubeUrl,
-            src: fotos.youtube,
+            src: fotoCapa("youtube", F),
             title: "YouTube Ágape",
             kicker: "Canal",
             external: true,

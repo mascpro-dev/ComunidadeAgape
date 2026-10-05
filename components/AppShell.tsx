@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { desktopNav, maisMenu } from "@/lib/nav";
 import { Logo } from "./Logo";
 import { SessionMenu } from "./LoginForm";
+import { FotosProvider } from "./FotosProvider";
 
 const tabs = [
   { href: "/", label: "Início", icon: HomeIcon },
@@ -47,10 +48,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   }, [pathname]);
 
   if (pathname === "/entrar") {
-    return <div className="min-h-dvh bg-deep">{children}</div>;
+    return (
+      <FotosProvider>
+        <div className="min-h-dvh bg-deep">{children}</div>
+      </FotosProvider>
+    );
   }
 
   return (
+    <FotosProvider>
     <div className="flex min-h-dvh min-w-0 max-w-full flex-col overflow-x-clip">
       <header className="sticky top-0 z-40 hidden border-b border-white/[0.06] bg-[#030b1f]/80 backdrop-blur-xl md:block">
         <div className="mx-auto flex h-[108px] max-w-7xl items-center gap-8 px-6 lg:px-8">
@@ -196,6 +202,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       </nav>
     </div>
+    </FotosProvider>
   );
 }
 

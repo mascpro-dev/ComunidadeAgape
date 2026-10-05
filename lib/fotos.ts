@@ -5,6 +5,13 @@ export const fotos = {
     "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1400&q=80",
   familia:
     "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1400&q=80",
+  heroInicio:
+    "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1400&q=80",
+  cultoFamilia:
+    "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1400&q=80",
+  cultoPre:
+    "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=1400&q=80",
+  cultoKids: "/culto-kids.jpg",
   celulas:
     "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1400&q=80",
   missao:
@@ -12,6 +19,7 @@ export const fotos = {
   jovens:
     "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1400&q=80",
   cultoJovens: "/culto-jovens.jpg",
+  cultoJovensSemana: "/culto-jovens-semana.jpg",
   adolescentes:
     "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=800&q=80",
   infantil:
@@ -100,6 +108,13 @@ export const fotos = {
   gfiVoar: "/cursos/convite-voar.jpg",
 };
 
-export function fotoCapa(chave: string) {
-  return fotos[chave as keyof typeof fotos] || fotos.familia;
+export type FotosMap = Record<string, string>;
+
+export function mesclarFotos(extras?: FotosMap): FotosMap {
+  return { ...fotos, ...(extras || {}) };
+}
+
+export function fotoCapa(chave: string, extras?: FotosMap) {
+  const mapa = mesclarFotos(extras);
+  return mapa[chave] || mapa.familia || fotos.familia;
 }

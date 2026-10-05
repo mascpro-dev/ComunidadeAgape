@@ -3,20 +3,22 @@ import { notFound } from "next/navigation";
 import { ActionForm } from "@/components/ActionForm";
 import { PosterRow } from "@/components/PosterRow";
 import { ministeriosNaAgenda, type ItemGeracao } from "@/lib/content";
-import { fotoCapa, fotos } from "@/lib/fotos";
+import { fotoCapa } from "@/lib/fotos";
+import { loadBannerOverrides } from "@/lib/banners";
 
 export default async function MinisterioPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const m = ministeriosNaAgenda().find((x) => x.id === id);
   if (!m) notFound();
-  const capa = fotos[m.id as keyof typeof fotos] || fotos.familia;
+  const extras = await loadBannerOverrides();
+  const capa = fotoCapa(m.id, extras);
   const cursos = m.catalogo.filter((i) => i.tipo === "curso");
   const atividades = m.catalogo.filter((i) => i.tipo === "atividade");
 
   function posters(itens: ItemGeracao[]) {
     return itens.map((i) => ({
         href: i.href || `/formacao/${id}`,
-      src: fotoCapa(i.capa),
+      src: fotoCapa(i.capa, extras),
       title: i.titulo,
       kicker: i.kicker,
     }));

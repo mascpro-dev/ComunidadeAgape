@@ -1,0 +1,180 @@
+export type BannerSlot = {
+  id: string;
+  grupo: string;
+  titulo: string;
+  onde: string;
+  largura: number;
+  altura: number;
+  dica: string;
+};
+
+export function rotuloTamanho(s: BannerSlot) {
+  const mdc = (a: number, b: number): number => (b ? mdc(b, a % b) : a);
+  const g = mdc(s.largura, s.altura);
+  return `${s.largura} × ${s.altura} px · ${s.largura / g}:${s.altura / g}`;
+}
+
+export const BANNER_SLOTS: BannerSlot[] = [
+  {
+    id: "heroInicio",
+    grupo: "Início",
+    titulo: "Banner do Início",
+    onde: "Foto grande no topo da aba Início",
+    largura: 1920,
+    altura: 1080,
+    dica: "Horizontal. O recorte central aparece no celular.",
+  },
+  {
+    id: "cultoFamilia",
+    grupo: "Cultos",
+    titulo: "Culto da família",
+    onde: "Card do Início e página Culto · Dom 10h",
+    largura: 1600,
+    altura: 900,
+    dica: "Horizontal 16:9. Sem esticar — o app recorta o centro.",
+  },
+  {
+    id: "cultoNoite",
+    grupo: "Cultos",
+    titulo: "Culto da noite",
+    onde: "Card do Início e página Culto · Dom 19h",
+    largura: 1600,
+    altura: 900,
+    dica: "Horizontal 16:9.",
+  },
+  {
+    id: "cultoJovens",
+    grupo: "Cultos",
+    titulo: "Culto de jovens",
+    onde: "Card do Início, agenda e página Culto · Sáb 20h",
+    largura: 1920,
+    altura: 1080,
+    dica: "Horizontal. Arte tipo “Off the Wall” cabe inteira neste tamanho.",
+  },
+  {
+    id: "cultoPre",
+    grupo: "Cultos",
+    titulo: "Culto de Pré Adolescentes",
+    onde: "Card do Início · às 19h",
+    largura: 1600,
+    altura: 900,
+    dica: "Horizontal 16:9.",
+  },
+  {
+    id: "cultoKids",
+    grupo: "Cultos",
+    titulo: "Culto Infantil",
+    onde: "Card do Início · Dom 10h",
+    largura: 1600,
+    altura: 900,
+    dica: "Horizontal 16:9.",
+  },
+  {
+    id: "jovens",
+    grupo: "Gerações",
+    titulo: "Jovens",
+    onde: "Card da geração 18–35",
+    largura: 1000,
+    altura: 1500,
+    dica: "Vertical 2:3, como pôster.",
+  },
+  {
+    id: "adolescentes",
+    grupo: "Gerações",
+    titulo: "Adolescentes",
+    onde: "Card da geração 12–17",
+    largura: 1000,
+    altura: 1500,
+    dica: "Vertical 2:3.",
+  },
+  {
+    id: "infantil",
+    grupo: "Gerações",
+    titulo: "Infantil",
+    onde: "Card da geração 0–11 e hero da página Infantil",
+    largura: 1000,
+    altura: 1500,
+    dica: "Vertical 2:3.",
+  },
+  {
+    id: "homens",
+    grupo: "Gerações",
+    titulo: "Homens",
+    onde: "Card da geração Irmãos",
+    largura: 1000,
+    altura: 1500,
+    dica: "Vertical 2:3.",
+  },
+  {
+    id: "mulheres",
+    grupo: "Gerações",
+    titulo: "Mulheres",
+    onde: "Card da geração Irmãs",
+    largura: 1000,
+    altura: 1500,
+    dica: "Vertical 2:3.",
+  },
+  {
+    id: "familia",
+    grupo: "Gerações",
+    titulo: "Famílias",
+    onde: "Card da geração Famílias",
+    largura: 1000,
+    altura: 1500,
+    dica: "Vertical 2:3.",
+  },
+  {
+    id: "checkinKids",
+    grupo: "Gerações",
+    titulo: "Check-in kids",
+    onde: "Card de atividade e menu Mais",
+    largura: 1000,
+    altura: 1500,
+    dica: "Vertical 2:3.",
+  },
+  { id: "crownEstudo", grupo: "Cursos", titulo: "Crown: Estudo Financeiro", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "crownCasamento", grupo: "Cursos", titulo: "Dinheiro e Casamento", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "crownFimMes", grupo: "Cursos", titulo: "Como Chegar ao Fim do Mês", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "crownAbc", grupo: "Cursos", titulo: "ABC do Dinheiro", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "crownSegredo", grupo: "Cursos", titulo: "O Segredo", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "crownTeens", grupo: "Cursos", titulo: "Crown Teens", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "habitudes1", grupo: "Cursos", titulo: "Habitudes: Autoliderança", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "habitudes2", grupo: "Cursos", titulo: "Habitudes: Conectar-se", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "habitudes3", grupo: "Cursos", titulo: "Habitudes: Liderar os outros", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "habitudes4", grupo: "Cursos", titulo: "Habitudes: Transformar a cultura", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "habitudes5", grupo: "Cursos", titulo: "Habitudes: Liderança espiritual", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "ignicao", grupo: "Cursos", titulo: "Ignição", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "mulherProspera", grupo: "Cursos", titulo: "A Mulher Que Prospera", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "homemMaximo", grupo: "Cursos", titulo: "Homem ao Máximo", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "vencedores", grupo: "Cursos", titulo: "Vencedores Nunca Desistem", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "coragem", grupo: "Cursos", titulo: "Coragem", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "homemVerdade", grupo: "Cursos", titulo: "Homem de Verdade", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "poderPotencial", grupo: "Cursos", titulo: "O Poder do Potencial", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "comunicacaoSexo", grupo: "Cursos", titulo: "Comunicação, Sexo e Dinheiro", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "homensFortes", grupo: "Cursos", titulo: "Homens Fortes em Tempos Difíceis", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "integridadeSexual", grupo: "Cursos", titulo: "Integridade Sexual", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "tesouro", grupo: "Cursos", titulo: "Tesouro", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "minhaMulherUnica", grupo: "Cursos", titulo: "Minha Mulher Única", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "maridoIrresistivel", grupo: "Cursos", titulo: "Marido Irresistível", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "mulherUnica", grupo: "Cursos", titulo: "Mulher Única", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "serMulher", grupo: "Cursos", titulo: "Ser Mulher", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "ffiAlianca", grupo: "Cursos", titulo: "Aliança", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "ffiRomance", grupo: "Cursos", titulo: "Romance à Maneira de Deus", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "ffiMinistracao", grupo: "Cursos", titulo: "Treinamento para Ministração", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "ffiRelacionamentos", grupo: "Cursos", titulo: "Fortalecendo Relacionamentos", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "ffiCoracoes", grupo: "Cursos", titulo: "Transformando Corações", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "ffiGeracoes", grupo: "Cursos", titulo: "Abençoando Gerações", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "ffiPergunta", grupo: "Cursos", titulo: "A Pergunta", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "ffiIra", grupo: "Cursos", titulo: "Vencendo a Ira", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "gfiBebe", grupo: "Cursos", titulo: "Preparação para a Chegada do Bebê", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "gfiInfante", grupo: "Cursos", titulo: "A Transição do Infante", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "gfiCriar", grupo: "Cursos", titulo: "Como Criar Seus Filhos", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "gfiEducacao", grupo: "Cursos", titulo: "Educação de Filhos à Maneira de Deus", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "gfiPureza", grupo: "Cursos", titulo: "Como Proteger a Pureza", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "gfiAdolescente", grupo: "Cursos", titulo: "Coração do Adolescente", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+  { id: "gfiVoar", grupo: "Cursos", titulo: "Um Convite Para Voar", onde: "Pôster e landing do curso", largura: 1000, altura: 1500, dica: "Capa vertical 2:3." },
+];
+
+export function slotPorId(id: string) {
+  return BANNER_SLOTS.find((s) => s.id === id);
+}

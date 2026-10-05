@@ -7,12 +7,13 @@ import { loadMe } from "@/lib/agape-db";
 import { celulaMaisPerto } from "@/lib/celula-proxima";
 import { celulas, dias } from "@/lib/content";
 import { fotos } from "@/lib/fotos";
-
-function capaDe(capa: string) {
-  return fotos[capa as keyof typeof fotos] || fotos.celulas;
-}
+import { useFotos } from "@/components/FotosProvider";
 
 export function CelulasList() {
+  const F = useFotos();
+  function capaDe(capa: string) {
+    return F[capa] || F.celulas || fotos.celulas;
+  }
   const [dia, setDia] = useState<(typeof dias)[number]>("Todos");
   const [sel, setSel] = useState(celulas[0].id);
   const [perto, setPerto] = useState("");

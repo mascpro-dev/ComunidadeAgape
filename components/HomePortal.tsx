@@ -6,7 +6,8 @@ import { useRouter } from "next/navigation";
 import { PosterRow } from "@/components/PosterRow";
 import { loadMe } from "@/lib/agape-db";
 import { agendaEventos, celulas, church, ministeriosNaAgenda } from "@/lib/content";
-import { fotoCapa, fotos } from "@/lib/fotos";
+import { fotoCapa } from "@/lib/fotos";
+import { useFotos } from "@/components/FotosProvider";
 
 const buscaRotas = [
   { href: "/perfil", k: "Perfil" },
@@ -24,14 +25,6 @@ const avisos = [
   { t: "Inscrições abertas na Universidade da Família", href: "/formacao" },
   { t: "Células durante a semana — ache a sua", href: "/celulas" },
   { t: "Culto da noite no templo, domingo 19h", href: "/culto" },
-];
-
-const destaques = [
-  { href: "/culto", src: fotos.familia, k: "Templo + ao vivo", t: "Culto da família", d: "Domingo 10h" },
-  { href: "/culto", src: fotos.cultoNoite, k: "Templo", t: "Culto da noite", d: "Domingo 19h" },
-  { href: "/formacao/jovens", src: fotos.cultoJovens, k: "Geração", t: "Culto de jovens", d: "Sábado 20h" },
-  { href: "/formacao/adolescentes", src: fotos.adolescentes, k: "Geração", t: "Culto de Pré Adolescentes", d: "às 19h" },
-  { href: "/formacao/infantil", src: fotos.infantil, k: "Kids", t: "Culto Infantil", d: "Domingo 10h · igreja" },
 ];
 
 const jornada = [
@@ -75,9 +68,17 @@ export function HomePortal() {
     router.push(hit?.href || "/biblia");
   }
 
+  const F = useFotos();
   const avisoAtual = avisos[aviso];
   const eventos = agendaEventos();
   const ministerios = ministeriosNaAgenda();
+  const destaques = [
+    { href: "/culto", src: F.cultoFamilia || F.familia, k: "Templo + ao vivo", t: "Culto da família", d: "Domingo 10h" },
+    { href: "/culto", src: F.cultoNoite, k: "Templo", t: "Culto da noite", d: "Domingo 19h" },
+    { href: "/formacao/jovens", src: F.cultoJovens, k: "Geração", t: "Culto de jovens", d: "Sábado 20h" },
+    { href: "/formacao/adolescentes", src: F.cultoPre || F.adolescentes, k: "Geração", t: "Culto de Pré Adolescentes", d: "às 19h" },
+    { href: "/formacao/infantil", src: F.cultoKids || F.infantil, k: "Kids", t: "Culto Infantil", d: "Domingo 10h · igreja" },
+  ];
   const temaPalavraLinhas = useMemo(() => {
     const t = church.temaPalavra.trim();
     const parts = t.split(/(?<=\.)\s+/).filter(Boolean);
@@ -90,7 +91,7 @@ export function HomePortal() {
       <section className="relative -mx-4 overflow-hidden md:mx-0 md:rounded-[28px]">
         <div className="relative min-h-[280px] md:min-h-[560px]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={fotos.familia} alt="" className="absolute inset-0 h-full w-full object-cover object-center" />
+          <img src={F.heroInicio || F.familia} alt="" className="absolute inset-0 h-full w-full object-cover object-center" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#030b1f] via-[#030b1f]/55 to-black/20" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#030b1f]/80 via-transparent to-transparent" />
           <div className="relative z-10 flex min-h-[280px] flex-col justify-end px-5 pb-5 pt-8 md:min-h-[560px] md:max-w-3xl md:px-12 md:pb-12 md:pt-16">
@@ -126,7 +127,7 @@ export function HomePortal() {
             className="relative min-w-[200px] shrink-0 overflow-hidden rounded-2xl border border-white/10 md:min-w-0"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={d.src} alt="" className="h-28 w-full object-cover md:h-32 lg:h-36" />
+            <img src={d.src} alt="" className="h-28 w-full object-cover object-center md:h-32 lg:h-36" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#030b1f] via-[#030b1f]/40 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-3">
               <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-gold">{d.k}</p>
@@ -186,7 +187,7 @@ export function HomePortal() {
         size="week"
         items={eventos.map((e) => ({
           href: "/eventos",
-          src: fotos[e.foto as keyof typeof fotos],
+          src: fotoCapa(e.foto, F),
           title: e.titulo,
           kicker: e.tag,
         }))}
@@ -196,7 +197,7 @@ export function HomePortal() {
         href="/formacao"
         items={ministerios.map((m) => ({
           href: `/formacao/${m.id}`,
-          src: fotos[m.id as keyof typeof fotos] || fotos.familia,
+          src: fotoCapa(m.id, F),
           title: m.nome,
           kicker: m.tag,
         }))}
@@ -205,13 +206,13 @@ export function HomePortal() {
         title="Assistir"
         href="/culto"
         items={[
-          { href: "/culto", src: fotos.familia, title: "Culto da família", kicker: "Dom 10h · templo e ao vivo" },
-          { href: "/culto", src: fotos.culto, title: "Culto da noite", kicker: "Domingo 19h" },
-          { href: "/formacao/jovens", src: fotos.cultoJovens, title: "Culto de jovens", kicker: "Sábado 20h" },
-          { href: "/formacao/adolescentes", src: fotos.adolescentes, title: "Culto de Pré Adolescentes", kicker: "às 19h" },
-          { href: "/formacao/infantil", src: fotos.infantil, title: "Culto Infantil", kicker: "Domingo 10h · igreja" },
-          { href: "/palavra", src: fotos.biblia, title: "Áudios", kicker: "Palavra" },
-          { href: "/visao", src: fotos.missao, title: "Visão 2033", kicker: "A comunidade" },
+          { href: "/culto", src: F.cultoFamilia || F.familia, title: "Culto da família", kicker: "Dom 10h · templo e ao vivo" },
+          { href: "/culto", src: F.cultoNoite, title: "Culto da noite", kicker: "Domingo 19h" },
+          { href: "/formacao/jovens", src: F.cultoJovens, title: "Culto de jovens", kicker: "Sábado 20h" },
+          { href: "/formacao/adolescentes", src: F.cultoPre || F.adolescentes, title: "Culto de Pré Adolescentes", kicker: "às 19h" },
+          { href: "/formacao/infantil", src: F.cultoKids || F.infantil, title: "Culto Infantil", kicker: "Domingo 10h · igreja" },
+          { href: "/palavra", src: F.biblia, title: "Áudios", kicker: "Palavra" },
+          { href: "/visao", src: F.missao, title: "Visão 2033", kicker: "A comunidade" },
         ]}
       />
 
@@ -224,7 +225,7 @@ export function HomePortal() {
             hrefLabel="Abrir →"
             items={m.catalogo.map((i) => ({
               href: i.href || `/formacao/${m.id}`,
-              src: fotoCapa(i.capa),
+              src: fotoCapa(i.capa, F),
               title: i.titulo,
               kicker: i.kicker,
             }))}
@@ -243,7 +244,7 @@ export function HomePortal() {
             hrefLabel="Ver grupos →"
             items={celulas.map((c) => ({
               href: "/celulas",
-              src: fotoCapa(c.capa),
+              src: fotoCapa(c.capa, F),
               title: c.nome,
               kicker: `${c.dia} · ${c.hora}`,
             }))}
@@ -259,7 +260,7 @@ export function HomePortal() {
                 .filter((i) => i.tipo === "atividade")
                 .map((i) => ({
                   href: i.href || `/formacao/${m.id}`,
-                  src: fotoCapa(i.capa),
+                  src: fotoCapa(i.capa, F),
                   title: i.titulo,
                   kicker: i.kicker,
                 })),

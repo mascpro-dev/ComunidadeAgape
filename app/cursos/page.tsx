@@ -1,11 +1,13 @@
 import { PosterRow } from "@/components/PosterRow";
 import { cursos } from "@/lib/content";
+import { loadBannerOverrides } from "@/lib/banners";
 import { fotoCapa } from "@/lib/fotos";
 import { PageHeader } from "@/components/PageHeader";
 
 const destaques = ["cr1", "hb1", "ig1", "mw1", "hm1", "hm5", "ff1", "gf4", "gf6", "cr6"];
 
-export default function CursosPage() {
+export default async function CursosPage() {
+  const extras = await loadBannerOverrides();
   const emCartaz = destaques
     .map((id) => cursos.find((c) => c.id === id))
     .filter((c): c is (typeof cursos)[number] => Boolean(c));
@@ -24,7 +26,7 @@ export default function CursosPage() {
         size="lg"
         items={emCartaz.map((c) => ({
           href: `/cursos/${c.id}`,
-          src: fotoCapa(c.capa),
+          src: fotoCapa(c.capa, extras),
           title: c.nome,
           kicker: c.semanas >= 2 ? `${c.semanas} semanas` : "Fim de semana",
         }))}

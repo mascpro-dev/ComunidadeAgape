@@ -18,6 +18,7 @@ import {
 import { FieldSelect } from "@/components/FieldSelect";
 import { insertRelatorio, loadMe, loadMembros, loadRelatorios, setFuncao } from "@/lib/agape-db";
 import { loadMovimentoMembros, loadMovimentosRecentes, type MembroMovimento, type MovimentoRow } from "@/lib/movimento-db";
+import { BannersAdmin } from "@/components/BannersAdmin";
 
 const MESES = [
   "janeiro",
@@ -42,7 +43,7 @@ function saudacaoHora(h: number) {
 }
 
 export function MetricsDashboard() {
-  const [tab, setTab] = useState<"numeros" | "relatorios" | "pessoas" | "movimento">("numeros");
+  const [tab, setTab] = useState<"numeros" | "relatorios" | "pessoas" | "movimento" | "banners">("numeros");
   const [membros, setMembros] = useState<Membro[]>([]);
   const [relatorios, setRelatorios] = useState<Relatorio[]>([]);
   const [movimento, setMovimento] = useState<MembroMovimento[]>([]);
@@ -116,6 +117,9 @@ export function MetricsDashboard() {
           ) : null}
           <SideBtn on={tab === "movimento"} label="Movimento" onClick={() => setTab("movimento")}>
             <IconList />
+          </SideBtn>
+          <SideBtn on={tab === "banners"} label="Banners" onClick={() => setTab("banners")}>
+            <IconImage />
           </SideBtn>
         </nav>
 
@@ -193,6 +197,7 @@ export function MetricsDashboard() {
           ) : null}
 
           {tab === "movimento" ? <MovimentoPainel membros={movimento} trilha={trilha} /> : null}
+          {tab === "banners" ? <BannersAdmin /> : null}
         </div>
       </div>
     </LeaderGate>
@@ -584,6 +589,16 @@ function MovimentoPainel({ membros, trilha }: { membros: MembroMovimento[]; tril
         </div>
       </section>
     </div>
+  );
+}
+
+function IconImage() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <circle cx="8.5" cy="10" r="1.4" />
+      <path d="m21 16-5.5-5.5-8.5 8.5" />
+    </svg>
   );
 }
 

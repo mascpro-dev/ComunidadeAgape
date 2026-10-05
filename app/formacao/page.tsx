@@ -1,20 +1,21 @@
-import Link from "next/link";
 import { ministeriosNaAgenda, type ItemGeracao, type Ministerio } from "@/lib/content";
 import { PageHeader } from "@/components/PageHeader";
 import { PosterRow } from "@/components/PosterRow";
-import { fotoCapa, fotos } from "@/lib/fotos";
+import { loadBannerOverrides } from "@/lib/banners";
+import { fotoCapa } from "@/lib/fotos";
 
-function postersDe(m: Ministerio, tipo?: ItemGeracao["tipo"]) {
+function postersDe(m: Ministerio, extras: Record<string, string>, tipo?: ItemGeracao["tipo"]) {
   const itens = tipo ? m.catalogo.filter((i) => i.tipo === tipo) : m.catalogo;
   return itens.map((i) => ({
     href: i.href || `/formacao/${m.id}`,
-    src: fotoCapa(i.capa),
+    src: fotoCapa(i.capa, extras),
     title: i.titulo,
     kicker: i.kicker,
   }));
 }
 
-export default function FormacaoPage() {
+export default async function FormacaoPage() {
+  const extras = await loadBannerOverrides();
   const ministerios = ministeriosNaAgenda();
   return (
     <div>
@@ -27,7 +28,7 @@ export default function FormacaoPage() {
         title="Gerações"
         items={ministerios.map((m) => ({
           href: `/formacao/${m.id}`,
-          src: fotos[m.id as keyof typeof fotos] || fotos.familia,
+          src: fotoCapa(m.id, extras),
           title: m.nome,
           kicker: m.tag,
         }))}
@@ -38,7 +39,7 @@ export default function FormacaoPage() {
           title={`${m.nome} · cursos e atividades`}
           href={`/formacao/${m.id}`}
           hrefLabel="Abrir geração →"
-          items={postersDe(m)}
+          items={postersDe(m, extras)}
           size="gen"
         />
       ))}
