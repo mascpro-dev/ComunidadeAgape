@@ -202,19 +202,6 @@ export function HomePortal() {
           kicker: m.tag,
         }))}
       />
-      <PosterRow
-        title="Assistir"
-        href="/culto"
-        items={[
-          { href: "/culto", src: F.cultoFamilia || F.familia, title: "Culto da família", kicker: "Dom 10h · templo e ao vivo" },
-          { href: "/culto", src: F.cultoNoite, title: "Culto da noite", kicker: "Domingo 19h" },
-          { href: "/formacao/jovens", src: F.cultoJovens, title: "Culto de jovens", kicker: "Sábado 20h" },
-          { href: "/formacao/adolescentes", src: F.cultoPre || F.adolescentes, title: "Culto de Pré Adolescentes", kicker: "às 19h" },
-          { href: "/formacao/infantil", src: F.cultoKids || F.infantil, title: "Culto Infantil", kicker: "Domingo 10h · igreja" },
-          { href: "/palavra", src: F.biblia, title: "Áudios", kicker: "Palavra" },
-          { href: "/visao", src: F.missao, title: "Visão 2033", kicker: "A comunidade" },
-        ]}
-      />
 
       <div className="md:hidden">
         {ministerios.map((m) => (
