@@ -36,6 +36,7 @@ export function PosterRow({
   const paused = useRef(false);
   const offset = useRef(0);
   const [marquee, setMarquee] = useState(false);
+  const [swipe, setSwipe] = useState(false);
   const signature = items.map((i) => `${i.title}:${i.href || ""}:${i.src}`).join("|");
   const shown = useMemo(
     () => (marquee && items.length > 1 ? [...items, ...items] : items),
@@ -44,6 +45,14 @@ export function PosterRow({
   );
   const speed = size === "lg" ? 0.42 : size === "gen" || size === "week" ? 0.28 : 0.7;
   const railSize = size === "gen" || size === "week";
+
+  useLayoutEffect(() => {
+    const mq = window.matchMedia("(max-width: 767.98px)");
+    const apply = () => setSwipe(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
 
   useLayoutEffect(() => {
     const view = viewport.current;
@@ -58,7 +67,7 @@ export function PosterRow({
     };
 
     const measure = () => {
-      if (reduce || items.length < 2) {
+      if (swipe || reduce || items.length < 2) {
         setMarquee(false);
         offset.current = 0;
         rail.style.transform = "translate3d(0,0,0)";
@@ -79,7 +88,7 @@ export function PosterRow({
 
     let frame = 0;
     const tick = () => {
-      if (marquee && !paused.current) {
+      if (marquee && !paused.current && !swipe) {
         offset.current += speed;
         const half = rail.scrollWidth / 2;
         if (half > 0 && offset.current >= half) offset.current -= half;
@@ -93,9 +102,10 @@ export function PosterRow({
       cancelAnimationFrame(frame);
       ro.disconnect();
     };
-  }, [items.length, signature, marquee, title, size, speed]);
+  }, [items.length, signature, marquee, title, size, speed, swipe]);
 
   function pause() {
+    if (swipe) return;
     paused.current = true;
   }
   function resume() {
@@ -121,6 +131,7 @@ export function PosterRow({
         onMouseLeave={resume}
         onPointerDown={pause}
         onPointerUp={resume}
+        onPointerCancel={resume}
       >
         <div ref={track} className="poster-track">
           {shown.map((item, i) => (

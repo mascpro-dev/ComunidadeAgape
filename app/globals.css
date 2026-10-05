@@ -83,10 +83,10 @@ body {
   .poster-row {
     @apply relative -mx-4 min-w-0 overflow-x-auto overflow-y-hidden overscroll-x-contain px-4 pb-5 [scrollbar-width:none] md:mx-0 md:px-0 md:pb-3;
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-x;
+    touch-action: pan-x pan-y;
   }
   .poster-row.is-marquee {
-    @apply overflow-hidden;
+    @apply md:overflow-hidden;
   }
   .poster-row::-webkit-scrollbar {
     display: none;
@@ -96,7 +96,7 @@ body {
     will-change: transform;
   }
   .poster-row:not(.is-marquee) .poster-track {
-    @apply w-full;
+    @apply w-max;
   }
   .poster-row:not(.is-marquee) .poster {
     @apply md:flex-1 md:max-w-[210px];
@@ -123,7 +123,7 @@ body {
   .poster-row-gen {
     --poster-n: 6;
     --poster-gap: 0.625rem;
-    @apply overflow-hidden pb-8 md:pb-10;
+    @apply overflow-x-auto overflow-y-hidden pb-8 md:pb-10;
     container-type: inline-size;
     container-name: posters;
   }
@@ -155,8 +155,14 @@ body {
   }
   .poster-row-gen .poster:hover {
     z-index: 20;
-    transform: translateY(-12px) scale(1.14);
-    box-shadow: 0 28px 50px rgba(0, 0, 0, 0.55);
+    transform: none;
+    box-shadow: none;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .poster-row-gen .poster:hover {
+      transform: translateY(-12px) scale(1.14);
+      box-shadow: 0 28px 50px rgba(0, 0, 0, 0.55);
+    }
   }
   .poster {
     @apply relative aspect-[2/3] w-[38vw] min-w-[128px] max-w-[168px] shrink-0 overflow-hidden rounded-md shadow-[0_12px_40px_rgba(0,0,0,.35)] transition duration-300 md:w-[176px] md:min-w-0 md:max-w-none md:rounded-lg;
