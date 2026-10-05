@@ -71,7 +71,7 @@ export function CelulasList() {
               Host {atual.host} · {atual.vagas} vagas
             </p>
             <div className="mt-4 max-w-sm">
-              <ActionForm kind="celula" extra={atual.nome} button="Quero essa célula" />
+              <ActionForm kind="celula" extra={atual.nome} celulaId={atual.id} button="Quero essa célula" />
             </div>
           </div>
         </article>

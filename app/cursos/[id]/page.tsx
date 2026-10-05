@@ -48,7 +48,7 @@ export default async function CursoLandingPage({ params }: { params: Promise<{ i
               <p className="mt-4 max-w-[38ch] text-lg leading-snug text-gold md:text-2xl">{c.slogan || c.resumo}</p>
               <p className="mt-3 text-sm text-[#d7e2f8]">{c.nome}</p>
               <div className="mt-6 flex flex-wrap gap-2">
-                {[`${c.semanas} semanas`, c.encontro, c.modalidade, c.material, `${c.vagas} vagas`].map((chip) => (
+                {[c.semanas >= 2 ? `${c.semanas} semanas` : "Fim de semana · 12h", c.encontro, c.modalidade, c.material, `${c.vagas} vagas`].map((chip) => (
                   <span key={chip} className="rounded-full border border-white/15 bg-black/25 px-3 py-1.5 text-[11px] uppercase tracking-[0.14em] text-[#e8eef8]">
                     {chip}
                   </span>
@@ -97,7 +97,9 @@ export default async function CursoLandingPage({ params }: { params: Promise<{ i
                 className="min-w-[168px] flex-1 rounded-2xl border border-white/10 bg-black/25 p-4"
                 style={{ boxShadow: `inset 0 0 40px ${glow}18` }}
               >
-                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-gold">Semana {i + 1}</p>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-gold">
+                  {c.semanas >= 2 ? `Semana ${i + 1}` : `Período ${i + 1}`}
+                </p>
                 <p className="mt-2 font-display text-xl leading-tight text-white">{tema}</p>
               </article>
             ))}
@@ -137,7 +139,7 @@ export default async function CursoLandingPage({ params }: { params: Promise<{ i
             </p>
           </div>
           <div className="border-t border-white/10 bg-black/25 p-6 md:border-l md:border-t-0 md:p-10">
-            <ActionForm kind="curso" extra={c.nome} button="Confirmar inscrição" />
+            <ActionForm kind="curso" extra={c.nome} cursoId={c.id} button="Confirmar inscrição" />
           </div>
         </div>
       </div>

@@ -266,8 +266,8 @@ const extraPorId: Record<string, Extra> = {
     headline: "Não são os que nunca enfrentam. São os que nunca desistem.",
     slogan: "Crise pode virar combustível. Treze semanas.",
     manifesto:
-      "Estresses, mudanças, crises… todos já passamos por isso. Já fomos tentados a dar as costas, esquecer e desistir. Deus tem solução para você se tornar vencedor em quaisquer circunstâncias. Perda de emprego, meia-idade, problemas conjugais, mudança de casa, aperto financeiro, estresse do cotidiano — isso pode impulsionar as maiores vitórias. A partir de 13 anos. Presencial e online. Material incluso.",
-    convite: "Homens a partir de 13. Se a vontade é desistir, este é o próximo passo — não a última porta.",
+      "Estresses, mudanças, crises… todos já passamos por isso. Já fomos tentados a dar as costas, esquecer e desistir. Deus tem solução para você se tornar vencedor em quaisquer circunstâncias. Perda de emprego, meia-idade, problemas conjugais, mudança de casa, aperto financeiro, estresse do cotidiano — isso pode impulsionar as maiores vitórias. Todas as gerações. Presencial e online. Material incluso.",
+    convite: "Mulheres, homens, adolescentes e jovens. Se a vontade é desistir, este é o próximo passo.",
     reels: reels([
       { nome: "Daniel", papel: "15 anos", frase: "Eu ia largar tudo. O curso me segurou na fé.", capa: fotos.adolescentes },
       { nome: "Roberto", papel: "Meia-idade", frase: "Perdi o emprego. Não perdi o chamado.", capa: fotos.homens },
@@ -308,8 +308,8 @@ const extraPorId: Record<string, Extra> = {
     headline: "José não desperdiçou o poço. Nem o palácio.",
     slogan: "Potencial máximo. Sonhos renovados. Treze semanas.",
     manifesto:
-      "Estudo sobre a vida de José, governador do Egito. Pequenos detalhes do dia a dia nos impedem de atingir o potencial máximo. Princípios diretos e inspiradores: fortalecer qualidades e virtudes; viver acima de injustiças e críticas; deixar a tensão e receber a paz; lidar com conflitos psicológicos e culpa; transformar preocupação em motivação; recuperar a visão e renovar os sonhos. Como concretizar os sonhos vivenciando ao máximo os princípios de Deus. Homens a partir de 13 anos. Presencial e online. Material incluso.",
-    convite: "Homens a partir de 13. Se o sonho esfriou, José ainda fala. 13 semanas.",
+      "Estudo sobre a vida de José, governador do Egito. Pequenos detalhes do dia a dia nos impedem de atingir o potencial máximo. Princípios diretos e inspiradores: fortalecer qualidades e virtudes; viver acima de injustiças e críticas; deixar a tensão e receber a paz; lidar com conflitos psicológicos e culpa; transformar preocupação em motivação; recuperar a visão e renovar os sonhos. Como concretizar os sonhos vivenciando ao máximo os princípios de Deus. Todas as gerações. Presencial e online. Material incluso.",
+    convite: "Mulheres, homens, adolescentes e jovens. Se o sonho esfriou, José ainda fala. 13 semanas.",
     reels: reels([
       { nome: "Miguel", papel: "16 anos", frase: "A crítica da escola parou de mandar no meu chamado.", capa: fotos.adolescentes },
       { nome: "Sérgio", papel: "Trabalho", frase: "Culpa travava o potencial. Paz destrancou.", capa: fotos.homens },
@@ -322,8 +322,8 @@ const extraPorId: Record<string, Extra> = {
     headline: "Em casa não pode ser monólogo.",
     slogan: "Comunicação, sexo e dinheiro — na Palavra. Treze semanas.",
     manifesto:
-      "Os homens costumam se comunicar bem com clientes, amigos e parceiros de projeto. Em casa, vira monólogo curto. Este curso ensina a arte da comunicação e princípios nas áreas sexual e financeira, alinhados à Palavra. “Quanto mais próxima da verdade, mais destrutiva é a mentira.” (Edwin Louis Cole). Os três desafios mais comuns do relacionamento conjugal, vencidos com verdade. Homens a partir de 18 anos ou casados. Presencial e online. Material incluso.",
-    convite: "Homens a partir de 18 ou casados. Fale. Honre. Administre. Inscreva-se.",
+      "Os homens costumam se comunicar bem com clientes, amigos e parceiros de projeto. Em casa, vira monólogo curto. Este curso ensina a arte da comunicação e princípios nas áreas sexual e financeira, alinhados à Palavra. “Quanto mais próxima da verdade, mais destrutiva é a mentira.” (Edwin Louis Cole). Os três desafios mais comuns do relacionamento, vencidos com verdade. Aberto a todas as gerações da Ágape. Presencial e online. Material incluso.",
+    convite: "Mulheres, homens, adolescentes e jovens. Fale. Honre. Administre. Inscreva-se.",
     reels: reels([
       { nome: "Eduardo", papel: "Casado", frase: "Eu falava no trabalho. Em casa, calava. Isso acabou.", capa: fotos.familia },
       { nome: "Rafael", papel: "Marido", frase: "Sexo e dinheiro na Palavra. Sem vergonha. Com verdade.", capa: fotos.homens },
@@ -343,6 +343,300 @@ const extraPorId: Record<string, Extra> = {
       { nome: "Carlos", papel: "Trabalho", frase: "Integridade custou. Depois pagou em paz.", capa: fotos.homens },
       { nome: "Samuel", papel: "Jovem", frase: "Herói no padrão de Jesus. Não de filme.", capa: fotos.jovens },
       { nome: "Encontro de Homens", papel: "Ágape", frase: "Tempos difíceis. Homens fortes. Ponto.", capa: fotos.lideranca },
+    ]),
+  },
+  hm8: {
+    glow: "#c4a35a",
+    headline: "Pureza não é atraso. É revolução.",
+    slogan: "Integridade sexual na Palavra. Sete semanas.",
+    manifesto:
+      "O que é integridade sexual? Como é uma revolução moral hoje? É possível mensurar a pureza? O sexo foi reduzido a piada, cobiça, sensualidade e aventura sem consequência. A imoralidade virou “normal” e a virgindade, mercadoria barata. Masturbação, pornografia, lascívia, abuso. O que a Bíblia diz — e como vencer? Este curso resgata princípios eternos para a vida do homem e da mulher. Todas as gerações: mulheres, homens, adolescentes e jovens. Presencial e online. Material incluso.",
+    convite: "Todas as gerações da Ágape. Sete semanas. Entre na revolução chamada pureza.",
+    reels: reels([
+      { nome: "Sofia", papel: "Jovem", frase: "Pureza deixou de ser vergonha. Virou coragem.", capa: fotos.mulheres },
+      { nome: "Pedro", papel: "15 anos", frase: "Pornografia mandava. A Palavra tomou o controle.", capa: fotos.adolescentes },
+      { nome: "Mariana", papel: "Mulheres", frase: "Integridade não é só dos irmãos. É da casa toda.", capa: fotos.celulaMulheres },
+      { nome: "Time Homens", papel: "Ágape", frase: "Revolução moral começa no coração. Não no feed.", capa: fotos.homens },
+    ]),
+  },
+  hm9: {
+    glow: "#2f8f4e",
+    headline: "O tesouro é o nome. O nome é o caráter.",
+    slogan: "Escolhas. Conduta. Destino. Sete semanas.",
+    manifesto:
+      "Um dos bens mais preciosos é o próprio nome — ligado ao caráter, revelado nas escolhas. Escolhas determinam conduta, caráter e destino. Este curso chama a desenvolver caráter e tornar-se alguém de sucesso nos princípios de Deus. Todas as gerações. Presencial e online. Material incluso.",
+    convite: "Mulheres, homens, adolescentes e jovens. Sete semanas para guardar o tesouro do nome.",
+    reels: reels([
+      { nome: "Lucas", papel: "Adolescente", frase: "Meu nome valia o que eu postava. Agora vale o caráter.", capa: fotos.adolescentes },
+      { nome: "Helena", papel: "Jovem", frase: "Escolha pequena. Destino grande. Eu não via isso.", capa: fotos.jovens },
+      { nome: "Roberto", papel: "Homens", frase: "Sucesso sem caráter é falência atrasada.", capa: fotos.homens },
+      { nome: "Time Mulheres", papel: "Ágape", frase: "Tesouro não é baú. É nome limpo.", capa: fotos.mulheres },
+    ]),
+  },
+  hm10: {
+    glow: "#3d6fd4",
+    headline: "Entender a esposa é ministrar. Não adivinhar.",
+    slogan: "Singularidade. Feminilidade. Amar como Cristo. Treze semanas.",
+    manifesto:
+      "Ajuda o homem a entender a singularidade, feminilidade e originalidade da mulher e a ministrar-lhe. As lições falam ao coração: ser canal de Deus para abençoar a esposa e exemplo para os filhos. Quem entende a esposa ama melhor — como Cristo ama a Igreja. Homens a partir de 18 ou casados. Presencial e online. Material incluso.",
+    convite: "Homens a partir de 18 ou casados. Treze semanas para honrar quem Deus te deu.",
+    reels: reels([
+      { nome: "André", papel: "Casado", frase: "Eu achava que ela era difícil. Eu é que não ministrava.", capa: fotos.familia },
+      { nome: "Paulo", papel: "Pai", frase: "Os filhos viram o jeito que eu olho para a mãe deles.", capa: fotos.homens },
+      { nome: "Casal", papel: "Célula", frase: "Amar como Cristo ama a Igreja. Isso mudou o tom da casa.", capa: fotos.celulas },
+      { nome: "Time Homens", papel: "Ágape", frase: "Singularidade não se corrige. Se honra.", capa: fotos.celulaHomens },
+    ]),
+  },
+  hm11: {
+    glow: "#1e4a8c",
+    headline: "O que o pai não ensinou. O pastor queria dizer.",
+    slogan: "Marido irresistível não é pose. É caráter. Treze semanas.",
+    manifesto:
+      "Para o homem que quer saber o que o pai não pôde ensinar, o que as mulheres não conseguem expressar e o que o pastor gostaria de dizer em particular. O que surpreende as mulheres; como não ser derrotado por forças exteriores; nadar contra a falta de paternidade; edificar caráter; investir no casamento. Sexo, compromisso, comunicação, carreira, filhos. Homens a partir de 18 ou casados. Presencial e online. Material incluso.",
+    convite: "Homens a partir de 18 ou casados. Treze semanas. Para o homem que quer saber.",
+    reels: reels([
+      { nome: "Ricardo", papel: "Casado", frase: "Ninguém me ensinou isso. O curso ensinou.", capa: fotos.homens },
+      { nome: "Fábio", papel: "Pai ausente na infância", frase: "A maré da falta de pai parou de me mandar.", capa: fotos.familia },
+      { nome: "João", papel: "Jovem casado", frase: "Investir no casamento. Eu só investia no trabalho.", capa: fotos.jovens },
+      { nome: "Encontro de Homens", papel: "Ágape", frase: "Irresistível é caráter. Não conquista de filme.", capa: fotos.lideranca },
+    ]),
+  },
+  mw2: {
+    glow: "#e07aa8",
+    headline: "Única. Não cópia. Não clichê.",
+    slogan: "Autoestima, valor e feminilidade em Cristo. Treze semanas.",
+    manifesto:
+      "Dirigido a mulheres: autoestima, valor, feminilidade e responsabilidade. Deus quer libertar e dar vida abundante em plenitude — impacto na família e na sociedade pela originalidade, identidade e singularidade. Público geral. Presencial e online. Material incluso.",
+    convite: "Mulheres da Ágape — adolescentes, jovens e adultas. Treze semanas para viver única.",
+    reels: reels([
+      { nome: "Bruna", papel: "Jovem", frase: "Valor deixou de ser like. Virou identidade.", capa: fotos.jovens },
+      { nome: "Carla", papel: "Mãe", frase: "Singularidade abriu a casa. Eu tentava caber.", capa: fotos.mulheres },
+      { nome: "Lívia", papel: "Adolescente", frase: "Eu copiava todo mundo. Única doeu. Depois libertou.", capa: fotos.adolescentes },
+      { nome: "Time Mulheres", papel: "Ágape", frase: "Vida abundante. Não versão reduzida.", capa: fotos.celulaMulheres },
+    ]),
+  },
+  mw3: {
+    glow: "#8b6bb5",
+    headline: "Mulheres da Bíblia. Lição para a sua terça.",
+    slogan: "Encontro com Jesus. Onze semanas. Reabastecer.",
+    manifesto:
+      "Histórias de várias mulheres da Palavra, direcionadas aos dias de hoje, para cada realidade. Encontros com Jesus para serem fortalecidas, renovadas e reabastecidas. Público geral. Presencial e online. Material incluso.",
+    convite: "Mulheres de todas as idades. Onze semanas nas histórias que ainda falam.",
+    reels: reels([
+      { nome: "Ana", papel: "Célula", frase: "Eu achava que a Bíblia era deles. Era minha também.", capa: fotos.mulheres },
+      { nome: "Júlia", papel: "Jovem", frase: "Reabastecida. Eu estava no automático.", capa: fotos.jovens },
+      { nome: "Marta", papel: "Mãe", frase: "Fortalecida na terça. A casa sentiu na quarta.", capa: fotos.familia },
+      { nome: "Time Mulheres", papel: "Ágape", frase: "Encontro com Jesus. Não só com a agenda.", capa: fotos.oracao },
+    ]),
+  },
+  ff1: {
+    glow: "#c4a35a",
+    headline: "Aliança não é contrato. É até o fim.",
+    slogan: "Oração, perdão e transparência. Dez semanas. Até 6 casais.",
+    manifesto:
+      "FFI — Fundamentos da Família: a mudança não ocorre só na mente, mas no coração, através de Cristo. Por que tantos conflitos viram separação? Este curso de casais (Craig e Jan Hill / Veredas Antigas) ensina o valor da aliança, a oração, o perdão e a transparência. Comunicação franca para que o casamento seja saudável e o amor perdure. Grupos de até 6 casais, com casal líder capacitado pela Universidade da Família. Presencial e online. Material incluso.",
+    convite: "Casados, união estável ou noivos. Os dois na mesma turma. Dez semanas.",
+    reels: reels([
+      { nome: "Ana e Pedro", papel: "Casados", frase: "A briga ia virar muro. Virou aliança de novo.", capa: fotos.familia },
+      { nome: "Mari e Lucas", papel: "Noivos", frase: "Entramos no altar já falando de perdão.", capa: fotos.entrar },
+      { nome: "Casal líder", papel: "UDF", frase: "Seis casais. Conversa real. Não plateia.", capa: fotos.celulaFamilias },
+      { nome: "Escola da Família", papel: "FFI", frase: "O amor perdura quando a aliança é ensinada.", capa: fotos.celulas },
+    ]),
+  },
+  ff2: {
+    glow: "#e07aa8",
+    headline: "Pais e filhos na mesma mesa. Sem sermão.",
+    slogan: "Identidade, valor e destino. Dez semanas juntos.",
+    manifesto:
+      "Adolescentes e jovens perdem identidade, valor e destino sob influência ruim, conceito torto e mídia tendenciosa. Romance à Maneira de Deus coloca pais e filhos no mesmo diálogo: amizade e cuidado, preparando um casamento duradouro. Até 6 pais com o filho(a). Semanal 2h30 ou seminário de fim de semana. Casal líder UDF. Presencial e online. Material incluso.",
+    convite: "Pai ou mãe + filho adolescente ou jovem. Vaga para o par. Não para um sozinho.",
+    reels: reels([
+      { nome: "Carla e a filha", papel: "16 anos", frase: "A gente não conversava. O curso obrigou. Depois virou gosto.", capa: fotos.familia },
+      { nome: "Rafa", papel: "Jovem", frase: "Meu pai parou de sermão. Começou a ouvir.", capa: fotos.jovens },
+      { nome: "Time Adolescentes", papel: "Ágape", frase: "Identidade não se baixa no celular. Se constrói em casa.", capa: fotos.adolescentes },
+      { nome: "Casal líder", papel: "FFI", frase: "Amizade entre gerações. Isso é romance à maneira de Deus.", capa: fotos.celulaFamilias },
+    ]),
+  },
+  ff3: {
+    glow: "#c47ab8",
+    headline: "Ministrar o coração. Não só orar em volta.",
+    slogan: "Ouvir a voz do Pai. Fim de semana. 12 horas.",
+    manifesto:
+      "Ministrar não é só orar por alguém: é ajudar a ouvir a voz do Pai nas necessidades. Qualquer pessoa que quer ser instrumento de Deus encontra método para facilitar a ação do Espírito Santo. Seminário intensivo para líderes de qualquer ministério — e para quem ainda não lidera. A partir de 13 anos. Vídeo, grupo pequeno, oração e ministração. Líderes UDF. Presencial e online. Material incluso.",
+    convite: "A partir de 13. Três períodos de 4h. Venha para aprender a ministrar de verdade.",
+    reels: reels([
+      { nome: "Bia", papel: "Célula", frase: "Eu só pedia. Agora ajudo o irmão a ouvir o Pai.", capa: fotos.celulas },
+      { nome: "Thiago", papel: "17 anos", frase: "Pensava que ministrar era de pastor. Era de discípulo.", capa: fotos.adolescentes },
+      { nome: "Time Homens", papel: "Ágape", frase: "Espírito Santo no grupo pequeno. Não no palco.", capa: fotos.homens },
+      { nome: "Liderança", papel: "FFI", frase: "Método + presença. Isso forma ministro.", capa: fotos.lideranca },
+    ]),
+  },
+  ff4: {
+    glow: "#4aa8d4",
+    headline: "O que você falou não é o que ele ouviu.",
+    slogan: "Linguagem tópica versus relacional. Fim de semana.",
+    manifesto:
+      "Relacionamentos esfriam porque o que se fala não é o que se entende — linguagem tópica versus relacional, a forma como é dito. Este seminário mostra como a comunicação interfere na harmonia familiar. A partir de 13 anos. Vídeo, compartilhamento, oração e ministração. Presencial e online. Material incluso.",
+    convite: "A partir de 13. Se em casa ninguém se entende, este fim de semana é o próximo passo.",
+    reels: reels([
+      { nome: "Pedro", papel: "Casado", frase: "Eu estava certo no conteúdo. Errado no tom.", capa: fotos.familia },
+      { nome: "Júlia", papel: "Jovem", frase: "Minha mãe ouviu ataque. Eu só pedia ajuda.", capa: fotos.jovens },
+      { nome: "Time Mulheres", papel: "Ágape", frase: "Harmonia familiar começa na forma. Não só no fato.", capa: fotos.mulheres },
+      { nome: "Célula", papel: "FFI", frase: "Surpresa: a comunicação era o curto-circuito.", capa: fotos.celulas },
+    ]),
+  },
+  ff5: {
+    glow: "#e08a3a",
+    headline: "Medo, vergonha, culpa. O coração pode mudar.",
+    slogan: "A mentira sai no nome de Jesus. Fim de semana.",
+    manifesto:
+      "FFI: a mudança não ocorre só na mente, mas no coração, através de Cristo. Medo, vergonha, culpa e justiça própria paralisam o plano de Deus. Neste seminário você olha o coração, acha onde a mentira se instalou e a elimina no poder do nome de Jesus. A partir de 13 anos. 12 horas. Presencial e online. Material incluso.",
+    convite: "A partir de 13. Se algo no peito trava o chamado, venha neste fim de semana.",
+    reels: reels([
+      { nome: "Sofia", papel: "Jovem", frase: "Vergonha mandava. Jesus tomou o nome.", capa: fotos.jovens },
+      { nome: "Marcos", papel: "Homens", frase: "Culpa não era humildade. Era paralisia.", capa: fotos.homens },
+      { nome: "Ana", papel: "Mãe", frase: "Justiça própria vestia de fé. O seminário despiu.", capa: fotos.mulheres },
+      { nome: "Escola da Família", papel: "FFI", frase: "Coração transformado. Mente acompanha.", capa: fotos.oracao },
+    ]),
+  },
+  ff6: {
+    glow: "#c4a35a",
+    headline: "A bênção de hoje alimenta gerações.",
+    slogan: "Filho amado. Identidade restaurada. Fim de semana.",
+    manifesto:
+      "A bênção proferida hoje será usufruída por muitas gerações. Se você já é adulto e nunca recebeu a bênção dos pais, neste seminário o próprio Deus restaura a identidade de filho amado e derrama a bênção. Influência geracional começa aqui. A partir de 13 anos. Presencial e online. Material incluso.",
+    convite: "A partir de 13. Quem nunca foi abençoado — e quem precisa abençoar os filhos.",
+    reels: reels([
+      { nome: "Roberto", papel: "Pai", frase: "Eu não recebi. Aprendi a pronunciar nos meus.", capa: fotos.familia },
+      { nome: "Lívia", papel: "Adolescente", frase: "Ouvir ‘filho amado’ mudou a semana inteira.", capa: fotos.adolescentes },
+      { nome: "Helena", papel: "Mulheres", frase: "Identidade de filha. Não de órfã funcional.", capa: fotos.mulheres },
+      { nome: "FFI", papel: "Ágape", frase: "Bênção não é sentimento. É pronunciamento.", capa: fotos.celulaFamilias },
+    ]),
+  },
+  ff7: {
+    glow: "#d45a8c",
+    headline: "Quem sou eu? Deus quer responder.",
+    slogan: "Versão homens. Versão mulheres. Fim de semana.",
+    manifesto:
+      "Quem sou eu? Qual a verdade sobre mim? Indefinição causa dor e deturpa a identidade. Deus espera a pergunta — e deseja responder com amor infinito. Duas versões: homens e mulheres. Linguagem simples, grupo pequeno, oração e ministração. A partir de 13 anos. Presencial e online. Material incluso.",
+    convite: "A partir de 13. Escolha a turma de irmãos ou de irmãs. Traga a pergunta.",
+    reels: reels([
+      { nome: "Gabriel", papel: "15 anos", frase: "Eu não sabia quem era. O Pai respondeu.", capa: fotos.adolescentes },
+      { nome: "Bruna", papel: "Jovem", frase: "A dúvida doía. A verdade do Pai coube.", capa: fotos.mulheres },
+      { nome: "Paulo", papel: "Homens", frase: "Identidade não se baixa em cargo. Se recebe.", capa: fotos.homens },
+      { nome: "Time Jovens", papel: "FFI", frase: "Pergunte. Ele responde com amor. Não com desempenho.", capa: fotos.jovens },
+    ]),
+  },
+  ff8: {
+    glow: "#c23b3b",
+    headline: "Ira e vício têm raiz. Dá para vencer.",
+    slogan: "Temperamento, comida, compra. Fim de semana no poder de Deus.",
+    manifesto:
+      "Dificuldade com temperamento ou hábitos compulsivos — comida, compras, outros vícios? Este seminário traz soluções práticas e bíblicas para achar de onde vêm a frustração e a ira, e superá-las no poder de Deus. A partir de 13 anos. Vídeo, grupo, oração e ministração. Presencial e online. Material incluso.",
+    convite: "A partir de 13. Se a ira manda na casa ou no carrinho, este fim de semana é para você.",
+    reels: reels([
+      { nome: "Eduardo", papel: "Casado", frase: "Eu explodia. A raiz não era o trânsito.", capa: fotos.homens },
+      { nome: "Carla", papel: "Mãe", frase: "Compra era ira disfarçada. O seminário nomeou.", capa: fotos.familia },
+      { nome: "Igor", papel: "Jovem", frase: "Temperamento não é personalidade. É ferida.", capa: fotos.jovens },
+      { nome: "Célula", papel: "FFI", frase: "No poder de Deus. Não na força de vontade sozinha.", capa: fotos.celulas },
+    ]),
+  },
+  gf1: {
+    glow: "#c47ab8",
+    headline: "O bebê chega. A casa precisa de rumo.",
+    slogan: "Amamentação, sono e cuidados. Cinco semanas. GFI.",
+    manifesto:
+      "GFI — Paternidade Bíblica (Growing Families International). Best-seller de Gary e Anne Marie Ezzo: aspectos essenciais do desenvolvimento infantil para os pais estabelecerem rotina de amamentação, vigília e sono, com cuidados completos do recém-nascido. Para grávidas a partir do 4º mês. Presencial e online. Material incluso.",
+    convite: "Grávidas a partir do 4º mês. O pai é bem-vindo. Cinco semanas antes do parto contar.",
+    reels: reels([
+      { nome: "Mariana", papel: "7º mês", frase: "Sono deixou de ser mito de internet. Virou plano.", capa: fotos.familia },
+      { nome: "Pedro", papel: "Pai", frase: "Eu ia improvisar. O curso me deu rotina.", capa: fotos.homens },
+      { nome: "Time Kids", papel: "Ágape", frase: "Paternidade começa no quarto mês. Não na alta.", capa: fotos.infantil },
+      { nome: "Escola da Família", papel: "GFI", frase: "Recém-nascido com cuidado. Não com palpite.", capa: fotos.celulaFamilias },
+    ]),
+  },
+  gf2: {
+    glow: "#3d9a7a",
+    headline: "De 1 a 3 anos tudo entra. Inclusive o que você não planejou.",
+    slogan: "Primeira infância com confiança. Nove semanas. GFI.",
+    manifesto:
+      "Conhecimentos úteis e práticos para educar na primeira infância — fase em que a criança aprende rápido e está suscetível a tudo que a cerca. Pais e mães com filhos de 1 a 3 anos. Encontros de até 2h. Presencial e online. Material incluso.",
+    convite: "Pais de 1 a 3 anos. Nove semanas para educar com confiança, não só com cansaço.",
+    reels: reels([
+      { nome: "Ana", papel: "Mãe do Davi, 2 anos", frase: "Ele absorvia tudo. Eu não tinha método.", capa: fotos.infantil },
+      { nome: "Lucas", papel: "Pai", frase: "Confiança. Eu só tinha improviso e YouTube.", capa: fotos.homens },
+      { nome: "Célula Famílias", papel: "Ágape", frase: "Primeira infância é janela. GFI ensina a usar.", capa: fotos.familia },
+      { nome: "Time Kids", papel: "GFI", frase: "Influência agora. Caráter depois.", capa: fotos.celulaFamilias },
+    ]),
+  },
+  gf3: {
+    glow: "#7eb64a",
+    headline: "Dois milhões de famílias já testaram. Agora a sua.",
+    slogan: "Como criar seus filhos. Dez semanas. Prático.",
+    manifesto:
+      "De fácil aceitação, aliado da igreja local, escolas e projetos sociais. Ensinos práticos já testados por mais de 2 milhões de famílias e 4 milhões de crianças. Pais, responsáveis e educadores. Até 2h por encontro. Presencial e online. Material incluso. GFI — Paternidade Bíblica.",
+    convite: "Pais e educadores. Dez semanas. Método testado, não opinião da vez.",
+    reels: reels([
+      { nome: "Carla", papel: "Mãe de três", frase: "Fácil de entender. Difícil foi começar. Depois fluía.", capa: fotos.familia },
+      { nome: "Escola", papel: "Educadora", frase: "Levei para o projeto social. As casas mudaram.", capa: fotos.educacao },
+      { nome: "João", papel: "Pai", frase: "Dois milhões não mentem. Minha casa confirmou.", capa: fotos.homens },
+      { nome: "Time Kids", papel: "GFI", frase: "Igreja local forte começa em casa treinada.", capa: fotos.infantil },
+    ]),
+  },
+  gf4: {
+    glow: "#e07a5a",
+    headline: "Não só o comportamento. O coração.",
+    slogan: "Educação à maneira de Deus. Dezessete semanas.",
+    manifesto:
+      "Primeiro curso para pais e mães cristãos: paternidade na Palavra, trabalhando não só o comportamento externo, mas as atitudes do coração. Da pré-escola à pré-adolescência, com propósito eterno. Gary e Anne Marie Ezzo. Até 2h. Presencial e online. Material incluso.",
+    convite: "Pais e educadores. Dezessete semanas. O mais longo — porque o coração não se forma em atalho.",
+    reels: reels([
+      { nome: "Helena", papel: "Mãe", frase: "Eu treinava pose. O curso foi atrás do coração.", capa: fotos.mulheres },
+      { nome: "Paulo", papel: "Pai", frase: "Palavra na paternidade. Eu só tinha grito.", capa: fotos.homens },
+      { nome: "Time Kids", papel: "Pré", frase: "Propósito eterno. Não só nota e obediência.", capa: fotos.infantil },
+      { nome: "Escola da Família", papel: "GFI", frase: "Dezessete semanas. Casa diferente no meio.", capa: fotos.familia },
+    ]),
+  },
+  gf5: {
+    glow: "#4a7ec4",
+    headline: "Pureza se ensina em casa. Na dose certa.",
+    slogan: "Verdade biológica e bíblica. Nove semanas. GFI.",
+    manifesto:
+      "Educação sexual das crianças de forma prática: confiança para ensinar verdades biológicas e bíblicas com dosagem e abordagem certas. Treinamento moral e proteção contra o que tenta entrar no lar. Pais, responsáveis e educadores. Até 2h. Presencial e online. Material incluso.",
+    convite: "Pais e educadores. Nove semanas para falar antes da internet.",
+    reels: reels([
+      { nome: "Mariana", papel: "Mãe", frase: "Eu adiava. A dose certa veio neste curso.", capa: fotos.familia },
+      { nome: "Roberto", papel: "Pai", frase: "Proteção não é silêncio. É conversa com verdade.", capa: fotos.homens },
+      { nome: "Time Adolescentes", papel: "Ágape", frase: "O que não se ensina em casa, o feed ensina torto.", capa: fotos.adolescentes },
+      { nome: "GFI", papel: "Paternidade Bíblica", frase: "Moral e Palavra. Sem pânico e sem omissão.", capa: fotos.celulaFamilias },
+    ]),
+  },
+  gf6: {
+    glow: "#e07a2f",
+    headline: "Independência sem perder o filho.",
+    slogan: "O coração do adolescente. Doze semanas. Até 1h30.",
+    manifesto:
+      "Adolescência é transição, conflito e busca de independência. Entender a fase e o que a Palavra diz ajuda a refletir atitudes, achar respostas e construir relacionamento que influencia a vida inteira. Pais, responsáveis e educadores. Gary e Anne Marie Ezzo. Presencial e online. Material incluso.",
+    convite: "Pais de adolescentes. Doze encontros de até 1h30. Vá atrás do coração, não só da porta do quarto.",
+    reels: reels([
+      { nome: "André", papel: "Pai de 15", frase: "Eu brigava pela porta. O curso foi atrás do peito.", capa: fotos.homens },
+      { nome: "Bia", papel: "Mãe", frase: "Independência não é abandono. Aprendi o meio.", capa: fotos.mulheres },
+      { nome: "Time Adolescentes", papel: "Ágape", frase: "Relacionamento que dura a vida. Começa agora.", capa: fotos.adolescentes },
+      { nome: "Famílias", papel: "GFI", frase: "Conflito é fase. Distância é escolha.", capa: fotos.familia },
+    ]),
+  },
+  gf7: {
+    glow: "#3d8ad4",
+    headline: "Deficiência não cancela propósito.",
+    slogan: "Sete necessidades. Sete semanas. Um convite para voar.",
+    manifesto:
+      "Bev Linder leva pais e mães de crianças com deficiência a ver, em cada pessoa, propósito único e necessidades universais. Maximizar potencial, suprindo sete necessidades básicas. Encontros de até 2h. Presencial e online. Material incluso. GFI.",
+    convite: "Pais de crianças com deficiência. Sete semanas para voar — sem reduzir o filho ao laudo.",
+    reels: reels([
+      { nome: "Carla", papel: "Mãe", frase: "Eu via só o diagnóstico. O curso viu o chamado.", capa: fotos.familia },
+      { nome: "Paulo", papel: "Pai", frase: "Necessidades básicas. Universais. Meu filho não é exceção de amor.", capa: fotos.homens },
+      { nome: "Time Kids", papel: "Ágape", frase: "Potencial. A gente não mede por comparação.", capa: fotos.infantil },
+      { nome: "GFI", papel: "Paternidade Bíblica", frase: "Um convite para voar. A casa inteira sobe.", capa: fotos.celulaFamilias },
     ]),
   },
 };

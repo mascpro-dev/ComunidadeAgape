@@ -21,6 +21,7 @@ export function PosterRow({
   items,
   className = "",
   fill = false,
+  size = "md",
 }: {
   title: string;
   href?: string;
@@ -28,6 +29,7 @@ export function PosterRow({
   items: PosterItem[];
   className?: string;
   fill?: boolean;
+  size?: "md" | "lg";
 }) {
   const viewport = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
@@ -76,7 +78,7 @@ export function PosterRow({
     let frame = 0;
     const tick = () => {
       if (marquee && !paused.current) {
-        offset.current += 0.7;
+        offset.current += size === "lg" ? 0.42 : 0.7;
         const half = rail.scrollWidth / 2;
         if (half > 0 && offset.current >= half) offset.current -= half;
         rail.style.transform = `translate3d(${-offset.current}px,0,0)`;
@@ -89,7 +91,7 @@ export function PosterRow({
       cancelAnimationFrame(frame);
       ro.disconnect();
     };
-  }, [items.length, signature, marquee, title]);
+  }, [items.length, signature, marquee, title, size]);
 
   function pause() {
     paused.current = true;
@@ -112,7 +114,7 @@ export function PosterRow({
       </div>
       <div
         ref={viewport}
-        className={`${fill ? "poster-row poster-row-fill" : "poster-row"} ${marquee ? "is-marquee" : ""}`.trim()}
+        className={`${fill ? "poster-row poster-row-fill" : "poster-row"} ${size === "lg" ? "poster-row-lg" : ""} ${marquee ? "is-marquee" : ""}`.trim()}
         onMouseEnter={pause}
         onMouseLeave={resume}
         onPointerDown={pause}
@@ -120,7 +122,7 @@ export function PosterRow({
       >
         <div ref={track} className="poster-track">
           {shown.map((item, i) => (
-            <PosterCard key={`${item.title}-${item.href || ""}-${i}`} item={item} />
+            <PosterCard key={`${item.title}-${item.href || ""}-${i}`} item={item} size={size} />
           ))}
         </div>
       </div>
@@ -128,7 +130,7 @@ export function PosterRow({
   );
 }
 
-export function PosterCard({ item }: { item: PosterItem }) {
+export function PosterCard({ item, size = "md" }: { item: PosterItem; size?: "md" | "lg" }) {
   const className = `${item.selected ? "poster group ring-2 ring-gold" : "poster group"} ${item.reel ? "reel" : ""}`.trim();
   const inner = (
     <>
@@ -140,11 +142,11 @@ export function PosterCard({ item }: { item: PosterItem }) {
           <span className="ml-0.5 text-lg">▶</span>
         </div>
       ) : null}
-      <div className="absolute inset-x-0 bottom-0 p-3">
+      <div className="absolute inset-x-0 bottom-0 p-3 md:p-4">
         {item.kicker ? (
-          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-gold">{item.kicker}</p>
+          <p className={`font-semibold uppercase tracking-[0.14em] text-gold ${size === "lg" ? "text-[11px] md:text-xs" : "text-[10px]"}`}>{item.kicker}</p>
         ) : null}
-        <p className="font-display text-[15px] leading-tight text-white drop-shadow md:text-xl">{item.title}</p>
+        <p className={`font-display leading-tight text-white drop-shadow ${item.reel ? "text-[15px] md:text-xl" : size === "lg" ? "text-lg md:text-2xl" : "text-[15px] md:text-xl"}`}>{item.title}</p>
       </div>
     </>
   );

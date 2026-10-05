@@ -17,6 +17,7 @@ import {
 } from "@/lib/metrics";
 import { FieldSelect } from "@/components/FieldSelect";
 import { insertRelatorio, loadMe, loadMembros, loadRelatorios, setFuncao } from "@/lib/agape-db";
+import { loadMovimentoMembros, loadMovimentosRecentes, type MembroMovimento, type MovimentoRow } from "@/lib/movimento-db";
 
 const MESES = [
   "janeiro",
@@ -41,17 +42,27 @@ function saudacaoHora(h: number) {
 }
 
 export function MetricsDashboard() {
-  const [tab, setTab] = useState<"numeros" | "relatorios" | "pessoas">("numeros");
+  const [tab, setTab] = useState<"numeros" | "relatorios" | "pessoas" | "movimento">("numeros");
   const [membros, setMembros] = useState<Membro[]>([]);
   const [relatorios, setRelatorios] = useState<Relatorio[]>([]);
+  const [movimento, setMovimento] = useState<MembroMovimento[]>([]);
+  const [trilha, setTrilha] = useState<MovimentoRow[]>([]);
   const [eu, setEu] = useState<Membro | undefined>();
   const [agora, setAgora] = useState<Date | null>(null);
 
   async function recarregar() {
-    const [m, r, me] = await Promise.all([loadMembros(), loadRelatorios(), loadMe()]);
+    const [m, r, me, mv, tr] = await Promise.all([
+      loadMembros(),
+      loadRelatorios(),
+      loadMe(),
+      loadMovimentoMembros().catch(() => [] as MembroMovimento[]),
+      loadMovimentosRecentes().catch(() => [] as MovimentoRow[]),
+    ]);
     setMembros(m);
     setRelatorios(r);
     setEu(me || undefined);
+    setMovimento(mv);
+    setTrilha(tr);
   }
 
   useEffect(() => {
@@ -103,6 +114,9 @@ export function MetricsDashboard() {
               <IconPeople />
             </SideBtn>
           ) : null}
+          <SideBtn on={tab === "movimento"} label="Movimento" onClick={() => setTab("movimento")}>
+            <IconList />
+          </SideBtn>
         </nav>
 
         <div>
@@ -177,6 +191,8 @@ export function MetricsDashboard() {
               }}
             />
           ) : null}
+
+          {tab === "movimento" ? <MovimentoPainel membros={movimento} trilha={trilha} /> : null}
         </div>
       </div>
     </LeaderGate>
@@ -466,6 +482,108 @@ function SideBtn({
     >
       {children}
     </button>
+  );
+}
+
+function rotuloTipo(tipo: string) {
+  const map: Record<string, string> = {
+    culto: "Culto",
+    celula_pedido: "Pedido de célula",
+    celula_membro: "Célula",
+    curso_inscricao: "Inscrição em curso",
+    curso_conclusao: "Concluiu curso",
+    checkin_kids: "Check-in kids",
+    oracao: "Oração",
+    quero_ir: "Quero fazer parte",
+  };
+  return map[tipo] || tipo;
+}
+
+function MovimentoPainel({ membros, trilha }: { membros: MembroMovimento[]; trilha: MovimentoRow[] }) {
+  const semCelula = membros.filter((m) => !m.celula_nome || m.celula_nome === "Não frequento").length;
+  const semCulto = membros.filter((m) => !m.cultos_90d).length;
+  const emCurso = membros.filter((m) => m.cursos_ativos > 0).length;
+
+  return (
+    <div className="grid gap-4">
+      <div className="grid gap-3 md:grid-cols-3">
+        <article className="dash-card">
+          <p className="text-[11px] uppercase tracking-[0.16em] text-gold">Sem célula</p>
+          <p className="font-display mt-1 text-4xl">{semCelula}</p>
+          <p className="meta">membros para indicar</p>
+        </article>
+        <article className="dash-card">
+          <p className="text-[11px] uppercase tracking-[0.16em] text-gold">Em curso</p>
+          <p className="font-display mt-1 text-4xl">{emCurso}</p>
+          <p className="meta">inscrições ativas</p>
+        </article>
+        <article className="dash-card">
+          <p className="text-[11px] uppercase tracking-[0.16em] text-gold">Sem culto em 90 dias</p>
+          <p className="font-display mt-1 text-4xl">{semCulto}</p>
+          <p className="meta">para cuidar</p>
+        </article>
+      </div>
+
+      <div className="overflow-x-auto rounded-[22px] border border-white/[0.08]">
+        <table className="min-w-full text-left text-sm">
+          <thead className="bg-[#0a1733] text-[11px] uppercase tracking-[0.14em] text-muted">
+            <tr>
+              <th className="px-4 py-3">Membro</th>
+              <th className="px-4 py-3">Célula</th>
+              <th className="px-4 py-3">Cursos</th>
+              <th className="px-4 py-3">Cultos 90d</th>
+              <th className="px-4 py-3">Último passo</th>
+            </tr>
+          </thead>
+          <tbody>
+            {membros.map((m) => (
+              <tr key={m.id} className="border-t border-white/[0.06]">
+                <td className="px-4 py-3">
+                  <p className="font-medium text-white">{m.nome}</p>
+                  <p className="meta">{m.bairro || m.cidade || m.email || "—"}</p>
+                </td>
+                <td className="px-4 py-3">
+                  {m.celula_nome || "—"}
+                  {m.celula_status ? <span className="meta"> · {m.celula_status}</span> : null}
+                </td>
+                <td className="px-4 py-3">
+                  {m.cursos_ativos} ativo(s)
+                  {m.cursos_concluidos ? ` · ${m.cursos_concluidos} concluído(s)` : ""}
+                </td>
+                <td className="px-4 py-3">{m.cultos_90d}</td>
+                <td className="px-4 py-3 text-muted">
+                  {m.ultimo_movimento
+                    ? new Date(m.ultimo_movimento).toLocaleString("pt-BR", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" })
+                    : "—"}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {!membros.length ? (
+          <p className="px-4 py-6 text-sm text-muted">Rode a migration 004 no Supabase para ver o movimento dos membros.</p>
+        ) : null}
+      </div>
+
+      <section>
+        <h2 className="section-label">Últimos movimentos</h2>
+        <div className="grid gap-2">
+          {trilha.map((t) => (
+            <article key={t.id} className="flex flex-wrap items-baseline justify-between gap-2 rounded-2xl border border-white/10 px-4 py-3">
+              <p>
+                <span className="text-gold">{rotuloTipo(t.tipo)}</span>
+                <span className="text-white"> · {t.nome || "Alguém"}</span>
+                {t.extra ? <span className="text-muted"> · {t.extra}</span> : null}
+              </p>
+              <p className="text-[12px] text-muted">
+                {new Date(t.created_at).toLocaleString("pt-BR", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" })}
+              </p>
+            </article>
+          ))}
+          {!trilha.length ? <p className="text-sm text-muted">Ainda não há inscrições, células ou check-ins gravados.</p> : null}
+        </div>
+      </section>
+    </div>
   );
 }
 
