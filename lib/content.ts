@@ -433,6 +433,55 @@ export type Ministerio = {
   cursos?: boolean;
 };
 
+function agoraEmSaoPaulo() {
+  const fmt = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "America/Sao_Paulo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+  const p = Object.fromEntries(fmt.formatToParts(new Date()).map((x) => [x.type, x.value]));
+  return new Date(Number(p.year), Number(p.month) - 1, Number(p.day), Number(p.hour), Number(p.minute));
+}
+
+export function primeiraSegundaDoMes(ano: number, mes0: number) {
+  const d = new Date(ano, mes0, 1, 18, 30, 0, 0);
+  const add = (8 - d.getDay()) % 7;
+  d.setDate(1 + add);
+  d.setHours(18, 30, 0, 0);
+  return d;
+}
+
+export function proximoEncontroHomens() {
+  const agora = agoraEmSaoPaulo();
+  let y = agora.getFullYear();
+  let m = agora.getMonth();
+  let data = primeiraSegundaDoMes(y, m);
+  if (agora.getTime() > data.getTime()) {
+    m += 1;
+    if (m > 11) {
+      m = 0;
+      y += 1;
+    }
+    data = primeiraSegundaDoMes(y, m);
+  }
+  return data;
+}
+
+export function rotuloEncontroHomens() {
+  const d = proximoEncontroHomens();
+  const texto = d.toLocaleDateString("pt-BR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    timeZone: "America/Sao_Paulo",
+  });
+  return `${texto.charAt(0).toUpperCase()}${texto.slice(1)} · 18h30`;
+}
+
 export const ministerios: Ministerio[] = [
   {
     id: "jovens",
@@ -446,7 +495,7 @@ export const ministerios: Ministerio[] = [
     tone: "from-[#2a5bb8] to-[#0a2460]",
     proximos: [
       { titulo: "Culto de jovens", data: "Sáb 20h", extra: "Louvor + palavra" },
-      { titulo: "Missão na cidade", data: "Dom 15h", extra: "Ágape Serve" },
+      { titulo: "Célula Universitários", data: "Sex 23h", extra: "Sexta à noite" },
     ],
     catalogo: [
       { id: "jh1", titulo: "Habitudes: Autoliderança", kicker: "12–24 · 13 sem", tipo: "curso", capa: "habitudes1", href: "/cursos#hb1" },
@@ -457,7 +506,7 @@ export const ministerios: Ministerio[] = [
       { id: "jg1", titulo: "Ignição", kicker: "A partir de 12 · 6 encontros", tipo: "curso", capa: "ignicao", href: "/cursos#ig1" },
       { id: "jc1", titulo: "Crown: Estudo Financeiro Bíblico", kicker: "18+ · 10 sem", tipo: "curso", capa: "crownEstudo", href: "/cursos#cr1" },
       { id: "jc3", titulo: "Como Chegar ao Fim do Mês", kicker: "18+ · 4 sem", tipo: "curso", capa: "crownFimMes", href: "/cursos#cr3" },
-      { id: "j4", titulo: "Célula Jovens", kicker: "Atividade · Ter", tipo: "atividade", capa: "celulaJovens", href: "/celulas" },
+      { id: "j4", titulo: "Célula Universitários", kicker: "Atividade · Sex 23h", tipo: "atividade", capa: "celulaJovens", href: "/celulas" },
       { id: "j5", titulo: "Missão na cidade", kicker: "Atividade", tipo: "atividade", capa: "missao" },
       { id: "j6", titulo: "Culto de jovens", kicker: "Atividade · Sáb 20h", tipo: "atividade", capa: "cultoNoite" },
     ],
@@ -474,8 +523,8 @@ export const ministerios: Ministerio[] = [
     lider: "Time Adolescentes",
     tone: "from-[#3d6fd4] to-[#12245a]",
     proximos: [
-      { titulo: "Culto de Pré Adolescentes", data: "às 19h", extra: "Identidade em Cristo" },
-      { titulo: "Retiro", data: "Em breve", extra: "Inscrições abertas" },
+      { titulo: "Célula de Adolescentes", data: "Sex 20h", extra: "Grupo da geração" },
+      { titulo: "Futebol no Flamingo", data: "Sáb 8h30", extra: "Bairro Flamingo" },
     ],
     catalogo: [
       { id: "ah1", titulo: "Habitudes: Autoliderança", kicker: "12–24 · 13 sem", tipo: "curso", capa: "habitudes1", href: "/cursos#hb1" },
@@ -486,8 +535,8 @@ export const ministerios: Ministerio[] = [
       { id: "ag1", titulo: "Ignição", kicker: "A partir de 12 · 6 encontros", tipo: "curso", capa: "ignicao", href: "/cursos#ig1" },
       { id: "at1", titulo: "Crown Teens", kicker: "13–17 · 12 sem", tipo: "curso", capa: "crownTeens", href: "/cursos#cr6" },
       { id: "a4", titulo: "Culto de Pré Adolescentes", kicker: "Atividade · às 19h", tipo: "atividade", capa: "celulaGeracao" },
-      { id: "a5", titulo: "Retiro", kicker: "Atividade", tipo: "atividade", capa: "visao" },
-      { id: "a6", titulo: "Célula Geração", kicker: "Atividade · Sex", tipo: "atividade", capa: "celulas", href: "/celulas" },
+      { id: "a6", titulo: "Célula de Adolescentes", kicker: "Atividade · Sex 20h", tipo: "atividade", capa: "celulas", href: "/celulas" },
+      { id: "a7", titulo: "Futebol no Flamingo", kicker: "Sáb 8h30 · Bairro Flamingo", tipo: "atividade", capa: "adolescentes" },
     ],
   },
   {
@@ -495,15 +544,14 @@ export const ministerios: Ministerio[] = [
     nome: "Infantil",
     emoji: "🌈",
     tag: "0–11",
-    quando: "Domingos no culto",
-    local: "Kids Hall",
+    quando: "Domingo · 10h",
+    local: "Igreja",
     texto: "Aprendizado bíblico criativo e interativo, formando uma base sólida desde cedo. Pais fazem o check-in no app.",
     lider: "Time Kids",
     checkin: true,
     tone: "from-[#e4d3a2] to-[#8a7340] text-[#1a1408]",
     proximos: [
-      { titulo: "Kids no culto", data: "Dom 10h e 19h", extra: "Turmas por idade" },
-      { titulo: "Família no parque", data: "Sáb 16h", extra: "Pais + kids" },
+      { titulo: "Culto Infantil", data: "Dom 10h", extra: "Na igreja" },
     ],
     catalogo: [
       { id: "k1", titulo: "Comece por aqui", kicker: "Módulo 01", tipo: "curso", capa: "infantil" },
@@ -511,8 +559,7 @@ export const ministerios: Ministerio[] = [
       { id: "ksg", titulo: "O Segredo", kicker: "8–12 anos · 12 sem", tipo: "curso", capa: "crownSegredo", href: "/cursos#cr5" },
       { id: "k2", titulo: "Histórias da Bíblia", kicker: "Curso", tipo: "curso", capa: "biblia" },
       { id: "k3", titulo: "Escola kids", kicker: "Curso", tipo: "curso", capa: "educacao" },
-      { id: "k4", titulo: "Kids no culto", kicker: "Atividade · Dom", tipo: "atividade", capa: "culto" },
-      { id: "k5", titulo: "Família no parque", kicker: "Atividade", tipo: "atividade", capa: "familia" },
+      { id: "k4", titulo: "Culto Infantil", kicker: "Dom 10h · igreja", tipo: "atividade", capa: "culto" },
       { id: "k6", titulo: "Check-in kids", kicker: "Atividade", tipo: "atividade", capa: "entrar" },
     ],
   },
@@ -521,18 +568,18 @@ export const ministerios: Ministerio[] = [
     nome: "Homens",
     emoji: "🛠",
     tag: "Irmãos",
-    quando: "1º sáb. do mês · 8h",
-    local: "Auditório 2",
+    quando: "1ª segunda do mês · 18h30",
+    local: "Igreja",
     texto: "Irmandade, palavra e propósito: fé, casa e serviço à cidade.",
     lider: "Time Homens",
     tone: "from-[#16305f] to-[#071433]",
-    proximos: [{ titulo: "Café & Palavra", data: "Sáb 8h", extra: "Café da manhã" }],
+    proximos: [{ titulo: "Encontro de Homens", data: "1ª segunda · 18h30", extra: "A data do mês aparece no card" }],
     catalogo: [
       { id: "h1", titulo: "Comece por aqui", kicker: "Módulo 01", tipo: "curso", capa: "homens" },
       { id: "h2", titulo: "Pai de propósito", kicker: "Curso · 5 sem", tipo: "curso", capa: "familia" },
       { id: "h3", titulo: "Crown: Estudo Financeiro Bíblico", kicker: "18+ · 10 sem", tipo: "curso", capa: "crownEstudo", href: "/cursos#cr1" },
       { id: "h3b", titulo: "Como Chegar ao Fim do Mês", kicker: "18+ · 4 sem", tipo: "curso", capa: "crownFimMes", href: "/cursos#cr3" },
-      { id: "h4", titulo: "Café & Palavra", kicker: "Atividade · Sáb", tipo: "atividade", capa: "lideranca" },
+      { id: "h4", titulo: "Encontro de Homens", kicker: "1ª segunda · 18h30", tipo: "atividade", capa: "lideranca" },
       { id: "h5", titulo: "Célula Homens", kicker: "Atividade · Sáb", tipo: "atividade", capa: "celulaHomens", href: "/celulas" },
       { id: "h6", titulo: "Irmandade na cidade", kicker: "Atividade", tipo: "atividade", capa: "missao" },
     ],
@@ -587,6 +634,19 @@ export const ministerios: Ministerio[] = [
   },
 ];
 
+export function ministeriosNaAgenda(): Ministerio[] {
+  const encontro = rotuloEncontroHomens();
+  return ministerios.map((m) => {
+    if (m.id !== "homens") return m;
+    return {
+      ...m,
+      quando: encontro,
+      proximos: [{ titulo: "Encontro de Homens", data: encontro, extra: "Toda 1ª segunda-feira do mês" }],
+      catalogo: m.catalogo.map((i) => (i.id === "h4" ? { ...i, kicker: encontro } : i)),
+    };
+  });
+}
+
 export const celulas = [
   {
     id: "c1",
@@ -601,13 +661,13 @@ export const celulas = [
   },
   {
     id: "c2",
-    nome: "Célula Jovens",
-    dia: "Ter",
-    hora: "19h30",
+    nome: "Célula Universitários",
+    dia: "Sex",
+    hora: "23h",
     bairro: "Jardins",
     cep: "17514-010",
     host: "Lucas",
-    vagas: 5,
+    vagas: 8,
     capa: "celulaJovens",
   },
   {
@@ -645,10 +705,10 @@ export const celulas = [
   },
   {
     id: "c6",
-    nome: "Célula Geração",
+    nome: "Célula de Adolescentes",
     dia: "Sex",
-    hora: "18h",
-    bairro: "Jardins",
+    hora: "20h",
+    bairro: "Flamingo",
     cep: "17514-100",
     host: "Mari",
     vagas: 8,
@@ -1029,14 +1089,20 @@ export const cursos: Curso[] = [
   },
 ];
 
-export const eventos = [
-  { titulo: "Culto da família", quando: "Dom 10h · templo + online", tag: "Ao vivo", foto: "familia" },
-  { titulo: "Culto da noite", quando: "Dom 19h · templo", tag: "Culto", foto: "cultoNoite" },
-  { titulo: "Culto de jovens", quando: "Sáb 20h · templo", tag: "Jovens", foto: "jovens" },
-  { titulo: "Culto de Pré Adolescentes", quando: "às 19h · templo", tag: "Geração", foto: "adolescentes" },
-  { titulo: "Células em casas", quando: "Durante a semana", tag: "Comunidade", foto: "celulas" },
-  { titulo: "Ágape Serve", quando: "Ações na cidade", tag: "Missão", foto: "missao" },
-];
+export function agendaEventos() {
+  return [
+    { titulo: "Culto da família", quando: "Dom 10h · templo + online", tag: "Ao vivo", foto: "familia" },
+    { titulo: "Culto Infantil", quando: "Dom 10h · igreja", tag: "Kids", foto: "infantil" },
+    { titulo: "Culto da noite", quando: "Dom 19h · templo", tag: "Culto", foto: "cultoNoite" },
+    { titulo: "Culto de jovens", quando: "Sáb 20h · templo", tag: "Jovens", foto: "jovens" },
+    { titulo: "Culto de Pré Adolescentes", quando: "às 19h · templo", tag: "Geração", foto: "adolescentes" },
+    { titulo: "Célula de Adolescentes", quando: "Sexta 20h", tag: "Geração", foto: "adolescentes" },
+    { titulo: "Célula Universitários", quando: "Sexta 23h", tag: "Jovens", foto: "jovens" },
+    { titulo: "Encontro de Homens", quando: rotuloEncontroHomens(), tag: "Homens", foto: "homens" },
+    { titulo: "Futebol no Flamingo", quando: "Sáb 8h30 · adolescentes", tag: "Esporte", foto: "adolescentes" },
+    { titulo: "Ágape Serve", quando: "Ações na cidade", tag: "Missão", foto: "missao" },
+  ];
+}
 
 export const dias = ["Todos", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"] as const;
 

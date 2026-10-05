@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-
+import { FieldSelect } from "@/components/FieldSelect";
 type Props = {
   kind: "oracao" | "celula" | "curso" | "quero-ir" | "checkin";
   extra?: string;
@@ -36,11 +36,10 @@ export function ActionForm({ kind, extra, button, ghost }: Props) {
       {kind === "checkin" ? (
         <>
           <input name="crianca" required placeholder="Nome da criança" className="field" />
-          <select name="turma" className="field">
-            <option>Berçário</option>
-            <option>Kids 2–5</option>
-            <option>Kids 6–11</option>
-          </select>
+          <FieldSelect
+            name="turma"
+            options={["Berçário", "Kids 2–5", "Kids 6–11"]}
+          />
         </>
       ) : kind === "oracao" ? (
         <>

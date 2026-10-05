@@ -145,7 +145,7 @@ export const seedMembros: Membro[] = [
     bairro: "Jardins",
     cep: "87020-120",
     cidade: "Maringá",
-    celula: "Célula Jovens",
+    celula: "Célula Universitários",
     querIndicacao: false,
     convertido: true,
     cursos: "Namoro com propósito",

@@ -15,6 +15,7 @@ import {
   type Membro,
   type Relatorio,
 } from "@/lib/metrics";
+import { FieldSelect } from "@/components/FieldSelect";
 import { insertRelatorio, loadMe, loadMembros, loadRelatorios, setFuncao } from "@/lib/agape-db";
 
 const MESES = [
@@ -137,11 +138,7 @@ export function MetricsDashboard() {
             <div className="grid gap-4 md:grid-cols-[1fr_1fr]">
               <form onSubmit={saveRel} className="dash-card grid h-fit gap-2">
                 <p className="font-display text-2xl">Enviar relatório</p>
-                <select name="ministerio" className="field" required>
-                  {ministeriosPainel.map((m) => (
-                    <option key={m}>{m}</option>
-                  ))}
-                </select>
+                <FieldSelect name="ministerio" required options={ministeriosPainel} />
                 <input name="lider" required placeholder="Nome do líder" className="field" defaultValue={eu?.nome} />
                 <input name="periodo" required placeholder="Período (ex.: Outubro 2026)" className="field" />
                 <input name="presentes" type="number" min={0} placeholder="Presentes" className="field" />

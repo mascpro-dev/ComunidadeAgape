@@ -59,7 +59,7 @@ export const temasBiblia: Record<GrupoBiblia, TemaBiblia> = {
     card: "#ffffff",
     desenho: "pomba",
     estudo: "Kids Hall — Jesus, o bom amigo",
-    quando: "Domingo · 10h · Kids Hall",
+    quando: "Domingo · 10h · igreja",
     versiculos: [
       { ref: "Mc 10.14", livro: 41, cap: 10, linha: "Deixai as crianças" },
       { ref: "Sl 23.1", livro: 19, cap: 23, linha: "O Senhor é o meu pastor" },
@@ -76,7 +76,7 @@ export const temasBiblia: Record<GrupoBiblia, TemaBiblia> = {
     card: "#ffffff",
     desenho: "escudo",
     estudo: "Homens Ágape — caráter e liderança",
-    quando: "Sábado · 8h · templo",
+    quando: "1ª segunda do mês · 18h30",
     versiculos: [
       { ref: "Js 1.9", livro: 6, cap: 1, linha: "Sê forte e corajoso" },
       { ref: "Mq 6.8", livro: 33, cap: 6, linha: "Agir com justiça" },

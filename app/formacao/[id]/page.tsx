@@ -2,12 +2,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ActionForm } from "@/components/ActionForm";
 import { PosterRow } from "@/components/PosterRow";
-import { ministerios, type ItemGeracao } from "@/lib/content";
+import { ministeriosNaAgenda, type ItemGeracao } from "@/lib/content";
 import { fotoCapa, fotos } from "@/lib/fotos";
 
 export default async function MinisterioPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const m = ministerios.find((x) => x.id === id);
+  const m = ministeriosNaAgenda().find((x) => x.id === id);
   if (!m) notFound();
   const capa = fotos[m.id as keyof typeof fotos] || fotos.familia;
   const cursos = m.catalogo.filter((i) => i.tipo === "curso");

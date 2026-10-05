@@ -5,7 +5,7 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { PosterRow } from "@/components/PosterRow";
 import { loadMe } from "@/lib/agape-db";
-import { celulas, church, eventos, ministerios } from "@/lib/content";
+import { agendaEventos, celulas, church, ministeriosNaAgenda } from "@/lib/content";
 import { fotoCapa, fotos } from "@/lib/fotos";
 
 const buscaRotas = [
@@ -31,6 +31,7 @@ const destaques = [
   { href: "/culto", src: fotos.cultoNoite, k: "Templo", t: "Culto da noite", d: "Domingo 19h" },
   { href: "/formacao/jovens", src: fotos.jovens, k: "Geração", t: "Culto de jovens", d: "Sábado 20h" },
   { href: "/formacao/adolescentes", src: fotos.adolescentes, k: "Geração", t: "Culto de Pré Adolescentes", d: "às 19h" },
+  { href: "/formacao/infantil", src: fotos.infantil, k: "Kids", t: "Culto Infantil", d: "Domingo 10h · igreja" },
 ];
 
 const jornada = [
@@ -75,6 +76,8 @@ export function HomePortal() {
   }
 
   const avisoAtual = avisos[aviso];
+  const eventos = agendaEventos();
+  const ministerios = ministeriosNaAgenda();
   const temaPalavraLinhas = useMemo(() => {
     const t = church.temaPalavra.trim();
     const parts = t.split(/(?<=\.)\s+/).filter(Boolean);
@@ -205,6 +208,7 @@ export function HomePortal() {
           { href: "/culto", src: fotos.culto, title: "Culto da noite", kicker: "Domingo 19h" },
           { href: "/formacao/jovens", src: fotos.jovens, title: "Culto de jovens", kicker: "Sábado 20h" },
           { href: "/formacao/adolescentes", src: fotos.adolescentes, title: "Culto de Pré Adolescentes", kicker: "às 19h" },
+          { href: "/formacao/infantil", src: fotos.infantil, title: "Culto Infantil", kicker: "Domingo 10h · igreja" },
           { href: "/palavra", src: fotos.biblia, title: "Áudios", kicker: "Palavra" },
           { href: "/visao", src: fotos.missao, title: "Visão 2033", kicker: "A comunidade" },
         ]}

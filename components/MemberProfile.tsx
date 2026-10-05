@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { Avatar } from "@/components/Avatar";
+import { FieldSelect } from "@/components/FieldSelect";
 import { celulas, cursos } from "@/lib/content";
 import { buscarCep } from "@/lib/cep";
 import { comprimirFoto } from "@/lib/foto-perfil";
@@ -250,12 +251,11 @@ export function MemberProfile() {
       </label>
       <label className="grid gap-1 text-sm">
         Célula que frequenta
-        <select className="field" value={form.celula} onChange={(e) => set("celula", e.target.value)}>
-          <option>Não frequento</option>
-          {celulas.map((c) => (
-            <option key={c.id}>{c.nome}</option>
-          ))}
-        </select>
+        <FieldSelect
+          value={form.celula}
+          onChange={(v) => set("celula", v)}
+          options={["Não frequento", ...celulas.map((c) => c.nome)]}
+        />
       </label>
       {semCelula ? (
         <label className="flex items-center gap-2 text-sm md:col-span-2">
@@ -276,17 +276,11 @@ export function MemberProfile() {
       </fieldset>
       <label className="grid gap-1 text-sm">
         Estado civil
-        <select
-          className="field"
+        <FieldSelect
           value={form.estadoCivil}
-          onChange={(e) => set("estadoCivil", e.target.value as EstadoCivil)}
-        >
-          {estadosCivis.map((e) => (
-            <option key={e.id} value={e.id}>
-              {e.label}
-            </option>
-          ))}
-        </select>
+          onChange={(v) => set("estadoCivil", v as EstadoCivil)}
+          options={estadosCivis.map((e) => ({ value: e.id, label: e.label }))}
+        />
       </label>
       {casado ? (
         <label className="grid gap-1 text-sm">

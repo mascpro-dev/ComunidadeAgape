@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ministerios, type ItemGeracao, type Ministerio } from "@/lib/content";
+import { ministeriosNaAgenda, type ItemGeracao, type Ministerio } from "@/lib/content";
 import { PageHeader } from "@/components/PageHeader";
 import { PosterRow } from "@/components/PosterRow";
 import { fotoCapa, fotos } from "@/lib/fotos";
@@ -15,6 +15,7 @@ function postersDe(m: Ministerio, tipo?: ItemGeracao["tipo"]) {
 }
 
 export default function FormacaoPage() {
+  const ministerios = ministeriosNaAgenda();
   return (
     <div>
       <PageHeader
