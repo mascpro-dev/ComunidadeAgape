@@ -21,6 +21,7 @@ export const fotos = {
   cultoJovens: "/culto-jovens.jpg",
   cultoJovensSemana: "/culto-jovens-semana.jpg",
   cultoKidsSemana: "/culto-kids-semana.jpg",
+  celulaAdolescentesSemana: "/celula-adolescentes-semana.jpg",
   adolescentes:
     "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=800&q=80",
   infantil:

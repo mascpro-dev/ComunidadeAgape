@@ -1826,7 +1826,7 @@ export function agendaEventos() {
     { titulo: "Culto da noite", quando: "Dom 19h · templo", tag: "Culto", foto: "cultoNoite" },
     { titulo: "Culto de jovens", quando: "Sáb 20h · templo", tag: "Jovens", foto: "cultoJovensSemana" },
     { titulo: "Culto de Pré Adolescentes", quando: "às 19h · templo", tag: "Geração", foto: "adolescentes" },
-    { titulo: "Célula de Adolescentes", quando: "Sexta 20h", tag: "Geração", foto: "adolescentes" },
+    { titulo: "Célula de Adolescentes", quando: "Sexta 20h", tag: "Geração", foto: "celulaAdolescentesSemana" },
     { titulo: "Célula Universitários", quando: "Sexta 23h", tag: "Jovens", foto: "jovens" },
     { titulo: "Encontro de Homens", quando: rotuloEncontroHomens(), tag: "Homens", foto: "homens" },
     { titulo: "Futebol no Flamingo", quando: "Sáb 8h30 · adolescentes", tag: "Esporte", foto: "adolescentes" },
