@@ -7,7 +7,23 @@ const SUPABASE_ANON_KEY = (
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5oYXFvZ25iaXpqc3dkbWZvYWh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTExNDA5ODAsImV4cCI6MjEwNjcxNjk4MH0.x-ffpEFsjJ23LjOsUkiLAEUbqCszghknI5zjy-MgiQs"
 ).trim();
 
-export async function loadBannerOverrides(): Promise<Record<string, string>> {
+async function loadLocalBannerOverrides(): Promise<Record<string, string>> {
+  try {
+    if (typeof window === "undefined") {
+      const { readFile } = await import("fs/promises");
+      const { join } = await import("path");
+      const raw = await readFile(join(process.cwd(), "public", "banners", "manifest.json"), "utf8");
+      return JSON.parse(raw) as Record<string, string>;
+    }
+    const r = await fetch("/api/banners", { cache: "no-store" });
+    if (!r.ok) return {};
+    return (await r.json()) as Record<string, string>;
+  } catch {
+    return {};
+  }
+}
+
+async function loadRemoteBannerOverrides(): Promise<Record<string, string>> {
   try {
     const r = await fetch(`${SUPABASE_URL}/rest/v1/banners?select=chave,url`, {
       headers: {
@@ -26,6 +42,11 @@ export async function loadBannerOverrides(): Promise<Record<string, string>> {
   } catch {
     return {};
   }
+}
+
+export async function loadBannerOverrides(): Promise<Record<string, string>> {
+  const [local, remote] = await Promise.all([loadLocalBannerOverrides(), loadRemoteBannerOverrides()]);
+  return { ...remote, ...local };
 }
 
 export function prepararBanner(file: File, largura: number, altura: number): Promise<Blob> {

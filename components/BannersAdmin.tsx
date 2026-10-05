@@ -1,7 +1,6 @@
 "use client";
 
 import { getSupabase } from "@/lib/supabase";
-import { getSessionUserId } from "@/lib/agape-db";
 import { BANNER_SLOTS, rotuloTamanho, type BannerSlot } from "@/lib/banner-slots";
 import { prepararBanner } from "@/lib/banners";
 import { fotoCapa } from "@/lib/fotos";
@@ -10,34 +9,38 @@ import { useMemo, useState } from "react";
 
 const grupos = ["Início", "Cultos", "Gerações", "Cursos"];
 
-async function enviarBanner(slot: BannerSlot, file: File) {
+async function tokenSessao() {
   const sb = getSupabase();
   if (!sb) throw new Error("Supabase não configurado");
+  const { data } = await sb.auth.getSession();
+  const token = data.session?.access_token;
+  if (!token) throw new Error("Entre na conta para trocar as imagens.");
+  return token;
+}
+
+async function enviarBanner(slot: BannerSlot, file: File) {
   const blob = await prepararBanner(file, slot.largura, slot.altura);
-  const path = `${slot.id}.jpg`;
-  const { error: upErr } = await sb.storage.from("banners").upload(path, blob, {
-    upsert: true,
-    contentType: "image/jpeg",
+  const token = await tokenSessao();
+  const form = new FormData();
+  form.append("id", slot.id);
+  form.append("file", blob, `${slot.id}.jpg`);
+  const r = await fetch("/api/banners", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+    body: form,
   });
-  if (upErr) throw upErr;
-  const { data } = sb.storage.from("banners").getPublicUrl(path);
-  const url = `${data.publicUrl}?v=${Date.now()}`;
-  const uid = await getSessionUserId();
-  const { error } = await sb.from("banners").upsert({
-    chave: slot.id,
-    url,
-    updated_by: uid || null,
-    updated_at: new Date().toISOString(),
-  });
-  if (error) throw error;
+  const body = (await r.json().catch(() => ({}))) as { error?: string };
+  if (!r.ok) throw new Error(body.error || "Não foi possível enviar a imagem.");
 }
 
 async function restaurarBanner(id: string) {
-  const sb = getSupabase();
-  if (!sb) throw new Error("Supabase não configurado");
-  await sb.storage.from("banners").remove([`${id}.jpg`]);
-  const { error } = await sb.from("banners").delete().eq("chave", id);
-  if (error) throw error;
+  const token = await tokenSessao();
+  const r = await fetch(`/api/banners?id=${encodeURIComponent(id)}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  const body = (await r.json().catch(() => ({}))) as { error?: string };
+  if (!r.ok) throw new Error(body.error || "Não foi possível restaurar.");
 }
 
 function CardBanner({ slot }: { slot: BannerSlot }) {
@@ -97,7 +100,15 @@ function CardBanner({ slot }: { slot: BannerSlot }) {
             Restaurar padrão
           </button>
         </div>
-        {busy ? <p className="mt-2 text-[12px] text-[#9fd4ea]">{busy}</p> : null}
+        {busy ? (
+          <p
+            className={`mt-2 text-[12px] ${
+              busy === "Atualizado" || busy === "Padrão" || busy.endsWith("…") ? "text-[#9fd4ea]" : "text-[#ffb4b4]"
+            }`}
+          >
+            {busy}
+          </p>
+        ) : null}
       </div>
     </article>
   );
