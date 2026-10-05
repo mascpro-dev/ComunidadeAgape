@@ -12,7 +12,7 @@ async function loadLocalBannerOverrides(): Promise<Record<string, string>> {
     if (typeof window === "undefined") {
       const { readFile } = await import("fs/promises");
       const { join } = await import("path");
-      const raw = await readFile(join(process.cwd(), "public", "banners", "manifest.json"), "utf8");
+      const raw = await readFile(join(process.cwd(), "data", "banners", "manifest.json"), "utf8");
       return JSON.parse(raw) as Record<string, string>;
     }
     const r = await fetch("/api/banners", { cache: "no-store" });

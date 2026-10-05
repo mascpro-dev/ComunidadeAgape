@@ -1,9 +1,16 @@
 import { createClient } from "@supabase/supabase-js";
-import { mkdir, readFile, unlink, writeFile } from "fs/promises";
-import { join } from "path";
 import { NextResponse } from "next/server";
+import {
+  apagarArquivoBanner,
+  chaveBannerOk,
+  gravarArquivoBanner,
+  gravarManifestoBanners,
+  lerManifestoBanners,
+  urlBanner,
+} from "@/lib/banner-fs";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 const SUPABASE_URL = (process.env.NEXT_PUBLIC_SUPABASE_URL || "https://nhaqognbizjswdmfoahx.supabase.co")
   .trim()
@@ -14,82 +21,67 @@ const SUPABASE_ANON_KEY = (
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5oYXFvZ25iaXpqc3dkbWZvYWh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTExNDA5ODAsImV4cCI6MjEwNjcxNjk4MH0.x-ffpEFsjJ23LjOsUkiLAEUbqCszghknI5zjy-MgiQs"
 ).trim();
 
-const pasta = join(process.cwd(), "public", "banners");
-const manifestoPath = join(pasta, "manifest.json");
-
-function chaveOk(id: string) {
-  return /^[a-zA-Z0-9_-]+$/.test(id);
-}
-
-async function lerManifesto(): Promise<Record<string, string>> {
-  try {
-    return JSON.parse(await readFile(manifestoPath, "utf8")) as Record<string, string>;
-  } catch {
-    return {};
-  }
-}
-
-async function gravarManifesto(mapa: Record<string, string>) {
-  await mkdir(pasta, { recursive: true });
-  await writeFile(manifestoPath, JSON.stringify(mapa, null, 2));
-}
-
 async function autorizar(req: Request) {
-  const auth = req.headers.get("authorization") || "";
-  if (!auth.toLowerCase().startsWith("bearer ")) return "Entre na conta para trocar as imagens.";
-  const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-    global: { headers: { Authorization: auth } },
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
-  const { data } = await sb.auth.getUser();
-  if (!data.user) return "Sessão expirada. Entre de novo.";
-  const painel = await sb.rpc("has_funcao", { fid: "painel" });
-  const admin = await sb.rpc("has_funcao", { fid: "admin" });
-  if (painel.error && admin.error) return null;
-  if (painel.data === true || admin.data === true) return null;
-  if (painel.data === false && admin.data === false) return "Sem permissão no painel.";
-  return null;
+  const token = (req.headers.get("authorization") || "").replace(/^Bearer\s+/i, "").trim();
+  if (!token) return "Entre na conta para trocar as imagens.";
+  try {
+    const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
+    const { data, error } = await sb.auth.getUser(token);
+    if (error || !data.user) return "Sessão expirada. Entre de novo.";
+    return null;
+  } catch {
+    return "Sessão expirada. Entre de novo.";
+  }
 }
 
 export async function GET() {
-  return NextResponse.json(await lerManifesto());
+  return NextResponse.json(await lerManifestoBanners());
 }
 
 export async function POST(req: Request) {
-  const bloqueio = await autorizar(req);
-  if (bloqueio) return NextResponse.json({ error: bloqueio }, { status: 401 });
+  try {
+    const bloqueio = await autorizar(req);
+    if (bloqueio) return NextResponse.json({ error: bloqueio }, { status: 401 });
 
-  const form = await req.formData();
-  const id = String(form.get("id") || "");
-  const file = form.get("file");
-  if (!chaveOk(id) || !(file instanceof File)) {
-    return NextResponse.json({ error: "Arquivo inválido." }, { status: 400 });
+    const corpo = (await req.json()) as { id?: string; jpeg?: string };
+    const id = String(corpo.id || "");
+    const jpeg = String(corpo.jpeg || "").replace(/^data:image\/jpeg;base64,/, "");
+    if (!chaveBannerOk(id) || !jpeg) {
+      return NextResponse.json({ error: "Arquivo inválido." }, { status: 400 });
+    }
+    const bytes = Buffer.from(jpeg, "base64");
+    if (!bytes.length) {
+      return NextResponse.json({ error: "Arquivo vazio." }, { status: 400 });
+    }
+
+    await gravarArquivoBanner(id, bytes);
+    const mapa = await lerManifestoBanners();
+    mapa[id] = urlBanner(id);
+    await gravarManifestoBanners(mapa);
+    return NextResponse.json({ ok: true, url: mapa[id] });
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : "Falha ao gravar a imagem.";
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
-
-  await mkdir(pasta, { recursive: true });
-  const bytes = Buffer.from(await file.arrayBuffer());
-  await writeFile(join(pasta, `${id}.jpg`), bytes);
-
-  const mapa = await lerManifesto();
-  mapa[id] = `/banners/${id}.jpg?v=${Date.now()}`;
-  await gravarManifesto(mapa);
-  return NextResponse.json({ ok: true, url: mapa[id] });
 }
 
 export async function DELETE(req: Request) {
-  const bloqueio = await autorizar(req);
-  if (bloqueio) return NextResponse.json({ error: bloqueio }, { status: 401 });
-
-  const id = new URL(req.url).searchParams.get("id") || "";
-  if (!chaveOk(id)) return NextResponse.json({ error: "Identificador inválido." }, { status: 400 });
-
   try {
-    await unlink(join(pasta, `${id}.jpg`));
-  } catch {
-    /* já não existia */
+    const bloqueio = await autorizar(req);
+    if (bloqueio) return NextResponse.json({ error: bloqueio }, { status: 401 });
+
+    const id = new URL(req.url).searchParams.get("id") || "";
+    if (!chaveBannerOk(id)) return NextResponse.json({ error: "Identificador inválido." }, { status: 400 });
+
+    await apagarArquivoBanner(id);
+    const mapa = await lerManifestoBanners();
+    delete mapa[id];
+    await gravarManifestoBanners(mapa);
+    return NextResponse.json({ ok: true });
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : "Falha ao restaurar.";
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
-  const mapa = await lerManifesto();
-  delete mapa[id];
-  await gravarManifesto(mapa);
-  return NextResponse.json({ ok: true });
 }

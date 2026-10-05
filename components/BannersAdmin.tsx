@@ -18,19 +18,34 @@ async function tokenSessao() {
   return token;
 }
 
+async function blobParaJpegBase64(blob: Blob) {
+  const bytes = new Uint8Array(await blob.arrayBuffer());
+  let binario = "";
+  for (let i = 0; i < bytes.length; i += 0x8000) {
+    binario += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  }
+  return btoa(binario);
+}
+
 async function enviarBanner(slot: BannerSlot, file: File) {
   const blob = await prepararBanner(file, slot.largura, slot.altura);
   const token = await tokenSessao();
-  const form = new FormData();
-  form.append("id", slot.id);
-  form.append("file", blob, `${slot.id}.jpg`);
   const r = await fetch("/api/banners", {
     method: "POST",
-    headers: { Authorization: `Bearer ${token}` },
-    body: form,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ id: slot.id, jpeg: await blobParaJpegBase64(blob) }),
   });
-  const body = (await r.json().catch(() => ({}))) as { error?: string };
-  if (!r.ok) throw new Error(body.error || "Não foi possível enviar a imagem.");
+  const texto = await r.text();
+  let body: { error?: string } = {};
+  try {
+    body = JSON.parse(texto) as { error?: string };
+  } catch {
+    body = {};
+  }
+  if (!r.ok) throw new Error(body.error || `Não foi possível enviar a imagem (${r.status}).`);
 }
 
 async function restaurarBanner(id: string) {
