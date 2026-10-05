@@ -1822,7 +1822,7 @@ export const cursos: Curso[] = [
 export function agendaEventos() {
   return [
     { titulo: "Culto da família", quando: "Dom 10h · templo e ao vivo", tag: "Família", foto: "cultoFamilia" },
-    { titulo: "Culto Infantil", quando: "Dom 10h · igreja", tag: "Kids", foto: "infantil" },
+    { titulo: "Culto Infantil", quando: "Dom 10h · igreja", tag: "Kids", foto: "cultoKidsSemana" },
     { titulo: "Culto da noite", quando: "Dom 19h · templo", tag: "Culto", foto: "cultoNoite" },
     { titulo: "Culto de jovens", quando: "Sáb 20h · templo", tag: "Jovens", foto: "cultoJovensSemana" },
     { titulo: "Culto de Pré Adolescentes", quando: "às 19h · templo", tag: "Geração", foto: "adolescentes" },
