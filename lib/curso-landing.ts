@@ -285,7 +285,7 @@ const extraPorId: Record<string, Extra> = {
     reels: reels([
       { nome: "Gabriel", papel: "14 anos", frase: "Coragem deixou de ser grito. Virou caráter.", capa: fotos.adolescentes },
       { nome: "Felipe", papel: "Jovem", frase: "Assumi o que eu fazia. Isso doeu. Depois libertou.", capa: fotos.jovens },
-      { nome: "André", papel: "Pai de adolesente", frase: "Meu filho saiu homem. Não só mais alto.", capa: fotos.homens },
+      { nome: "André", papel: "Pai de adolescente", frase: "Meu filho saiu homem. Não só mais alto.", capa: fotos.homens },
       { nome: "Time Adolescentes", papel: "Ágape", frase: "Batalha espiritual pede homem acordado.", capa: fotos.celulaGeracao },
     ]),
   },
