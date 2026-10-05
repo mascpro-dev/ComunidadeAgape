@@ -1,21 +1,21 @@
 "use client";
 
 import { BANNER_SLOTS, rotuloTamanho, type BannerSlot } from "@/lib/banner-slots";
-import { apagarBannerLocal, blobParaDataUrl, salvarBannerLocal } from "@/lib/banner-idb";
+import { BANNER_SETUP_SQL, publicarBanner, removerBannerRemoto, tabelaBannersOk } from "@/lib/banner-sync";
 import { prepararBanner } from "@/lib/banners";
 import { fotoCapa } from "@/lib/fotos";
 import { useFotos } from "@/components/FotosProvider";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const grupos = ["Início", "Cultos", "Gerações", "Cursos"];
 
 async function enviarBanner(slot: BannerSlot, file: File) {
   const blob = await prepararBanner(file, slot.largura, slot.altura);
-  await salvarBannerLocal(slot.id, await blobParaDataUrl(blob));
+  await publicarBanner(slot.id, blob);
 }
 
 async function restaurarBanner(id: string) {
-  await apagarBannerLocal(id);
+  await removerBannerRemoto(id);
 }
 
 function CardBanner({ slot }: { slot: BannerSlot }) {
@@ -29,7 +29,7 @@ function CardBanner({ slot }: { slot: BannerSlot }) {
     try {
       await enviarBanner(slot, file);
       window.dispatchEvent(new Event("agape-banners"));
-      setBusy("Atualizado");
+      setBusy("No ar para todos");
     } catch (e) {
       setBusy(e instanceof Error ? e.message : "Não foi possível enviar a imagem.");
     }
@@ -78,7 +78,7 @@ function CardBanner({ slot }: { slot: BannerSlot }) {
         {busy ? (
           <p
             className={`mt-2 text-[12px] ${
-              busy === "Atualizado" || busy === "Padrão" || busy.endsWith("…") ? "text-[#9fd4ea]" : "text-[#ffb4b4]"
+              busy === "No ar para todos" || busy === "Padrão" || busy.endsWith("…") ? "text-[#9fd4ea]" : "text-[#ffb4b4]"
             }`}
           >
             {busy}
@@ -91,12 +91,32 @@ function CardBanner({ slot }: { slot: BannerSlot }) {
 
 export function BannersAdmin() {
   const [grupo, setGrupo] = useState(grupos[0]);
+  const [sqlOk, setSqlOk] = useState<boolean | null>(null);
+  const [copied, setCopied] = useState(false);
   const lista = useMemo(() => BANNER_SLOTS.filter((s) => s.grupo === grupo), [grupo]);
+
+  useEffect(() => {
+    tabelaBannersOk().then(setSqlOk).catch(() => setSqlOk(false));
+  }, []);
+
+  async function copiarSql() {
+    await navigator.clipboard.writeText(BANNER_SETUP_SQL);
+    setCopied(true);
+  }
 
   return (
     <div>
+      {sqlOk === false ? (
+        <div className="mb-4 rounded-2xl border border-gold/40 bg-gold/10 p-4 text-sm text-[#d7e2f8]">
+          <p className="font-medium text-white">Para todo mundo ver as capas (computador e celular), rode este SQL uma vez no Supabase → SQL Editor.</p>
+          <button type="button" className="btn-gold mt-3 px-4 py-2 text-[12px]" onClick={() => void copiarSql()}>
+            {copied ? "SQL copiado" : "Copiar SQL"}
+          </button>
+        </div>
+      ) : null}
       <p className="mb-3 max-w-[62ch] text-sm text-[#d7e2f8]">
-        Cada peça tem um tamanho. O envio recorta no centro, na proporção certa — a imagem não estica. JPG ou PNG.
+        Cada peça tem um tamanho. O envio recorta no centro, na proporção certa — a imagem não estica. JPG ou PNG. A capa
+        nova entra no servidor e aparece para todos.
       </p>
       <div className="mb-4 flex flex-wrap gap-2">
         {grupos.map((g) => (

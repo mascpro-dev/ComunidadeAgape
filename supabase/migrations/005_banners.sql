@@ -24,6 +24,9 @@ to authenticated
 using (public.has_funcao('painel') or public.has_funcao('admin'))
 with check (public.has_funcao('painel') or public.has_funcao('admin'));
 
+grant select on public.banners to anon, authenticated;
+grant insert, update, delete on public.banners to authenticated;
+
 insert into storage.buckets (id, name, public)
 values ('banners', 'banners', true)
 on conflict (id) do update set public = true;
