@@ -11,6 +11,7 @@ export type PosterItem = {
   external?: boolean;
   selected?: boolean;
   onSelect?: () => void;
+  reel?: boolean;
 };
 
 export function PosterRow({
@@ -128,12 +129,17 @@ export function PosterRow({
 }
 
 export function PosterCard({ item }: { item: PosterItem }) {
-  const className = item.selected ? "poster group ring-2 ring-gold" : "poster group";
+  const className = `${item.selected ? "poster group ring-2 ring-gold" : "poster group"} ${item.reel ? "reel" : ""}`.trim();
   const inner = (
     <>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={item.src} alt={item.title} className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-110" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
+      {item.reel ? (
+        <div className="absolute left-1/2 top-[42%] flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-black/45 text-white backdrop-blur-sm">
+          <span className="ml-0.5 text-lg">▶</span>
+        </div>
+      ) : null}
       <div className="absolute inset-x-0 bottom-0 p-3">
         {item.kicker ? (
           <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-gold">{item.kicker}</p>

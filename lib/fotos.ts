@@ -67,6 +67,14 @@ export const fotos = {
   crownAbc: "/cursos/crown-abc.jpg",
   crownSegredo: "/cursos/crown-segredo.jpg",
   crownTeens: "/cursos/crown-teens.jpg",
+  mulherProspera: "/cursos/mulher-prospera.jpg",
+  homemMaximo: "/cursos/homem-maximo.jpg",
+  vencedores: "/cursos/vencedores.jpg",
+  coragem: "/cursos/coragem.jpg",
+  homemVerdade: "/cursos/homem-verdade.jpg",
+  poderPotencial: "/cursos/poder-potencial.jpg",
+  comunicacaoSexo: "/cursos/comunicacao-sexo-dinheiro.jpg",
+  homensFortes: "/cursos/homens-fortes.jpg",
 };
 
 export function fotoCapa(chave: string) {

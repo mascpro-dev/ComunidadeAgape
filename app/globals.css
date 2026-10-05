@@ -113,4 +113,7 @@ body {
   .poster {
     @apply relative aspect-[2/3] w-[38vw] min-w-[128px] max-w-[168px] shrink-0 overflow-hidden rounded-md shadow-[0_12px_40px_rgba(0,0,0,.35)] transition duration-300 md:w-[176px] md:min-w-0 md:max-w-none md:rounded-lg md:hover:z-10 md:hover:scale-[1.08];
   }
+  .poster.reel {
+    @apply aspect-[9/16] w-[42vw] min-w-[140px] max-w-[180px] rounded-xl md:w-[168px];
+  }
 }

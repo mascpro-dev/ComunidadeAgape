@@ -498,14 +498,21 @@ export const ministerios: Ministerio[] = [
       { titulo: "Célula Universitários", data: "Sex 23h", extra: "Sexta à noite" },
     ],
     catalogo: [
-      { id: "jh1", titulo: "Habitudes: Autoliderança", kicker: "12–24 · 13 sem", tipo: "curso", capa: "habitudes1", href: "/cursos#hb1" },
-      { id: "jh2", titulo: "Habitudes: Conectar-se", kicker: "12–24 · 13 sem", tipo: "curso", capa: "habitudes2", href: "/cursos#hb2" },
-      { id: "jh3", titulo: "Habitudes: Liderar os outros", kicker: "12–24 · 13 sem", tipo: "curso", capa: "habitudes3", href: "/cursos#hb3" },
-      { id: "jh4", titulo: "Habitudes: Transformar a cultura", kicker: "12–24 · 13 sem", tipo: "curso", capa: "habitudes4", href: "/cursos#hb4" },
-      { id: "jh5", titulo: "Habitudes: Liderança espiritual", kicker: "12–24 · 13 sem", tipo: "curso", capa: "habitudes5", href: "/cursos#hb5" },
-      { id: "jg1", titulo: "Ignição", kicker: "A partir de 12 · 6 encontros", tipo: "curso", capa: "ignicao", href: "/cursos#ig1" },
-      { id: "jc1", titulo: "Crown: Estudo Financeiro Bíblico", kicker: "18+ · 10 sem", tipo: "curso", capa: "crownEstudo", href: "/cursos#cr1" },
-      { id: "jc3", titulo: "Como Chegar ao Fim do Mês", kicker: "18+ · 4 sem", tipo: "curso", capa: "crownFimMes", href: "/cursos#cr3" },
+      { id: "jh1", titulo: "Habitudes: Autoliderança", kicker: "12–24 · 13 sem", tipo: "curso", capa: "habitudes1", href: "/cursos/hb1" },
+      { id: "jh2", titulo: "Habitudes: Conectar-se", kicker: "12–24 · 13 sem", tipo: "curso", capa: "habitudes2", href: "/cursos/hb2" },
+      { id: "jh3", titulo: "Habitudes: Liderar os outros", kicker: "12–24 · 13 sem", tipo: "curso", capa: "habitudes3", href: "/cursos/hb3" },
+      { id: "jh4", titulo: "Habitudes: Transformar a cultura", kicker: "12–24 · 13 sem", tipo: "curso", capa: "habitudes4", href: "/cursos/hb4" },
+      { id: "jh5", titulo: "Habitudes: Liderança espiritual", kicker: "12–24 · 13 sem", tipo: "curso", capa: "habitudes5", href: "/cursos/hb5" },
+      { id: "jg1", titulo: "Ignição", kicker: "A partir de 12 · 6 encontros", tipo: "curso", capa: "ignicao", href: "/cursos/ig1" },
+      { id: "jc1", titulo: "Crown: Estudo Financeiro Bíblico", kicker: "18+ · 10 sem", tipo: "curso", capa: "crownEstudo", href: "/cursos/cr1" },
+      { id: "jc3", titulo: "Como Chegar ao Fim do Mês", kicker: "18+ · 4 sem", tipo: "curso", capa: "crownFimMes", href: "/cursos/cr3" },
+      { id: "jm1", titulo: "Homem ao Máximo", kicker: "18+ · 13 sem", tipo: "curso", capa: "homemMaximo", href: "/cursos/hm1" },
+      { id: "jm4", titulo: "Homem de Verdade", kicker: "18+ · 13 sem", tipo: "curso", capa: "homemVerdade", href: "/cursos/hm4" },
+      { id: "jm6", titulo: "Comunicação, Sexo e Dinheiro", kicker: "18+ · 13 sem", tipo: "curso", capa: "comunicacaoSexo", href: "/cursos/hm6" },
+      { id: "jm2", titulo: "Vencedores Nunca Desistem", kicker: "A partir de 13 · 13 sem", tipo: "curso", capa: "vencedores", href: "/cursos/hm2" },
+      { id: "jm3", titulo: "Coragem", kicker: "A partir de 13 · 13 sem", tipo: "curso", capa: "coragem", href: "/cursos/hm3" },
+      { id: "jm5", titulo: "O Poder do Potencial", kicker: "A partir de 13 · 13 sem", tipo: "curso", capa: "poderPotencial", href: "/cursos/hm5" },
+      { id: "jm7", titulo: "Homens Fortes em Tempos Difíceis", kicker: "A partir de 15 · 13 sem", tipo: "curso", capa: "homensFortes", href: "/cursos/hm7" },
       { id: "j4", titulo: "Célula Universitários", kicker: "Atividade · Sex 23h", tipo: "atividade", capa: "celulaJovens", href: "/celulas" },
       { id: "j5", titulo: "Missão na cidade", kicker: "Atividade", tipo: "atividade", capa: "missao" },
       { id: "j6", titulo: "Culto de jovens", kicker: "Atividade · Sáb 20h", tipo: "atividade", capa: "cultoNoite" },
@@ -527,13 +534,17 @@ export const ministerios: Ministerio[] = [
       { titulo: "Futebol no Flamingo", data: "Sáb 8h30", extra: "Bairro Flamingo" },
     ],
     catalogo: [
-      { id: "ah1", titulo: "Habitudes: Autoliderança", kicker: "12–24 · 13 sem", tipo: "curso", capa: "habitudes1", href: "/cursos#hb1" },
-      { id: "ah2", titulo: "Habitudes: Conectar-se", kicker: "12–24 · 13 sem", tipo: "curso", capa: "habitudes2", href: "/cursos#hb2" },
-      { id: "ah3", titulo: "Habitudes: Liderar os outros", kicker: "12–24 · 13 sem", tipo: "curso", capa: "habitudes3", href: "/cursos#hb3" },
-      { id: "ah4", titulo: "Habitudes: Transformar a cultura", kicker: "12–24 · 13 sem", tipo: "curso", capa: "habitudes4", href: "/cursos#hb4" },
-      { id: "ah5", titulo: "Habitudes: Liderança espiritual", kicker: "12–24 · 13 sem", tipo: "curso", capa: "habitudes5", href: "/cursos#hb5" },
-      { id: "ag1", titulo: "Ignição", kicker: "A partir de 12 · 6 encontros", tipo: "curso", capa: "ignicao", href: "/cursos#ig1" },
-      { id: "at1", titulo: "Crown Teens", kicker: "13–17 · 12 sem", tipo: "curso", capa: "crownTeens", href: "/cursos#cr6" },
+      { id: "ah1", titulo: "Habitudes: Autoliderança", kicker: "12–24 · 13 sem", tipo: "curso", capa: "habitudes1", href: "/cursos/hb1" },
+      { id: "ah2", titulo: "Habitudes: Conectar-se", kicker: "12–24 · 13 sem", tipo: "curso", capa: "habitudes2", href: "/cursos/hb2" },
+      { id: "ah3", titulo: "Habitudes: Liderar os outros", kicker: "12–24 · 13 sem", tipo: "curso", capa: "habitudes3", href: "/cursos/hb3" },
+      { id: "ah4", titulo: "Habitudes: Transformar a cultura", kicker: "12–24 · 13 sem", tipo: "curso", capa: "habitudes4", href: "/cursos/hb4" },
+      { id: "ah5", titulo: "Habitudes: Liderança espiritual", kicker: "12–24 · 13 sem", tipo: "curso", capa: "habitudes5", href: "/cursos/hb5" },
+      { id: "ag1", titulo: "Ignição", kicker: "A partir de 12 · 6 encontros", tipo: "curso", capa: "ignicao", href: "/cursos/ig1" },
+      { id: "at1", titulo: "Crown Teens", kicker: "13–17 · 12 sem", tipo: "curso", capa: "crownTeens", href: "/cursos/cr6" },
+      { id: "am2", titulo: "Vencedores Nunca Desistem", kicker: "A partir de 13 · 13 sem", tipo: "curso", capa: "vencedores", href: "/cursos/hm2" },
+      { id: "am3", titulo: "Coragem", kicker: "A partir de 13 · 13 sem", tipo: "curso", capa: "coragem", href: "/cursos/hm3" },
+      { id: "am5", titulo: "O Poder do Potencial", kicker: "A partir de 13 · 13 sem", tipo: "curso", capa: "poderPotencial", href: "/cursos/hm5" },
+      { id: "am7", titulo: "Homens Fortes em Tempos Difíceis", kicker: "A partir de 15 · 13 sem", tipo: "curso", capa: "homensFortes", href: "/cursos/hm7" },
       { id: "a4", titulo: "Culto de Pré Adolescentes", kicker: "Atividade · às 19h", tipo: "atividade", capa: "celulaGeracao" },
       { id: "a6", titulo: "Célula de Adolescentes", kicker: "Atividade · Sex 20h", tipo: "atividade", capa: "celulas", href: "/celulas" },
       { id: "a7", titulo: "Futebol no Flamingo", kicker: "Sáb 8h30 · Bairro Flamingo", tipo: "atividade", capa: "adolescentes" },
@@ -555,8 +566,8 @@ export const ministerios: Ministerio[] = [
     ],
     catalogo: [
       { id: "k1", titulo: "Comece por aqui", kicker: "Módulo 01", tipo: "curso", capa: "infantil" },
-      { id: "kab", titulo: "ABC do Dinheiro", kicker: "5–7 anos · 10 sem", tipo: "curso", capa: "crownAbc", href: "/cursos#cr4" },
-      { id: "ksg", titulo: "O Segredo", kicker: "8–12 anos · 12 sem", tipo: "curso", capa: "crownSegredo", href: "/cursos#cr5" },
+      { id: "kab", titulo: "ABC do Dinheiro", kicker: "5–7 anos · 10 sem", tipo: "curso", capa: "crownAbc", href: "/cursos/cr4" },
+      { id: "ksg", titulo: "O Segredo", kicker: "8–12 anos · 12 sem", tipo: "curso", capa: "crownSegredo", href: "/cursos/cr5" },
       { id: "k2", titulo: "Histórias da Bíblia", kicker: "Curso", tipo: "curso", capa: "biblia" },
       { id: "k3", titulo: "Escola kids", kicker: "Curso", tipo: "curso", capa: "educacao" },
       { id: "k4", titulo: "Culto Infantil", kicker: "Dom 10h · igreja", tipo: "atividade", capa: "culto" },
@@ -575,10 +586,15 @@ export const ministerios: Ministerio[] = [
     tone: "from-[#16305f] to-[#071433]",
     proximos: [{ titulo: "Encontro de Homens", data: "1ª segunda · 18h30", extra: "A data do mês aparece no card" }],
     catalogo: [
-      { id: "h1", titulo: "Comece por aqui", kicker: "Módulo 01", tipo: "curso", capa: "homens" },
-      { id: "h2", titulo: "Pai de propósito", kicker: "Curso · 5 sem", tipo: "curso", capa: "familia" },
-      { id: "h3", titulo: "Crown: Estudo Financeiro Bíblico", kicker: "18+ · 10 sem", tipo: "curso", capa: "crownEstudo", href: "/cursos#cr1" },
-      { id: "h3b", titulo: "Como Chegar ao Fim do Mês", kicker: "18+ · 4 sem", tipo: "curso", capa: "crownFimMes", href: "/cursos#cr3" },
+      { id: "h3", titulo: "Crown: Estudo Financeiro Bíblico", kicker: "18+ · 10 sem", tipo: "curso", capa: "crownEstudo", href: "/cursos/cr1" },
+      { id: "h3b", titulo: "Como Chegar ao Fim do Mês", kicker: "18+ · 4 sem", tipo: "curso", capa: "crownFimMes", href: "/cursos/cr3" },
+      { id: "hm1c", titulo: "Homem ao Máximo", kicker: "18+ · 13 sem", tipo: "curso", capa: "homemMaximo", href: "/cursos/hm1" },
+      { id: "hm4c", titulo: "Homem de Verdade", kicker: "18+ · 13 sem", tipo: "curso", capa: "homemVerdade", href: "/cursos/hm4" },
+      { id: "hm6c", titulo: "Comunicação, Sexo e Dinheiro", kicker: "18+ · 13 sem", tipo: "curso", capa: "comunicacaoSexo", href: "/cursos/hm6" },
+      { id: "hm2c", titulo: "Vencedores Nunca Desistem", kicker: "A partir de 13 · 13 sem", tipo: "curso", capa: "vencedores", href: "/cursos/hm2" },
+      { id: "hm3c", titulo: "Coragem", kicker: "A partir de 13 · 13 sem", tipo: "curso", capa: "coragem", href: "/cursos/hm3" },
+      { id: "hm5c", titulo: "O Poder do Potencial", kicker: "A partir de 13 · 13 sem", tipo: "curso", capa: "poderPotencial", href: "/cursos/hm5" },
+      { id: "hm7c", titulo: "Homens Fortes em Tempos Difíceis", kicker: "A partir de 15 · 13 sem", tipo: "curso", capa: "homensFortes", href: "/cursos/hm7" },
       { id: "h4", titulo: "Encontro de Homens", kicker: "1ª segunda · 18h30", tipo: "atividade", capa: "lideranca" },
       { id: "h5", titulo: "Célula Homens", kicker: "Atividade · Sáb", tipo: "atividade", capa: "celulaHomens", href: "/celulas" },
       { id: "h6", titulo: "Irmandade na cidade", kicker: "Atividade", tipo: "atividade", capa: "missao" },
@@ -596,11 +612,9 @@ export const ministerios: Ministerio[] = [
     tone: "from-[#2a5bb8] to-[#0a2460]",
     proximos: [{ titulo: "Círculo de irmãs", data: "Ter 20h", extra: "Louvor + partilha" }],
     catalogo: [
-      { id: "m1", titulo: "Comece por aqui", kicker: "Módulo 01", tipo: "curso", capa: "mulheres" },
-      { id: "m2", titulo: "Mulher e a Palavra", kicker: "Curso · 6 sem", tipo: "curso", capa: "biblia" },
-      { id: "mc1", titulo: "Crown: Estudo Financeiro Bíblico", kicker: "18+ · 10 sem", tipo: "curso", capa: "crownEstudo", href: "/cursos#cr1" },
-      { id: "mc3", titulo: "Como Chegar ao Fim do Mês", kicker: "18+ · 4 sem", tipo: "curso", capa: "crownFimMes", href: "/cursos#cr3" },
-      { id: "m3", titulo: "Mentoria de irmãs", kicker: "Curso", tipo: "curso", capa: "lideranca" },
+      { id: "mw1", titulo: "A Mulher Que Prospera", kicker: "18+ · 10 sem", tipo: "curso", capa: "mulherProspera", href: "/cursos/mw1" },
+      { id: "mc1", titulo: "Crown: Estudo Financeiro Bíblico", kicker: "18+ · 10 sem", tipo: "curso", capa: "crownEstudo", href: "/cursos/cr1" },
+      { id: "mc3", titulo: "Como Chegar ao Fim do Mês", kicker: "18+ · 4 sem", tipo: "curso", capa: "crownFimMes", href: "/cursos/cr3" },
       { id: "m4", titulo: "Círculo de irmãs", kicker: "Atividade · Ter", tipo: "atividade", capa: "celulaMulheres" },
       { id: "m5", titulo: "Célula Mulheres", kicker: "Atividade · Qui", tipo: "atividade", capa: "perfil", href: "/celulas" },
       { id: "m6", titulo: "Vigília de oração", kicker: "Atividade", tipo: "atividade", capa: "oracao" },
@@ -621,13 +635,13 @@ export const ministerios: Ministerio[] = [
     proximos: [{ titulo: "Nova turma Casais", data: "Início 12 out", extra: "8 semanas" }],
     catalogo: [
       { id: "f1", titulo: "Comece por aqui", kicker: "Módulo 01", tipo: "curso", capa: "familia" },
-      { id: "f2", titulo: "Namoro com propósito", kicker: "Curso · 6 sem", tipo: "curso", capa: "jovens", href: "/cursos" },
-      { id: "f3", titulo: "Noivos Ágape", kicker: "Curso · 8 sem", tipo: "curso", capa: "entrar", href: "/cursos" },
-      { id: "f4", titulo: "Casais em missão", kicker: "Curso · 8 sem", tipo: "curso", capa: "celulaFamilias", href: "/cursos" },
-      { id: "fc1", titulo: "Crown: Estudo Financeiro Bíblico", kicker: "18+ · 10 sem", tipo: "curso", capa: "crownEstudo", href: "/cursos#cr1" },
-      { id: "fc2", titulo: "Dinheiro e Casamento", kicker: "Casais · 6 sem", tipo: "curso", capa: "crownCasamento", href: "/cursos#cr2" },
-      { id: "fc3", titulo: "Como Chegar ao Fim do Mês", kicker: "18+ · 4 sem", tipo: "curso", capa: "crownFimMes", href: "/cursos#cr3" },
-      { id: "f5", titulo: "Pais que discipulam", kicker: "Curso · 5 sem", tipo: "curso", capa: "infantil", href: "/cursos" },
+      { id: "f2", titulo: "Namoro com propósito", kicker: "Curso · 6 sem", tipo: "curso", capa: "jovens", href: "/cursos/n1" },
+      { id: "f3", titulo: "Noivos Ágape", kicker: "Curso · 8 sem", tipo: "curso", capa: "entrar", href: "/cursos/n2" },
+      { id: "f4", titulo: "Casais em missão", kicker: "Curso · 8 sem", tipo: "curso", capa: "celulaFamilias", href: "/cursos/n3" },
+      { id: "fc1", titulo: "Crown: Estudo Financeiro Bíblico", kicker: "18+ · 10 sem", tipo: "curso", capa: "crownEstudo", href: "/cursos/cr1" },
+      { id: "fc2", titulo: "Dinheiro e Casamento", kicker: "Casais · 6 sem", tipo: "curso", capa: "crownCasamento", href: "/cursos/cr2" },
+      { id: "fc3", titulo: "Como Chegar ao Fim do Mês", kicker: "18+ · 4 sem", tipo: "curso", capa: "crownFimMes", href: "/cursos/cr3" },
+      { id: "f5", titulo: "Pais que discipulam", kicker: "Curso · 5 sem", tipo: "curso", capa: "infantil", href: "/cursos/n4" },
       { id: "f6", titulo: "Célula Famílias", kicker: "Atividade · Qua", tipo: "atividade", capa: "celulas", href: "/celulas" },
       { id: "f7", titulo: "Culto da família", kicker: "Atividade · Dom", tipo: "atividade", capa: "culto", href: "/culto" },
     ],
@@ -716,6 +730,14 @@ export const celulas = [
   },
 ];
 
+export type CursoReel = {
+  nome: string;
+  papel: string;
+  frase: string;
+  capa: string;
+  video?: string;
+};
+
 export type Curso = {
   id: string;
   nome: string;
@@ -731,7 +753,17 @@ export type Curso = {
   paraQuem: string;
   voceVai: string[];
   temas: string[];
+  headline?: string;
+  slogan?: string;
+  manifesto?: string;
+  convite?: string;
+  glow?: string;
+  reels?: CursoReel[];
 };
+
+export function getCurso(id: string) {
+  return cursos.find((c) => c.id === id);
+}
 
 export const cursos: Curso[] = [
   {
@@ -1086,6 +1118,191 @@ export const cursos: Curso[] = [
     paraQuem: "Pais e mães com filhos em qualquer idade.",
     voceVai: ["Criar ritmos de Palavra em casa", "Discipular com graça e verdade"],
     temas: ["Lar", "Discipulado", "Geração"],
+  },
+  {
+    id: "mw1",
+    nome: "A Mulher Que Prospera",
+    semanas: 10,
+    encontro: "Encontros semanais",
+    publico: "Mulheres casadas e solteiras acima de 18 anos",
+    geracoes: "Mulheres",
+    modalidade: "Presencial e online",
+    material: "Material didático incluído",
+    vagas: 16,
+    capa: "mulherProspera",
+    resumo:
+      "Na corrida da vida, não basta alcançar metas financeiras, de trabalho e econômicas. É vital chegar lá mantendo o resto da vida intacto: tempo, talento e tesouros — tangíveis como dinheiro, empresa e casa, e intangíveis como amor e respeito dos filhos. A prosperidade integral não depende só da capacidade econômica, mas da forma como se escolhe viver cada dia. Tem mais a ver com a atitude do coração e o estado da alma do que com o saldo da conta.",
+    paraQuem:
+      "Mulheres casadas e solteiras acima de 18 anos que querem prosperar sem destruir família, fé e saúde interior — princípios que transformam família, finanças e vida.",
+    voceVai: [
+      "Alinhar metas de trabalho e dinheiro ao restante da vida",
+      "Cuidar de tesouros tangíveis e intangíveis no mesmo ritmo",
+      "Cultivar atitude de coração e estado de alma, não só de conta bancária",
+    ],
+    temas: [
+      "Metas e vida intacta",
+      "Tempo, talento e tesouros",
+      "Família e finanças",
+      "Coração e alma",
+      "Prosperidade integral",
+    ],
+  },
+  {
+    id: "hm1",
+    nome: "Homem ao Máximo",
+    semanas: 13,
+    encontro: "Encontros semanais de até 2h30",
+    publico: "Homens a partir de 18 anos ou casados",
+    geracoes: "Homens · Jovens",
+    modalidade: "Presencial e online",
+    material: "Material didático incluído",
+    vagas: 16,
+    capa: "homemMaximo",
+    resumo:
+      "O que é ser um homem ao máximo? Qual a referência? O que impede ou promove a maximização do homem? Através deste curso, o Espírito Santo ministra ao coração do homem e o ajuda a desenvolver sua masculinidade em Cristo e a conformar o comportamento à Sua Palavra. O participante também aprende a se fortalecer mutuamente com outros homens do convívio. “Assim como o ferro afia o ferro, um amigo afia seu amigo” (Provérbios 27.17). Viver com todo o potencial é um dos maiores anseios do homem — e dos pais e da esposa, quando ele é casado. Um guia para o sucesso familiar, na linha de Edwin Louis Cole.",
+    paraQuem: "Homens a partir de 18 anos ou já casados que querem maximizar caráter, masculinidade em Cristo e o lar.",
+    voceVai: [
+      "Definir o que é homem ao máximo à luz da Palavra",
+      "Desenvolver masculinidade em Cristo, não em estereótipo",
+      "Fortalecer-se com irmãos — ferro afiando ferro",
+      "Viver potencial que abençoa pais, esposa e filhos",
+    ],
+    temas: [
+      "Referência de homem",
+      "Masculinidade em Cristo",
+      "Comportamento e Palavra",
+      "Irmandade",
+      "Sucesso familiar",
+    ],
+  },
+  {
+    id: "hm2",
+    nome: "Vencedores Nunca Desistem",
+    semanas: 13,
+    encontro: "Encontros semanais de até 2h30",
+    publico: "Homens a partir de 13 anos",
+    geracoes: "Adolescentes · Jovens · Homens",
+    modalidade: "Presencial e online",
+    material: "Material didático incluído",
+    vagas: 16,
+    capa: "vencedores",
+    resumo:
+      "Estresses, mudanças, crises… todos já passamos por isso. Já fomos tentados a dar as costas a uma situação, esquecê-la e desistir. Entretanto, Deus tem uma solução para você se tornar um vencedor em quaisquer circunstâncias. Enfrentar a perda de um emprego, a crise da meia-idade, problemas conjugais, mudanças de residência, dificuldades financeiras e o estresse cotidiano — essas situações podem se tornar combustível para nos impulsionar às nossas maiores vitórias e êxitos. Não são aqueles que nunca enfrentam, mas os que nunca desistem.",
+    paraQuem: "Homens a partir de 13 anos que enfrentam pressão, mudança ou vontade de desistir — e querem fé para persistir.",
+    voceVai: [
+      "Ler crises como combustível, não só como ameaça",
+      "Recusar a tentação de desistir quando a situação aperta",
+      "Aplicar princípios de persistência em trabalho, casa e caráter",
+    ],
+    temas: ["Estresse", "Mudança", "Crise", "Persistência", "Vitória"],
+  },
+  {
+    id: "hm3",
+    nome: "Coragem",
+    semanas: 13,
+    encontro: "Encontros semanais de até 2h30",
+    publico: "Homens a partir de 13 anos",
+    geracoes: "Adolescentes · Jovens · Homens",
+    modalidade: "Presencial e online",
+    material: "Material didático incluído",
+    vagas: 16,
+    capa: "coragem",
+    resumo:
+      "Homens de todas as idades vivem uma vida agitada e desafiadora, numa batalha tanto física quanto espiritual contra o inimigo de nossas almas. Nunca, em toda a história, foi tão importante que os jovens aprendessem a ser homens de verdade e a ter coragem de viver como tal. Este curso ensina o jovem a ser um homem de verdade, a assumir a responsabilidade pelos seus atos, a ser maduro em suas ações e a enfrentar as batalhas da vida — vencendo as mais difíceis.",
+    paraQuem: "Homens a partir de 13 anos — em especial adolescentes e jovens — que precisam de coragem para viver como homens de verdade.",
+    voceVai: [
+      "Assumir responsabilidade pelos próprios atos",
+      "Amadurecer ações no meio da pressão",
+      "Enfrentar batalhas físicas e espirituais com coragem",
+    ],
+    temas: ["Homem de verdade", "Responsabilidade", "Maturidade", "Batalha espiritual", "Coragem"],
+  },
+  {
+    id: "hm4",
+    nome: "Homem de Verdade",
+    semanas: 13,
+    encontro: "Encontros semanais de até 2h30",
+    publico: "Homens a partir de 18 anos ou casados",
+    geracoes: "Homens · Jovens",
+    modalidade: "Presencial e online",
+    material: "Material didático incluído",
+    vagas: 16,
+    capa: "homemVerdade",
+    resumo:
+      "Este curso desconsidera os estereótipos que não trazem realização alguma, acaba com a pressão das exigências irreais, abandona as substituições baratas e as imitações mesquinhas da verdadeira masculinidade. Ele dá ao homem o poder de que precisa para se posicionar e tornar-se um homem de verdade. Neste curso, você descobrirá a hombridade de Jesus Cristo; também aprenderá como chegar ao topo e ali permanecer, a estabelecer a direção de seu coração, além de esclarecer seu papel como líder, marido, pai e amigo.",
+    paraQuem: "Homens a partir de 18 anos ou casados que querem deixar imitação e viver hombridade em Cristo — líder, marido, pai e amigo.",
+    voceVai: [
+      "Abandonar estereótipos e imitações da masculinidade",
+      "Descobrir a hombridade de Jesus Cristo",
+      "Estabelecer a direção do coração e permanecer",
+      "Esclarecer o papel de líder, marido, pai e amigo",
+    ],
+    temas: ["Estereótipos", "Hombridade de Cristo", "Coração", "Líder", "Marido, pai e amigo"],
+  },
+  {
+    id: "hm5",
+    nome: "O Poder do Potencial",
+    semanas: 13,
+    encontro: "Encontros semanais de até 2h30",
+    publico: "Homens a partir de 13 anos",
+    geracoes: "Adolescentes · Jovens · Homens",
+    modalidade: "Presencial e online",
+    material: "Material didático incluído",
+    vagas: 16,
+    capa: "poderPotencial",
+    resumo:
+      "Estudo sobre a vida de José, que foi governador do Egito. Neste material conhecemos pequenos detalhes, presentes nos problemas do dia a dia, que nos impedem de atingir o nosso potencial máximo. Por meio de uma abordagem direta e inspiradora, são apresentados princípios que ajudam a fortalecer qualidades e virtudes; viver acima das injustiças e das críticas alheias; deixar a tensão e receber a paz; lidar com conflitos psicológicos e com o senso de culpa; transformar a preocupação em motivação; recuperar a visão e renovar os sonhos. Como concretizar os seus sonhos vivenciando ao máximo os princípios de Deus.",
+    paraQuem: "Homens a partir de 13 anos que sentem potencial travado por injustiça, culpa, crítica ou sonhos adormecidos.",
+    voceVai: [
+      "Fortalecer qualidades e virtudes no padrão de José",
+      "Viver acima de injustiças e críticas",
+      "Trocar tensão por paz e culpa por graça",
+      "Transformar preocupação em motivação e renovar sonhos",
+    ],
+    temas: ["José", "Virtudes", "Injustiça", "Paz", "Sonhos"],
+  },
+  {
+    id: "hm6",
+    nome: "Comunicação, Sexo e Dinheiro",
+    semanas: 13,
+    encontro: "Encontros semanais de até 2h30",
+    publico: "Homens a partir de 18 anos ou casados",
+    geracoes: "Homens · Jovens",
+    modalidade: "Presencial e online",
+    material: "Material didático incluído",
+    vagas: 16,
+    capa: "comunicacaoSexo",
+    resumo:
+      "Normalmente, os homens se comunicam bem com clientes, amigos e parceiros de projetos, mas têm dificuldades quando chegam em casa, e a comunicação se restringe a monólogos curtos. Este curso ajuda o homem na arte da comunicação, ensinando princípios nas áreas sexual e financeira, alinhando-se pela Palavra de Deus. “Quanto mais próxima da verdade, mais destrutiva é a mentira.” (Edwin Louis Cole). Vencendo os três desafios mais comuns do relacionamento conjugal.",
+    paraQuem: "Homens a partir de 18 anos ou casados que querem falar, amar e administrar o lar com verdade — não com monólogo.",
+    voceVai: [
+      "Sair do monólogo curto e comunicar de verdade em casa",
+      "Alinhar sexualidade à Palavra, com honra à esposa",
+      "Tratar dinheiro como discipulado a dois, não como tabu",
+    ],
+    temas: ["Comunicação", "Sexo", "Dinheiro", "Verdade", "Casamento"],
+  },
+  {
+    id: "hm7",
+    nome: "Homens Fortes em Tempos Difíceis",
+    semanas: 13,
+    encontro: "Encontros semanais de até 2h30",
+    publico: "Homens a partir de 15 anos",
+    geracoes: "Adolescentes · Jovens · Homens",
+    modalidade: "Presencial e online",
+    material: "Material didático incluído",
+    vagas: 16,
+    capa: "homensFortes",
+    resumo:
+      "Estudo profundo sobre a vida de Daniel, que passou por quatro reinados diferentes e se manteve íntegro, fiel e forte, mesmo diante das dificuldades. O que significa, na prática, ser um homem forte em tempos difíceis? A ampliação da lacuna social entre realização tecnológica e declínio moral obriga homens de coragem, integridade e verdadeira hombridade a se fortalecerem. Em busca de satisfação, muitos esqueceram o significado de hombridade e abandonaram ideais por escolhas imorais, ilegais, antiéticas ou irresponsáveis. Os tempos difíceis de hoje exigem que superemos princípios morais duvidosos e desenvolvamos esperança, dignidade, a verdade de Deus e a ordem para um mundo desesperado, necessitado de homens dispostos a serem heróis, como Jesus Cristo. Praticando a verdadeira hombridade numa época que clama por heróis.",
+    paraQuem: "Homens a partir de 15 anos que querem integridade estilo Daniel — forte quando a cultura pede o contrário.",
+    voceVai: [
+      "Aprender com Daniel a permanecer íntegro em qualquer reinado",
+      "Recusar escolhas imorais disfarçadas de sucesso",
+      "Desenvolver esperança, dignidade e verdade de Deus",
+      "Viver hombridade de herói — no padrão de Jesus Cristo",
+    ],
+    temas: ["Daniel", "Integridade", "Tempos difíceis", "Hombridade", "Heroísmo em Cristo"],
   },
 ];
 
