@@ -33,6 +33,7 @@ export const fotos = {
     "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
   entrar:
     "https://images.unsplash.com/photo-1438032005730-c779bca2a2ee?auto=format&fit=crop&w=800&q=80",
+  checkinKids: "/cursos/checkin-kids.jpg",
   oracao:
     "https://images.unsplash.com/photo-1478146892126-fb34f0246e37?auto=format&fit=crop&w=800&q=80",
   educacao:

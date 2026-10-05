@@ -39,6 +39,7 @@ export default function FormacaoPage() {
           href={`/formacao/${m.id}`}
           hrefLabel="Abrir geração →"
           items={postersDe(m)}
+          size="gen"
         />
       ))}
     </div>

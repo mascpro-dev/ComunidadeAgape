@@ -227,6 +227,7 @@ export function HomePortal() {
               title: i.titulo,
               kicker: i.kicker,
             }))}
+            size="gen"
           />
         ))}
       </div>

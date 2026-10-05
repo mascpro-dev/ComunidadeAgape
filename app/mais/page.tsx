@@ -37,7 +37,7 @@ export default function MaisPage() {
         href="/formacao"
         items={[
           { href: "/cursos", src: fotos.familia, title: "Trilhas", kicker: "Família" },
-          { href: "/formacao/infantil", src: fotos.infantil, title: "Check-in kids", kicker: "Infantil" },
+          { href: "/formacao/infantil#checkin", src: fotos.checkinKids, title: "Check-in kids", kicker: "Infantil" },
           { href: "/visao/educacao", src: fotos.educacao, title: "Roda da educação", kicker: "2033" },
           { href: "/visao/social", src: fotos.celulas, title: "Roda social", kicker: "2033" },
           { href: "/visao/economia", src: fotos.economia, title: "Roda da economia", kicker: "2033" },

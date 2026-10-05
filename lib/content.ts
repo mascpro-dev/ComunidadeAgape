@@ -603,7 +603,7 @@ export const ministerios: Ministerio[] = [
       { id: "kab", titulo: "ABC do Dinheiro", kicker: "5–7 anos · 10 sem", tipo: "curso", capa: "crownAbc", href: "/cursos/cr4" },
       { id: "ksg", titulo: "O Segredo", kicker: "8–12 anos · 12 sem", tipo: "curso", capa: "crownSegredo", href: "/cursos/cr5" },
       { id: "k4", titulo: "Culto Infantil", kicker: "Dom 10h · igreja", tipo: "atividade", capa: "culto" },
-      { id: "k6", titulo: "Check-in kids", kicker: "Atividade", tipo: "atividade", capa: "entrar" },
+      { id: "k6", titulo: "Check-in kids", kicker: "Atividade", tipo: "atividade", capa: "checkinKids", href: "/formacao/infantil#checkin" },
     ],
   },
   {

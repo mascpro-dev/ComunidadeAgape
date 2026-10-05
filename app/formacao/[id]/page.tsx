@@ -40,8 +40,8 @@ export default async function MinisterioPage({ params }: { params: Promise<{ id:
         </div>
       </article>
 
-      <PosterRow title="Cursos" items={posters(cursos)} />
-      <PosterRow title="Atividades" items={posters(atividades)} />
+      <PosterRow title="Cursos" items={posters(cursos)} size="gen" />
+      <PosterRow title="Atividades" items={posters(atividades)} size="gen" />
 
       <div className="mt-8 grid gap-8 md:grid-cols-[1.2fr_0.8fr]">
         <p className="max-w-[52ch] text-[15px] leading-relaxed text-[#d7e2f8]">{m.texto}</p>
@@ -53,7 +53,7 @@ export default async function MinisterioPage({ params }: { params: Promise<{ id:
           </div>
           <div className="mt-4">
             {m.checkin ? (
-              <article className="card">
+              <article id="checkin" className="card">
                 <h3 className="font-display text-2xl">Check-in kids</h3>
                 <p className="meta">Pré-selecione as crianças. No templo, mostre o código.</p>
                 <ActionForm kind="checkin" button="Gerar código" />

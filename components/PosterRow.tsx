@@ -29,7 +29,7 @@ export function PosterRow({
   items: PosterItem[];
   className?: string;
   fill?: boolean;
-  size?: "md" | "lg";
+  size?: "md" | "lg" | "gen";
 }) {
   const viewport = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
@@ -42,6 +42,7 @@ export function PosterRow({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [marquee, signature],
   );
+  const speed = size === "lg" ? 0.42 : size === "gen" ? 0.28 : 0.7;
 
   useLayoutEffect(() => {
     const view = viewport.current;
@@ -78,7 +79,7 @@ export function PosterRow({
     let frame = 0;
     const tick = () => {
       if (marquee && !paused.current) {
-        offset.current += size === "lg" ? 0.42 : 0.7;
+        offset.current += speed;
         const half = rail.scrollWidth / 2;
         if (half > 0 && offset.current >= half) offset.current -= half;
         rail.style.transform = `translate3d(${-offset.current}px,0,0)`;
@@ -91,7 +92,7 @@ export function PosterRow({
       cancelAnimationFrame(frame);
       ro.disconnect();
     };
-  }, [items.length, signature, marquee, title, size]);
+  }, [items.length, signature, marquee, title, size, speed]);
 
   function pause() {
     paused.current = true;
@@ -114,7 +115,7 @@ export function PosterRow({
       </div>
       <div
         ref={viewport}
-        className={`${fill ? "poster-row poster-row-fill" : "poster-row"} ${size === "lg" ? "poster-row-lg" : ""} ${marquee ? "is-marquee" : ""}`.trim()}
+        className={`${fill ? "poster-row poster-row-fill" : "poster-row"} ${size === "lg" ? "poster-row-lg" : ""} ${size === "gen" ? "poster-row-gen" : ""} ${marquee ? "is-marquee" : ""}`.trim()}
         onMouseEnter={pause}
         onMouseLeave={resume}
         onPointerDown={pause}
@@ -130,12 +131,12 @@ export function PosterRow({
   );
 }
 
-export function PosterCard({ item, size = "md" }: { item: PosterItem; size?: "md" | "lg" }) {
+export function PosterCard({ item, size = "md" }: { item: PosterItem; size?: "md" | "lg" | "gen" }) {
   const className = `${item.selected ? "poster group ring-2 ring-gold" : "poster group"} ${item.reel ? "reel" : ""}`.trim();
   const inner = (
     <>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={item.src} alt={item.title} className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-110" />
+      <img src={item.src} alt={item.title} className={size === "gen" ? "" : "transition duration-500 group-hover:scale-110"} />
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
       {item.reel ? (
         <div className="absolute left-1/2 top-[42%] flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-black/45 text-white backdrop-blur-sm">
