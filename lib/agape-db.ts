@@ -237,14 +237,26 @@ export async function insertRelatorio(r: Omit<Relatorio, "id" | "quando">) {
   if (error) throw error;
 }
 
+function textoBanco(error: { code?: string; message?: string; details?: string | null; hint?: string | null }) {
+  return [error.code, error.message, error.details, error.hint].filter(Boolean).join(" ");
+}
+
 export async function setFuncao(profileId: string, fn: FuncaoId, on: boolean) {
   const sb = getSupabase();
   if (!sb) throw new Error("Supabase não configurado");
   if (on) {
+    const label = FUNCOES.find((f) => f.id === fn)?.label || fn;
+    await sb.from("funcoes").upsert({ id: fn, label });
     const { error } = await sb.from("profile_funcoes").insert({ profile_id: profileId, funcao_id: fn });
-    if (error && !String(error.message).toLowerCase().includes("duplicate")) throw error;
+    if (error && !String(error.message).toLowerCase().includes("duplicate")) {
+      const texto = textoBanco(error);
+      if (error.code === "23503" || /foreign key|not present|não está presente|chave estrangeira/i.test(texto)) {
+        throw new Error("Fazer escalas ainda não está cadastrada no banco. Rode a migration 006 no SQL Editor do Supabase e marque de novo.");
+      }
+      throw new Error(error.message || "Não consegui salvar esta função.");
+    }
     return;
   }
   const { error } = await sb.from("profile_funcoes").delete().eq("profile_id", profileId).eq("funcao_id", fn);
-  if (error) throw error;
+  if (error) throw new Error(error.message || "Não consegui salvar esta função.");
 }

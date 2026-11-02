@@ -642,13 +642,8 @@ function PessoasAdmin({
     const tem = (m.funcoes || []).includes(fn);
     setAviso("");
     void onToggle(m.id, fn, !tem).catch((erro: unknown) => {
-      const msg = erro instanceof Error ? erro.message : String(erro);
-      const faltaCatalogo = /foreign key|23503|funcoes/i.test(msg);
-      setAviso(
-        faltaCatalogo
-          ? "A função Fazer escalas ainda não está no banco. Rode a migration 006 no SQL Editor do Supabase e tente de novo."
-          : "Não consegui salvar esta função. Tente de novo.",
-      );
+      const msg = erro instanceof Error ? erro.message : "Não consegui salvar esta função.";
+      setAviso(msg);
     });
   }
 

@@ -10,3 +10,16 @@ select p.id, 'escalas'
 from public.profiles p
 where lower(p.email) = 'conelheiros@gmail.com'
 on conflict do nothing;
+
+drop policy if exists "funcoes_admin_inserir" on public.funcoes;
+create policy "funcoes_admin_inserir"
+on public.funcoes for insert
+to authenticated
+with check (public.has_funcao('admin') or public.has_funcao('liberar'));
+
+drop policy if exists "funcoes_admin_atualizar" on public.funcoes;
+create policy "funcoes_admin_atualizar"
+on public.funcoes for update
+to authenticated
+using (public.has_funcao('admin') or public.has_funcao('liberar'))
+with check (public.has_funcao('admin') or public.has_funcao('liberar'));
