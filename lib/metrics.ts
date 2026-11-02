@@ -13,7 +13,7 @@ export const estadosCivis = [
 
 export type EstadoCivil = (typeof estadosCivis)[number]["id"];
 
-export type FuncaoId = "painel" | "relatorios" | "pessoas" | "liberar" | "audios";
+export type FuncaoId = "painel" | "relatorios" | "pessoas" | "liberar" | "audios" | "escalas";
 
 export const FUNCOES: { id: FuncaoId; label: string }[] = [
   { id: "painel", label: "Painel de métricas" },
@@ -21,6 +21,7 @@ export const FUNCOES: { id: FuncaoId; label: string }[] = [
   { id: "pessoas", label: "Ver cadastros" },
   { id: "liberar", label: "Liberar funções" },
   { id: "audios", label: "Publicar áudios" },
+  { id: "escalas", label: "Fazer escalas" },
 ];
 
 export type Membro = {

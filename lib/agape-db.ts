@@ -1,7 +1,7 @@
 "use client";
 
 import { getSupabase } from "@/lib/supabase";
-import { type EstadoCivil, type FuncaoId, type Membro, type Relatorio } from "@/lib/metrics";
+import { FUNCOES, type EstadoCivil, type FuncaoId, type Membro, type Relatorio } from "@/lib/metrics";
 
 type ProfileRow = {
   id: string;
@@ -42,7 +42,7 @@ function mapMembro(row: ProfileRow, funcoes: string[]): Membro {
     cidade: row.cidade || "",
     email: row.email || "",
     principal,
-    funcoes: principal ? (["painel", "relatorios", "pessoas", "liberar", "audios"] as FuncaoId[]) : lista,
+    funcoes: principal ? FUNCOES.map((f) => f.id) : lista,
     celula: row.celula || "Não frequento",
     querIndicacao: row.quer_indicacao,
     convertido: row.convertido,

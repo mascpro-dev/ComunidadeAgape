@@ -635,15 +635,26 @@ function PessoasAdmin({
   onToggle: (id: string, fn: FuncaoId, on: boolean) => Promise<void>;
 }) {
   const podeLiberar = temFuncao(eu, "liberar");
+  const [aviso, setAviso] = useState("");
 
   function toggle(m: Membro, fn: FuncaoId) {
     if (m.principal) return;
     const tem = (m.funcoes || []).includes(fn);
-    void onToggle(m.id, fn, !tem);
+    setAviso("");
+    void onToggle(m.id, fn, !tem).catch((erro: unknown) => {
+      const msg = erro instanceof Error ? erro.message : String(erro);
+      const faltaCatalogo = /foreign key|23503|funcoes/i.test(msg);
+      setAviso(
+        faltaCatalogo
+          ? "A função Fazer escalas ainda não está no banco. Rode a migration 006 no SQL Editor do Supabase e tente de novo."
+          : "Não consegui salvar esta função. Tente de novo.",
+      );
+    });
   }
 
   return (
     <div className="grid gap-3 md:grid-cols-2">
+      {aviso ? <p className="meta md:col-span-2 text-[#f0c7a2]">{aviso}</p> : null}
       {membros.map((m) => (
         <article key={m.id} className="dash-card">
           <p className="font-display text-2xl">

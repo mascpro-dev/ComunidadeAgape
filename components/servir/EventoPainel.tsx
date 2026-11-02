@@ -123,7 +123,67 @@ export function EventoPainel({ eventoId }: { eventoId: string }) {
     setBuscaPessoa("");
   }
 
-  let depAnterior = "";
+  function blocoFuncao(linha: (typeof linhas)[number], mostraDep: boolean) {
+    return (
+      <>
+        {mostraDep ? (
+          <p className="mb-1 text-[11px] uppercase tracking-[0.14em] text-gold">{nomeDepartamento(state, linha.depId)}</p>
+        ) : null}
+        {editando === linha.vaga.id ? (
+          <form
+            className="flex min-w-0 gap-2"
+            onSubmit={(e) => {
+              e.preventDefault();
+              commit((s) => renomearVaga(s, linha.vaga.id, rotulo));
+              setEditando(null);
+            }}
+          >
+            <input className="field min-w-0 flex-1 py-2" value={rotulo} onChange={(ev) => setRotulo(ev.target.value)} />
+            <button className="btn-gold shrink-0 px-3" type="submit">
+              Ok
+            </button>
+          </form>
+        ) : (
+          <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+            <span className="min-w-0 break-words">{linha.vaga.rotulo}</span>
+            <button
+              type="button"
+              className="text-[12px] text-muted"
+              onClick={() => {
+                setEditando(linha.vaga.id);
+                setRotulo(linha.vaga.rotulo);
+              }}
+            >
+              Renomear
+            </button>
+            <button type="button" className="text-[12px] text-muted" onClick={() => commit((s) => duplicarVaga(s, linha.vaga.id))}>
+              Duplicar
+            </button>
+          </div>
+        )}
+      </>
+    );
+  }
+
+  function blocoPessoa(linha: (typeof linhas)[number], pessoa: (typeof state.voluntarios)[number] | undefined) {
+    return (
+      <button
+        type="button"
+        className="flex w-full min-w-0 items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-left hover:border-gold/40"
+        onClick={() => {
+          setVagaId(linha.vaga.id);
+          setBuscaPessoa("");
+        }}
+      >
+        <span aria-hidden className="shrink-0">
+          ⌕
+        </span>
+        <span className={`min-w-0 break-words ${pessoa && linha.vaga.status ? COR[linha.vaga.status] : "text-muted"}`}>
+          {pessoa ? `${pessoa.nome} · ${STATUS_LABEL[linha.vaga.status || "nao_notificado"]}` : "Voluntário"}
+        </span>
+      </button>
+    );
+  }
 
   return (
     <div>
@@ -132,7 +192,7 @@ export function EventoPainel({ eventoId }: { eventoId: string }) {
           <Link href="/servir/escalas" className="text-sm text-gold">
             ← Escalas
           </Link>
-          <h1 className="mt-2 font-display text-4xl leading-none">{evento.nome}</h1>
+          <h1 className="mt-2 min-w-0 break-words font-display text-4xl leading-none">{evento.nome}</h1>
           <p className="meta">{fmtQuando(evento.data, evento.hora)} · {situacaoLabel(situacaoEvento(state, evento.id))}</p>
         </div>
         <button
@@ -219,15 +279,15 @@ export function EventoPainel({ eventoId }: { eventoId: string }) {
       ) : null}
 
       {aba === "escala" ? (
-        <div className="grid gap-3">
+        <div className="grid min-w-0 max-w-full gap-3">
           <button type="button" className="btn-gold w-full" onClick={() => commit((s) => gerarAutomatica(s, evento.id))}>
             Gerar escala automática
           </button>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex min-w-0 max-w-full flex-wrap gap-2">
             <button type="button" className="btn-ghost" onClick={() => setSaude(true)}>
               Saúde da escala
             </button>
-            <select className="field max-w-xs" value={tagId} onChange={(e) => setTagId(e.target.value)}>
+            <select className="field min-w-0 max-w-full sm:max-w-xs" value={tagId} onChange={(e) => setTagId(e.target.value)}>
               <option value="">Filtrar voluntário por tag</option>
               {state.tags
                 .filter((t) => t.tipo === "voluntario")
@@ -239,7 +299,7 @@ export function EventoPainel({ eventoId }: { eventoId: string }) {
             </select>
             {equipes.length ? (
               <>
-                <select className="field max-w-xs" value={equipeId} onChange={(e) => setEquipeId(e.target.value)}>
+                <select className="field min-w-0 max-w-full sm:max-w-xs" value={equipeId} onChange={(e) => setEquipeId(e.target.value)}>
                   <option value="">Equipe</option>
                   {equipes.map((e) => (
                     <option key={e.id} value={e.id}>
@@ -268,11 +328,27 @@ export function EventoPainel({ eventoId }: { eventoId: string }) {
             <span className="text-orange-300">Troca</span>
             <span className="text-sky-300">Presente</span>
           </p>
-          <div className="overflow-x-auto rounded-2xl border border-white/10">
-            <table className="w-full min-w-[640px] text-left text-sm">
+          <div className="grid min-w-0 gap-2 md:hidden">
+            <p className="break-words text-[11px] uppercase tracking-[0.14em] text-muted">
+              {fmtQuando(evento.data, evento.hora)}
+              <span className="mt-1 block normal-case tracking-normal text-ink">{evento.nome}</span>
+            </p>
+            {linhas.map((linha, index) => {
+              const mostraDep = index === 0 || linhas[index - 1].depId !== linha.depId;
+              const pessoa = state.voluntarios.find((v) => v.id === linha.vaga.voluntarioId);
+              return (
+                <article key={linha.vaga.id} className="min-w-0 rounded-2xl border border-white/10 p-3">
+                  {blocoFuncao(linha, mostraDep)}
+                  <div className="mt-2">{blocoPessoa(linha, pessoa)}</div>
+                </article>
+              );
+            })}
+          </div>
+          <div className="hidden min-w-0 max-w-full overflow-x-auto rounded-2xl border border-white/10 md:block">
+            <table className="w-full text-left text-sm">
               <thead className="bg-white/[0.04] text-[11px] uppercase tracking-[0.14em] text-muted">
                 <tr>
-                  <th className="px-3 py-3 font-medium">Função</th>
+                  <th className="w-[42%] px-3 py-3 font-medium">Função</th>
                   <th className="px-3 py-3 font-medium">
                     {fmtQuando(evento.data, evento.hora)}
                     <span className="mt-1 block normal-case tracking-normal text-ink">{evento.nome}</span>
@@ -280,64 +356,13 @@ export function EventoPainel({ eventoId }: { eventoId: string }) {
                 </tr>
               </thead>
               <tbody>
-                {linhas.map((linha) => {
-                  const mostraDep = linha.depId !== depAnterior;
-                  depAnterior = linha.depId;
+                {linhas.map((linha, index) => {
+                  const mostraDep = index === 0 || linhas[index - 1].depId !== linha.depId;
                   const pessoa = state.voluntarios.find((v) => v.id === linha.vaga.voluntarioId);
                   return (
                     <tr key={linha.vaga.id} className="border-t border-white/10">
-                      <td className="px-3 py-3 align-top">
-                        {mostraDep ? (
-                          <p className="mb-1 text-[11px] uppercase tracking-[0.14em] text-gold">{nomeDepartamento(state, linha.depId)}</p>
-                        ) : null}
-                        {editando === linha.vaga.id ? (
-                          <form
-                            className="flex gap-2"
-                            onSubmit={(e) => {
-                              e.preventDefault();
-                              commit((s) => renomearVaga(s, linha.vaga.id, rotulo));
-                              setEditando(null);
-                            }}
-                          >
-                            <input className="field py-2" value={rotulo} onChange={(ev) => setRotulo(ev.target.value)} />
-                            <button className="btn-gold px-3" type="submit">
-                              Ok
-                            </button>
-                          </form>
-                        ) : (
-                          <div className="flex items-center gap-2">
-                            <span>{linha.vaga.rotulo}</span>
-                            <button
-                              type="button"
-                              className="text-[12px] text-muted"
-                              onClick={() => {
-                                setEditando(linha.vaga.id);
-                                setRotulo(linha.vaga.rotulo);
-                              }}
-                            >
-                              Renomear
-                            </button>
-                            <button type="button" className="text-[12px] text-muted" onClick={() => commit((s) => duplicarVaga(s, linha.vaga.id))}>
-                              Duplicar
-                            </button>
-                          </div>
-                        )}
-                      </td>
-                      <td className="px-3 py-3">
-                        <button
-                          type="button"
-                          className="flex w-full items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-left hover:border-gold/40"
-                          onClick={() => {
-                            setVagaId(linha.vaga.id);
-                            setBuscaPessoa("");
-                          }}
-                        >
-                          <span aria-hidden>⌕</span>
-                          <span className={pessoa && linha.vaga.status ? COR[linha.vaga.status] : "text-muted"}>
-                            {pessoa ? `${pessoa.nome} · ${STATUS_LABEL[linha.vaga.status || "nao_notificado"]}` : "Voluntário"}
-                          </span>
-                        </button>
-                      </td>
+                      <td className="px-3 py-3 align-top">{blocoFuncao(linha, mostraDep)}</td>
+                      <td className="px-3 py-3">{blocoPessoa(linha, pessoa)}</td>
                     </tr>
                   );
                 })}

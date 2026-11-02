@@ -151,7 +151,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         />
       ) : null}
 
-      <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-white/10 bg-[#06153a]/92 px-2 pb-[max(10px,env(safe-area-inset-bottom))] pt-2 backdrop-blur-xl md:hidden">
+      <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-white/10 bg-[#030b1f] px-2 pb-[max(10px,env(safe-area-inset-bottom))] pt-2 shadow-[0_-10px_28px_rgba(0,0,0,0.55)] md:hidden">
         {maisAberto ? (
           <div className="absolute bottom-[calc(100%+8px)] right-3 w-[min(240px,calc(100vw-24px))] overflow-hidden rounded-none border border-gold/40 bg-deep shadow-[0_16px_40px_rgba(0,0,0,.4)]">
             {maisMenu.map((item) => (
@@ -175,8 +175,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   key={tab.href}
                   type="button"
                   onClick={() => setMaisAberto((v) => !v)}
-                  className={`grid justify-items-center gap-1 py-1 text-[10px] tracking-wide ${
-                    on ? "text-gold" : "text-[#7d91b8]"
+                  className={`grid justify-items-center gap-1 py-1 text-[10px] font-medium tracking-wide ${
+                    on ? "text-gold" : "text-[#d5e2f7]"
                   }`}
                   aria-expanded={maisAberto}
                   aria-label="Mais"
@@ -190,8 +190,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <Link
                 key={tab.href}
                 href={tab.href}
-                className={`grid justify-items-center gap-1 py-1 text-[10px] tracking-wide ${
-                  on ? "text-gold" : "text-[#7d91b8]"
+                className={`grid justify-items-center gap-1 py-1 text-[10px] font-medium tracking-wide ${
+                  on ? "text-gold" : "text-[#d5e2f7]"
                 }`}
                 onClick={() => setMaisAberto(false)}
               >

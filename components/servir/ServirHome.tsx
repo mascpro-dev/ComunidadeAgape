@@ -4,6 +4,7 @@ import Link from "next/link";
 import { fmtData, fmtQuando, patchConfig, situacaoEvento } from "@/lib/servir";
 import { Modal } from "./Modal";
 import { useServir } from "./ServirProvider";
+import { usePodeEscalas } from "./usePodeEscalas";
 
 const SITUACAO = {
   vazia: "Sem escala",
@@ -13,6 +14,7 @@ const SITUACAO = {
 
 export function ServirHome() {
   const { state, commit } = useServir();
+  const { ready, pode } = usePodeEscalas();
   const eu = state.voluntarios.find((v) => v.id === state.config.euVoluntarioId);
   const minhas = state.vagas
     .filter((v) => eu && v.voluntarioId === eu.id)
@@ -26,7 +28,7 @@ export function ServirHome() {
 
   return (
     <div>
-      {!state.config.tourVisto ? (
+      {ready && pode && !state.config.tourVisto ? (
         <Modal title="Bem-vindo ao Servir" onClose={() => commit((s) => patchConfig(s, { tourVisto: true }))}>
           <p className="text-sm leading-relaxed text-muted">
             Este canto organiza quem serve nos cultos. O caminho é organização, depois as pessoas, depois a escala.
@@ -51,26 +53,45 @@ export function ServirHome() {
         <section className="grid gap-3">
           <div className="flex items-end justify-between gap-3">
             <h2 className="section-label mb-0">Próximos cultos</h2>
-            <Link href="/servir/escalas" className="text-sm text-gold">
-              Escala rápida →
-            </Link>
+            {pode ? (
+              <Link href="/servir/escalas" className="text-sm text-gold">
+                Escala rápida →
+              </Link>
+            ) : null}
           </div>
           {proximos.length === 0 ? (
             <article className="card">
               <p className="font-display text-2xl">Nenhum culto criado</p>
-              <p className="meta">A escala começa por um evento. Departamentos e funções já estão prontos.</p>
-              <Link href="/servir/escalas" className="btn-gold mt-4">
-                Criar evento
-              </Link>
+              <p className="meta">
+                {pode
+                  ? "A escala começa por um evento. Departamentos e funções já estão prontos."
+                  : "Quando alguém com a função Fazer escalas criar um culto, ele aparece aqui."}
+              </p>
+              {pode ? (
+                <Link href="/servir/escalas" className="btn-gold mt-4">
+                  Criar evento
+                </Link>
+              ) : null}
             </article>
           ) : (
-            proximos.map((evento) => (
-              <Link key={evento.id} href={`/servir/escalas/${evento.id}`} className="card block hover:border-gold/30">
-                <p className="text-[11px] uppercase tracking-[0.16em] text-gold">{SITUACAO[situacaoEvento(state, evento.id)]}</p>
-                <p className="mt-1 font-display text-2xl leading-tight">{evento.nome}</p>
-                <p className="meta">{fmtQuando(evento.data, evento.hora)}</p>
-              </Link>
-            ))
+            proximos.map((evento) => {
+              const corpo = (
+                <>
+                  <p className="text-[11px] uppercase tracking-[0.16em] text-gold">{SITUACAO[situacaoEvento(state, evento.id)]}</p>
+                  <p className="mt-1 font-display text-2xl leading-tight">{evento.nome}</p>
+                  <p className="meta">{fmtQuando(evento.data, evento.hora)}</p>
+                </>
+              );
+              return pode ? (
+                <Link key={evento.id} href={`/servir/escalas/${evento.id}`} className="card block hover:border-gold/30">
+                  {corpo}
+                </Link>
+              ) : (
+                <article key={evento.id} className="card">
+                  {corpo}
+                </article>
+              );
+            })
           )}
         </section>
 
@@ -88,16 +109,27 @@ export function ServirHome() {
             </>
           ) : (
             <ul className="mt-3 grid gap-3">
-              {minhas.map(({ vaga, evento }) => (
-                <li key={vaga.id}>
-                  <Link href={`/servir/escalas/${evento!.id}`} className="block">
+              {minhas.map(({ vaga, evento }) => {
+                const corpo = (
+                  <>
                     <p className="text-sm font-medium">{evento!.nome}</p>
                     <p className="text-[13px] text-muted">
                       {fmtData(evento!.data)} · {vaga.rotulo}
                     </p>
-                  </Link>
-                </li>
-              ))}
+                  </>
+                );
+                return (
+                  <li key={vaga.id}>
+                    {pode ? (
+                      <Link href={`/servir/escalas/${evento!.id}`} className="block">
+                        {corpo}
+                      </Link>
+                    ) : (
+                      corpo
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           )}
         </aside>
