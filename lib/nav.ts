@@ -9,6 +9,7 @@ export const mobileTabs = [
 export const desktopNav = [
   { href: "/", label: "Início" },
   { href: "/culto", label: "Culto" },
+  { href: "/servir", label: "Servir" },
   { href: "/biblia", label: "Bíblia" },
   { href: "/comunidade", label: "Comunidade" },
   { href: "/formacao", label: "Gerações" },

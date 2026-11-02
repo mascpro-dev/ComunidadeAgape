@@ -32,6 +32,7 @@ function isOn(pathname: string, href: string) {
       "/dashboard",
       "/entrar",
       "/culto",
+      "/servir",
     ].some(
       (p) => pathname === p || pathname.startsWith(`${p}/`),
     );

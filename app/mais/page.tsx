@@ -14,6 +14,7 @@ export default async function MaisPage() {
           { href: "/entrar", src: fotoCapa("entrar", F), title: "Entrar", kicker: "Acesso" },
           { href: "/perfil", src: fotoCapa("perfil", F), title: "Meu perfil", kicker: "Membro" },
           { href: "/dashboard", src: fotoCapa("painel", F), title: "Painel", kicker: "Liderança" },
+          { href: "/servir", src: fotoCapa("lideranca", F), title: "Servir", kicker: "Escalas" },
         ]}
       />
       <PosterRow

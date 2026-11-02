@@ -17,6 +17,7 @@ const buscaRotas = [
   { href: "/comunidade", k: "Comunidade" },
   { href: "/celulas", k: "Células" },
   { href: "/culto", k: "Culto" },
+  { href: "/servir", k: "Servir" },
   { href: "/palavra", k: "Áudios" },
 ];
 
